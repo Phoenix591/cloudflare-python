@@ -33,6 +33,7 @@ jobs:
       run: npm install $(grep -m1 prism-cli scripts/mock | awk '{print $3}' | sed s/--package=//)
       working-directory: ${{ env.CHECKOUT_DIR }}
 
+# The spec is under a BSD licensw, its all good. see https://github.com/cloudflare/api-schemas
     - name: fetch cloudflare api spec
       run: wget $(yq -e '.openapi_spec_url' .stats.yml) -O cloudflare-spec.yml
       working-directory: ${{ env.CHECKOUT_DIR }}
