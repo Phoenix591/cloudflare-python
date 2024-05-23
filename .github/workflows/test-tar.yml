@@ -6,7 +6,7 @@ name: Package prism
 env:
   TAR_REPRO_OPTS: '"--mtime=2024-01-01 00:00 UTC" --sort=name  --owner=0 --group=0 --numeric-owner'
   TAR_NAME: ${{ github.event.repository.name }}-${{ github.ref_name }}-prism.tar.gz
-  TAR_FILES: node_modules package.json package-lock.json
+  TAR_FILES: node_modules package.json package-lock.json cloudflare-spec.yml
   CHECKOUT_DIR: ${{ github.event.repository.name }}-${{ github.ref_name }}
 
 on:
@@ -14,7 +14,7 @@ on:
     tags: 
     - '*'
 
-  
+
 
 jobs:
   vendor-tarball:
@@ -33,10 +33,13 @@ jobs:
       run: npm install $(grep -m1 prism-cli scripts/mock | awk '{print $3}' | sed s/--package=//)
       working-directory: ${{ env.CHECKOUT_DIR }}
 
+    - name: fetch cloudflare api spec
+      run: wget $(yq -e '.openapi_spec_url' .stats.yml) -O cloudflare-spec.yml
+      working-directory: ${{ env.CHECKOUT_DIR }}
+
     - name: Create Archive
       run: tar ${{ env.TAR_REPRO_OPTS }} -caf ${{ env.TAR_NAME }} ${{ env.TAR_FILES }}
       working-directory: ${{ env.CHECKOUT_DIR }}
-    
     - name: release
       uses: softprops/action-gh-release@v2
       with:
