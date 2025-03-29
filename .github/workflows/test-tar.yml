@@ -1,5 +1,5 @@
 # This workflow will download the nodejs based prism-cli
-# which this progeam uses for its testa
+# which this program uses for its tests
 
 
 name: Package prism
@@ -11,7 +11,7 @@ env:
 
 on:
   push:
-    tags: 
+    tags:
     - '*'
 
 
@@ -19,6 +19,8 @@ on:
 jobs:
   vendor-tarball:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
       with:
@@ -33,7 +35,7 @@ jobs:
       run: npm install $(grep -m1 prism-cli scripts/mock | awk '{print $3}' | sed s/--package=//)
       working-directory: ${{ env.CHECKOUT_DIR }}
 
-# The spec is under a BSD licensw, its all good. see https://github.com/cloudflare/api-schemas
+# The spec is under a BSD license see https://github.com/cloudflare/api-schemas
     - name: fetch cloudflare api spec
       run: wget $(yq -e '.openapi_spec_url' .stats.yml) -O cloudflare-spec.yml
       working-directory: ${{ env.CHECKOUT_DIR }}
@@ -42,9 +44,11 @@ jobs:
       run: tar ${{ env.TAR_REPRO_OPTS }} -caf ${{ env.TAR_NAME }} ${{ env.TAR_FILES }}
       working-directory: ${{ env.CHECKOUT_DIR }}
     - name: release
-      uses: softprops/action-gh-release@v2
-      with:
-        files: ${{ env.CHECKOUT_DIR }}/${{ env.TAR_NAME }}
-        body: Prism tarball for tests for Gentoo Linux overlay package
-        generate_release_notes: false
-        fail_on_unmatched_files: true
+      run: |
+        gh release create ${{ github.ref_name }} \
+          --title "${{ github.ref_name }}" \
+          --notes "Prism tarball for tests for Gentoo Linux overlay package" \
+          ${{ env.TAR_NAME }}
+      working-directory: ${{ env.CHECKOUT_DIR }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
