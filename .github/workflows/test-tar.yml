@@ -36,6 +36,7 @@ jobs:
       working-directory: ${{ env.CHECKOUT_DIR }}
 
 # The spec is under a BSD license see https://github.com/cloudflare/api-schemas
+# upstream fetches this at test time in scripts/mock
     - name: fetch cloudflare api spec
       run: wget $(yq -e '.openapi_spec_url' .stats.yml) -O cloudflare-spec.yml
       working-directory: ${{ env.CHECKOUT_DIR }}
