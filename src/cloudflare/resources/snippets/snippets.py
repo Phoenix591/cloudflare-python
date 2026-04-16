@@ -23,7 +23,7 @@ from .content import (
     AsyncContentResourceWithStreamingResponse,
 )
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -113,7 +113,7 @@ class SnippetsResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._put(
-            f"/zones/{zone_id}/snippets/{snippet_name}",
+            path_template("/zones/{zone_id}/snippets/{snippet_name}", zone_id=zone_id, snippet_name=snippet_name),
             body=maybe_transform({"metadata": metadata}, snippet_update_params.SnippetUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -162,7 +162,7 @@ class SnippetsResource(SyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._get_api_list(
-            f"/zones/{zone_id}/snippets",
+            path_template("/zones/{zone_id}/snippets", zone_id=zone_id),
             page=SyncV4PagePaginationArray[SnippetListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -215,7 +215,7 @@ class SnippetsResource(SyncAPIResource):
         if not snippet_name:
             raise ValueError(f"Expected a non-empty value for `snippet_name` but received {snippet_name!r}")
         return self._delete(
-            f"/zones/{zone_id}/snippets/{snippet_name}",
+            path_template("/zones/{zone_id}/snippets/{snippet_name}", zone_id=zone_id, snippet_name=snippet_name),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -261,7 +261,7 @@ class SnippetsResource(SyncAPIResource):
         if not snippet_name:
             raise ValueError(f"Expected a non-empty value for `snippet_name` but received {snippet_name!r}")
         return self._get(
-            f"/zones/{zone_id}/snippets/{snippet_name}",
+            path_template("/zones/{zone_id}/snippets/{snippet_name}", zone_id=zone_id, snippet_name=snippet_name),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -343,7 +343,7 @@ class AsyncSnippetsResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._put(
-            f"/zones/{zone_id}/snippets/{snippet_name}",
+            path_template("/zones/{zone_id}/snippets/{snippet_name}", zone_id=zone_id, snippet_name=snippet_name),
             body=await async_maybe_transform({"metadata": metadata}, snippet_update_params.SnippetUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -392,7 +392,7 @@ class AsyncSnippetsResource(AsyncAPIResource):
         if not zone_id:
             raise ValueError(f"Expected a non-empty value for `zone_id` but received {zone_id!r}")
         return self._get_api_list(
-            f"/zones/{zone_id}/snippets",
+            path_template("/zones/{zone_id}/snippets", zone_id=zone_id),
             page=AsyncV4PagePaginationArray[SnippetListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -445,7 +445,7 @@ class AsyncSnippetsResource(AsyncAPIResource):
         if not snippet_name:
             raise ValueError(f"Expected a non-empty value for `snippet_name` but received {snippet_name!r}")
         return await self._delete(
-            f"/zones/{zone_id}/snippets/{snippet_name}",
+            path_template("/zones/{zone_id}/snippets/{snippet_name}", zone_id=zone_id, snippet_name=snippet_name),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -491,7 +491,7 @@ class AsyncSnippetsResource(AsyncAPIResource):
         if not snippet_name:
             raise ValueError(f"Expected a non-empty value for `snippet_name` but received {snippet_name!r}")
         return await self._get(
-            f"/zones/{zone_id}/snippets/{snippet_name}",
+            path_template("/zones/{zone_id}/snippets/{snippet_name}", zone_id=zone_id, snippet_name=snippet_name),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

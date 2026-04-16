@@ -7,7 +7,7 @@ from typing import Type, Optional, cast
 import httpx
 
 from ......_types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ......_utils import maybe_transform, async_maybe_transform
+from ......_utils import path_template, maybe_transform, async_maybe_transform
 from ......_compat import cached_property
 from ......_resource import SyncAPIResource, AsyncAPIResource
 from ......_response import (
@@ -94,7 +94,12 @@ class SettingsResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._patch(
-            f"/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+            path_template(
+                "/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+                account_id=account_id,
+                dispatch_namespace=dispatch_namespace,
+                script_name=script_name,
+            ),
             body=maybe_transform({"settings": settings}, setting_edit_params.SettingEditParams),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -147,7 +152,12 @@ class SettingsResource(SyncAPIResource):
         if not script_name:
             raise ValueError(f"Expected a non-empty value for `script_name` but received {script_name!r}")
         return self._get(
-            f"/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+            path_template(
+                "/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+                account_id=account_id,
+                dispatch_namespace=dispatch_namespace,
+                script_name=script_name,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -228,7 +238,12 @@ class AsyncSettingsResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._patch(
-            f"/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+            path_template(
+                "/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+                account_id=account_id,
+                dispatch_namespace=dispatch_namespace,
+                script_name=script_name,
+            ),
             body=await async_maybe_transform({"settings": settings}, setting_edit_params.SettingEditParams),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -281,7 +296,12 @@ class AsyncSettingsResource(AsyncAPIResource):
         if not script_name:
             raise ValueError(f"Expected a non-empty value for `script_name` but received {script_name!r}")
         return await self._get(
-            f"/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+            path_template(
+                "/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings",
+                account_id=account_id,
+                dispatch_namespace=dispatch_namespace,
+                script_name=script_name,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
