@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
@@ -35,7 +35,7 @@ __all__ = [
 
 
 class StreamCreateParams(TypedDict, total=False):
-    account_id: str
+    account_id: Required[str]
     """Specifies the public ID of the account."""
 
     name: Required[str]
@@ -198,32 +198,12 @@ class SchemaFieldJson(TypedDict, total=False):
     sql_name: str
 
 
-class SchemaFieldStruct(TypedDict, total=False):
-    type: Required[Literal["struct"]]
-
-    metadata_key: Optional[str]
-
-    name: str
-
-    required: bool
-
-    sql_name: str
-
-    fields: Optional[List["SchemaField"]]
+class SchemaFieldStruct(total=False):
+    pass
 
 
-class SchemaFieldList(TypedDict, total=False):
-    type: Required[Literal["list"]]
-
-    metadata_key: Optional[str]
-
-    name: str
-
-    required: bool
-
-    sql_name: str
-
-    element: Optional["SchemaField"]
+class SchemaFieldList(total=False):
+    pass
 
 
 SchemaField: TypeAlias = Union[
