@@ -264,11 +264,11 @@ class SchemaFieldJson(BaseModel):
     sql_name: Optional[str] = None
 
 
-class SchemaFieldStruct:
+class SchemaFieldStruct(BaseModel):
     pass
 
 
-class SchemaFieldList:
+class SchemaFieldList(BaseModel):
     pass
 
 
