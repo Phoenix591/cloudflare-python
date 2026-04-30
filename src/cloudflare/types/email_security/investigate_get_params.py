@@ -9,7 +9,7 @@ __all__ = ["InvestigateGetParams"]
 
 class InvestigateGetParams(TypedDict, total=False):
     account_id: Required[str]
-    """Account Identifier"""
+    """Identifier."""
 
     submission: bool
     """When true, search the submissions datastore only.

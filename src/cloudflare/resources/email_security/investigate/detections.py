@@ -45,7 +45,7 @@ class DetectionsResource(SyncAPIResource):
 
     def get(
         self,
-        postfix_id: str,
+        investigate_id: str,
         *,
         account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -60,9 +60,9 @@ class DetectionsResource(SyncAPIResource):
         non-benign messages.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          postfix_id: The identifier of the message.
+          investigate_id: Unique identifier for a message retrieved from investigation
 
           extra_headers: Send extra headers
 
@@ -74,13 +74,13 @@ class DetectionsResource(SyncAPIResource):
         """
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
-        if not postfix_id:
-            raise ValueError(f"Expected a non-empty value for `postfix_id` but received {postfix_id!r}")
+        if not investigate_id:
+            raise ValueError(f"Expected a non-empty value for `investigate_id` but received {investigate_id!r}")
         return self._get(
             path_template(
-                "/accounts/{account_id}/email-security/investigate/{postfix_id}/detections",
+                "/accounts/{account_id}/email-security/investigate/{investigate_id}/detections",
                 account_id=account_id,
-                postfix_id=postfix_id,
+                investigate_id=investigate_id,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -115,7 +115,7 @@ class AsyncDetectionsResource(AsyncAPIResource):
 
     async def get(
         self,
-        postfix_id: str,
+        investigate_id: str,
         *,
         account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -130,9 +130,9 @@ class AsyncDetectionsResource(AsyncAPIResource):
         non-benign messages.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          postfix_id: The identifier of the message.
+          investigate_id: Unique identifier for a message retrieved from investigation
 
           extra_headers: Send extra headers
 
@@ -144,13 +144,13 @@ class AsyncDetectionsResource(AsyncAPIResource):
         """
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
-        if not postfix_id:
-            raise ValueError(f"Expected a non-empty value for `postfix_id` but received {postfix_id!r}")
+        if not investigate_id:
+            raise ValueError(f"Expected a non-empty value for `investigate_id` but received {investigate_id!r}")
         return await self._get(
             path_template(
-                "/accounts/{account_id}/email-security/investigate/{postfix_id}/detections",
+                "/accounts/{account_id}/email-security/investigate/{investigate_id}/detections",
                 account_id=account_id,
-                postfix_id=postfix_id,
+                investigate_id=investigate_id,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,

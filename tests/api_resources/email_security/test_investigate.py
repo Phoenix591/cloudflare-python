@@ -39,19 +39,17 @@ class TestInvestigate:
             detections_only=True,
             domain="domain",
             end=parse_datetime("2019-12-27T18:11:19.117Z"),
-            exact_subject="exact_subject",
             final_disposition="MALICIOUS",
             message_action="PREVIEW",
             message_id="message_id",
             metric="metric",
             page=1,
-            per_page=1,
+            per_page=20,
             query="query",
             recipient="recipient",
             sender="sender",
             start=parse_datetime("2019-12-27T18:11:19.117Z"),
             subject="subject",
-            submissions=True,
         )
         assert_matches_type(SyncV4PagePaginationArray[InvestigateListResponse], investigate, path=["response"])
 
@@ -89,7 +87,7 @@ class TestInvestigate:
     @parametrize
     def test_method_get(self, client: Cloudflare) -> None:
         investigate = client.email_security.investigate.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
         assert_matches_type(InvestigateGetResponse, investigate, path=["response"])
@@ -97,7 +95,7 @@ class TestInvestigate:
     @parametrize
     def test_method_get_with_all_params(self, client: Cloudflare) -> None:
         investigate = client.email_security.investigate.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             submission=True,
         )
@@ -106,7 +104,7 @@ class TestInvestigate:
     @parametrize
     def test_raw_response_get(self, client: Cloudflare) -> None:
         response = client.email_security.investigate.with_raw_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
 
@@ -118,7 +116,7 @@ class TestInvestigate:
     @parametrize
     def test_streaming_response_get(self, client: Cloudflare) -> None:
         with client.email_security.investigate.with_streaming_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         ) as response:
             assert not response.is_closed
@@ -133,13 +131,13 @@ class TestInvestigate:
     def test_path_params_get(self, client: Cloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
             client.email_security.investigate.with_raw_response.get(
-                postfix_id="4Njp3P0STMz2c02Q",
+                investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
                 account_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `postfix_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `investigate_id` but received ''"):
             client.email_security.investigate.with_raw_response.get(
-                postfix_id="",
+                investigate_id="",
                 account_id="023e105f4ecef8ad9ca31a8372d0c353",
             )
 
@@ -166,19 +164,17 @@ class TestAsyncInvestigate:
             detections_only=True,
             domain="domain",
             end=parse_datetime("2019-12-27T18:11:19.117Z"),
-            exact_subject="exact_subject",
             final_disposition="MALICIOUS",
             message_action="PREVIEW",
             message_id="message_id",
             metric="metric",
             page=1,
-            per_page=1,
+            per_page=20,
             query="query",
             recipient="recipient",
             sender="sender",
             start=parse_datetime("2019-12-27T18:11:19.117Z"),
             subject="subject",
-            submissions=True,
         )
         assert_matches_type(AsyncV4PagePaginationArray[InvestigateListResponse], investigate, path=["response"])
 
@@ -216,7 +212,7 @@ class TestAsyncInvestigate:
     @parametrize
     async def test_method_get(self, async_client: AsyncCloudflare) -> None:
         investigate = await async_client.email_security.investigate.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
         assert_matches_type(InvestigateGetResponse, investigate, path=["response"])
@@ -224,7 +220,7 @@ class TestAsyncInvestigate:
     @parametrize
     async def test_method_get_with_all_params(self, async_client: AsyncCloudflare) -> None:
         investigate = await async_client.email_security.investigate.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             submission=True,
         )
@@ -233,7 +229,7 @@ class TestAsyncInvestigate:
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncCloudflare) -> None:
         response = await async_client.email_security.investigate.with_raw_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
 
@@ -245,7 +241,7 @@ class TestAsyncInvestigate:
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncCloudflare) -> None:
         async with async_client.email_security.investigate.with_streaming_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         ) as response:
             assert not response.is_closed
@@ -260,12 +256,12 @@ class TestAsyncInvestigate:
     async def test_path_params_get(self, async_client: AsyncCloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
             await async_client.email_security.investigate.with_raw_response.get(
-                postfix_id="4Njp3P0STMz2c02Q",
+                investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
                 account_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `postfix_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `investigate_id` but received ''"):
             await async_client.email_security.investigate.with_raw_response.get(
-                postfix_id="",
+                investigate_id="",
                 account_id="023e105f4ecef8ad9ca31a8372d0c353",
             )

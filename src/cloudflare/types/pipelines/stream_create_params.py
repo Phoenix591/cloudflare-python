@@ -198,11 +198,11 @@ class SchemaFieldJson(TypedDict, total=False):
     sql_name: str
 
 
-class SchemaFieldStruct(total=False):
+class SchemaFieldStruct(TypedDict, total=False):
     pass
 
 
-class SchemaFieldList(total=False):
+class SchemaFieldList(TypedDict, total=False):
     pass
 
 
