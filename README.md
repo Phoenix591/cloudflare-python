@@ -29,45 +29,6 @@ The REST API documentation can be found on [developers.cloudflare.com](https://d
 pip install --pre cloudflare
 ```
 
-## Authentication
-
-The SDK supports multiple authentication methods. Each can be provided as a constructor argument or read automatically from an environment variable.
-
-### API Token (recommended)
-
-[API tokens](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) are scoped to specific permissions and are the recommended way to authenticate.
-
-```python
-from cloudflare import Cloudflare
-
-client = Cloudflare(api_token="your-api-token")
-
-# Or set the CLOUDFLARE_API_TOKEN environment variable and omit the argument:
-client = Cloudflare()
-```
-
-### API Key + Email
-
-The [Global API Key](https://developers.cloudflare.com/fundamentals/api/get-started/keys/) authenticates using a key and email pair. Both must be provided together.
-
-```python
-from cloudflare import Cloudflare
-
-client = Cloudflare(
-    api_key="your-global-api-key",
-    api_email="user@example.com",
-)
-
-# Or set CLOUDFLARE_API_KEY and CLOUDFLARE_EMAIL environment variables:
-client = Cloudflare()
-```
-
-| Parameter | Environment variable | Header sent |
-|-----------|---------------------|-------------|
-| `api_token` | `CLOUDFLARE_API_TOKEN` | `Authorization: Bearer <token>` |
-| `api_key` | `CLOUDFLARE_API_KEY` | `X-Auth-Key: <key>` |
-| `api_email` | `CLOUDFLARE_EMAIL` | `X-Auth-Email: <email>` |
-
 ## Usage
 
 The full API of this library can be found in [api.md](api.md).
