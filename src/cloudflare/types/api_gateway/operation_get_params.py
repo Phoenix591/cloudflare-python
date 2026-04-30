@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from typing import List
-from typing_extensions import Literal, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["OperationGetParams"]
 
 
 class OperationGetParams(TypedDict, total=False):
-    zone_id: str
+    zone_id: Required[str]
     """Identifier."""
 
     feature: List[Literal["thresholds", "parameter_schemas", "schema_info"]]
@@ -18,4 +18,11 @@ class OperationGetParams(TypedDict, total=False):
     The feature name that is given here corresponds to the resulting feature object.
     Have a look at the top-level object description for more details on the specific
     meaning.
+    """
+
+    with_schemas: bool
+    """
+    When true, includes OpenAPI schemas (both uploaded and learned) for the
+    operation in the response. Due to the conversion overhead, this parameter is
+    only supported on single-operation retrieval.
     """

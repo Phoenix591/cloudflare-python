@@ -2,16 +2,17 @@
 
 from __future__ import annotations
 
-from typing_extensions import TypedDict
+from typing import Optional
+from typing_extensions import Required, TypedDict
 
 __all__ = ["TrustedDomainEditParams"]
 
 
 class TrustedDomainEditParams(TypedDict, total=False):
-    account_id: str
-    """Account Identifier"""
+    account_id: Required[str]
+    """Identifier."""
 
-    comments: str
+    comments: Optional[str]
 
     is_recent: bool
     """

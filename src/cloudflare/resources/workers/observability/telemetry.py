@@ -51,7 +51,7 @@ class TelemetryResource(SyncAPIResource):
     def keys(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         datasets: SequenceNotStr[str] | Omit = omit,
         filters: Iterable[telemetry_keys_params.Filter] | Omit = omit,
         from_: float | Omit = omit,
@@ -91,8 +91,6 @@ class TelemetryResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -120,7 +118,7 @@ class TelemetryResource(SyncAPIResource):
     def query(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         query_id: str,
         timeframe: telemetry_query_params.Timeframe,
         chart: bool | Omit = omit,
@@ -141,44 +139,53 @@ class TelemetryResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TelemetryQueryResponse:
-        """
-        Run a temporary or saved query.
+        """Run a temporary or saved query.
 
         Args:
-          query_id: Unique identifier for the query to execute
+          query_id: Identifier for the query.
 
-          timeframe: Timeframe for your query using Unix timestamps in milliseconds. Provide from/to
-              epoch ms; narrower timeframes provide faster responses and more specific
-              results.
+        When parameters are omitted, this ID is used to load a
+              previously saved query's parameters. When providing parameters inline, pass any
+              identifier (e.g. an ad-hoc ID).
 
-          chart: Whether to include timeseties data in the response
+          timeframe: Timeframe for the query using Unix timestamps in milliseconds. Narrower
+              timeframes produce faster responses and more specific results.
 
-          compare: Whether to include comparison data with previous time periods
+          chart: When true, includes time-series data in the response.
 
-          dry: Whether to perform a dry run without saving the results of the query. Useful for
-              validation
+          compare: When true, includes a comparison dataset from the previous time period of equal
+              length.
 
-          granularity: This is only used when the view is calculations. Leaving it empty lets Workers
-              Observability detect the correct granularity.
+          dry: When true, executes the query without persisting the results. Useful for
+              validation or previewing.
 
-          ignore_series: Whether to ignore time-series data in the results and return only aggregated
-              values
+          granularity: Number of time-series buckets. Only used when view is 'calculations'. Omit to
+              let the system auto-detect an appropriate granularity.
 
-          limit: Use this limit to cap the number of events returned when the view is events.
+          ignore_series: When true, omits time-series data from the response and returns only aggregated
+              values. Reduces response size when series are not needed.
 
-          offset: Cursor pagination for event/trace/invocation views. Pass the last item's
-              $metadata.id as the next offset.
+          limit: Maximum number of events to return when view is 'events'. Also controls the
+              number of group-by rows when view is 'calculations'.
 
-          offset_by: Numeric offset for pattern results (top-N list). Use with limit to page pattern
-              groups; not used by cursor pagination.
+          offset: Cursor for pagination in event, trace, and invocation views. Pass the
+              $metadata.id of the last returned item to fetch the next page.
 
-          offset_direction: Direction for offset-based pagination (e.g., 'next', 'prev')
+          offset_by: Numeric offset for paginating grouped/pattern results (top-N lists). Use
+              together with limit. Not used by cursor-based pagination.
 
-          parameters: Optional parameters to pass to the query execution
+          offset_direction: Pagination direction: 'next' for forward, 'prev' for backward.
 
-          view: Examples by view type. Events: show errors for a worker in the last 30 minutes.
-              Calculations: p99 of wall time or count by status code. Invocations: find a
-              specific request that resulted in a 500.
+          parameters: Query parameters defining what data to retrieve — filters, calculations,
+              group-bys, and ordering. In practice this should always be provided for ad-hoc
+              queries. Only omit when executing a previously saved query by queryId. Use the
+              keys and values endpoints to discover available fields before building filters.
+
+          view: Controls the shape of the response. 'events': individual log lines matching the
+              query. 'calculations': aggregated metrics (count, avg, p99, etc.) with optional
+              group-by breakdowns and time-series. 'invocations': events grouped by request
+              ID. 'traces': distributed trace summaries. 'agents': Durable Object agent
+              summaries.
 
           extra_headers: Send extra headers
 
@@ -188,8 +195,6 @@ class TelemetryResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._post(
@@ -225,7 +230,7 @@ class TelemetryResource(SyncAPIResource):
     def values(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         datasets: SequenceNotStr[str],
         key: str,
         timeframe: telemetry_values_params.Timeframe,
@@ -249,7 +254,8 @@ class TelemetryResource(SyncAPIResource):
           filters: Apply filters before listing values. Supports nested groups via kind: 'group'.
               Maximum nesting depth is 4.
 
-          needle: Search for a specific substring in the event.
+          needle: Full-text search expression to match events containing the specified text or
+              pattern.
 
           extra_headers: Send extra headers
 
@@ -259,8 +265,6 @@ class TelemetryResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -309,7 +313,7 @@ class AsyncTelemetryResource(AsyncAPIResource):
     def keys(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         datasets: SequenceNotStr[str] | Omit = omit,
         filters: Iterable[telemetry_keys_params.Filter] | Omit = omit,
         from_: float | Omit = omit,
@@ -349,8 +353,6 @@ class AsyncTelemetryResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -378,7 +380,7 @@ class AsyncTelemetryResource(AsyncAPIResource):
     async def query(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         query_id: str,
         timeframe: telemetry_query_params.Timeframe,
         chart: bool | Omit = omit,
@@ -399,44 +401,53 @@ class AsyncTelemetryResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TelemetryQueryResponse:
-        """
-        Run a temporary or saved query.
+        """Run a temporary or saved query.
 
         Args:
-          query_id: Unique identifier for the query to execute
+          query_id: Identifier for the query.
 
-          timeframe: Timeframe for your query using Unix timestamps in milliseconds. Provide from/to
-              epoch ms; narrower timeframes provide faster responses and more specific
-              results.
+        When parameters are omitted, this ID is used to load a
+              previously saved query's parameters. When providing parameters inline, pass any
+              identifier (e.g. an ad-hoc ID).
 
-          chart: Whether to include timeseties data in the response
+          timeframe: Timeframe for the query using Unix timestamps in milliseconds. Narrower
+              timeframes produce faster responses and more specific results.
 
-          compare: Whether to include comparison data with previous time periods
+          chart: When true, includes time-series data in the response.
 
-          dry: Whether to perform a dry run without saving the results of the query. Useful for
-              validation
+          compare: When true, includes a comparison dataset from the previous time period of equal
+              length.
 
-          granularity: This is only used when the view is calculations. Leaving it empty lets Workers
-              Observability detect the correct granularity.
+          dry: When true, executes the query without persisting the results. Useful for
+              validation or previewing.
 
-          ignore_series: Whether to ignore time-series data in the results and return only aggregated
-              values
+          granularity: Number of time-series buckets. Only used when view is 'calculations'. Omit to
+              let the system auto-detect an appropriate granularity.
 
-          limit: Use this limit to cap the number of events returned when the view is events.
+          ignore_series: When true, omits time-series data from the response and returns only aggregated
+              values. Reduces response size when series are not needed.
 
-          offset: Cursor pagination for event/trace/invocation views. Pass the last item's
-              $metadata.id as the next offset.
+          limit: Maximum number of events to return when view is 'events'. Also controls the
+              number of group-by rows when view is 'calculations'.
 
-          offset_by: Numeric offset for pattern results (top-N list). Use with limit to page pattern
-              groups; not used by cursor pagination.
+          offset: Cursor for pagination in event, trace, and invocation views. Pass the
+              $metadata.id of the last returned item to fetch the next page.
 
-          offset_direction: Direction for offset-based pagination (e.g., 'next', 'prev')
+          offset_by: Numeric offset for paginating grouped/pattern results (top-N lists). Use
+              together with limit. Not used by cursor-based pagination.
 
-          parameters: Optional parameters to pass to the query execution
+          offset_direction: Pagination direction: 'next' for forward, 'prev' for backward.
 
-          view: Examples by view type. Events: show errors for a worker in the last 30 minutes.
-              Calculations: p99 of wall time or count by status code. Invocations: find a
-              specific request that resulted in a 500.
+          parameters: Query parameters defining what data to retrieve — filters, calculations,
+              group-bys, and ordering. In practice this should always be provided for ad-hoc
+              queries. Only omit when executing a previously saved query by queryId. Use the
+              keys and values endpoints to discover available fields before building filters.
+
+          view: Controls the shape of the response. 'events': individual log lines matching the
+              query. 'calculations': aggregated metrics (count, avg, p99, etc.) with optional
+              group-by breakdowns and time-series. 'invocations': events grouped by request
+              ID. 'traces': distributed trace summaries. 'agents': Durable Object agent
+              summaries.
 
           extra_headers: Send extra headers
 
@@ -446,8 +457,6 @@ class AsyncTelemetryResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._post(
@@ -483,7 +492,7 @@ class AsyncTelemetryResource(AsyncAPIResource):
     def values(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         datasets: SequenceNotStr[str],
         key: str,
         timeframe: telemetry_values_params.Timeframe,
@@ -507,7 +516,8 @@ class AsyncTelemetryResource(AsyncAPIResource):
           filters: Apply filters before listing values. Supports nested groups via kind: 'group'.
               Maximum nesting depth is 4.
 
-          needle: Search for a specific substring in the event.
+          needle: Full-text search expression to match events containing the specified text or
+              pattern.
 
           extra_headers: Send extra headers
 
@@ -517,8 +527,6 @@ class AsyncTelemetryResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(

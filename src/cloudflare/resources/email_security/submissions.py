@@ -49,8 +49,7 @@ class SubmissionsResource(SyncAPIResource):
     def list(
         self,
         *,
-        account_id: str | None = None,
-        customer_status: Literal["escalated", "reviewed", "unreviewed"] | Omit = omit,
+        account_id: str,
         end: Union[str, datetime] | Omit = omit,
         original_disposition: Literal["MALICIOUS", "SUSPICIOUS", "SPOOF", "SPAM", "BULK", "NONE"] | Omit = omit,
         outcome_disposition: Literal["MALICIOUS", "SUSPICIOUS", "SPOOF", "SPAM", "BULK", "NONE"] | Omit = omit,
@@ -69,20 +68,22 @@ class SubmissionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncV4PagePaginationArray[SubmissionListResponse]:
-        """
-        This endpoint returns information for submissions to made to reclassify emails.
+        """Returns information for submissions made to reclassify emails.
+
+        Shows the status,
+        outcome, and disposition changes for reclassification requests made by users or
+        the security team. Useful for tracking false positive/negative reports.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          end: The end of the search date range. Defaults to `now` if not provided.
+          end: The end of the search date range. Defaults to `now`.
 
-          page: The page number of paginated results.
+          page: Current page within paginated list of results.
 
-          per_page: The number of results per page.
+          per_page: The number of results per page. Maximum value is 1000.
 
-          start: The beginning of the search date range. Defaults to `now - 30 days` if not
-              provided.
+          start: The beginning of the search date range. Defaults to `now - 30 days`.
 
           extra_headers: Send extra headers
 
@@ -92,8 +93,6 @@ class SubmissionsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -106,7 +105,6 @@ class SubmissionsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "customer_status": customer_status,
                         "end": end,
                         "original_disposition": original_disposition,
                         "outcome_disposition": outcome_disposition,
@@ -149,8 +147,7 @@ class AsyncSubmissionsResource(AsyncAPIResource):
     def list(
         self,
         *,
-        account_id: str | None = None,
-        customer_status: Literal["escalated", "reviewed", "unreviewed"] | Omit = omit,
+        account_id: str,
         end: Union[str, datetime] | Omit = omit,
         original_disposition: Literal["MALICIOUS", "SUSPICIOUS", "SPOOF", "SPAM", "BULK", "NONE"] | Omit = omit,
         outcome_disposition: Literal["MALICIOUS", "SUSPICIOUS", "SPOOF", "SPAM", "BULK", "NONE"] | Omit = omit,
@@ -169,20 +166,22 @@ class AsyncSubmissionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[SubmissionListResponse, AsyncV4PagePaginationArray[SubmissionListResponse]]:
-        """
-        This endpoint returns information for submissions to made to reclassify emails.
+        """Returns information for submissions made to reclassify emails.
+
+        Shows the status,
+        outcome, and disposition changes for reclassification requests made by users or
+        the security team. Useful for tracking false positive/negative reports.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          end: The end of the search date range. Defaults to `now` if not provided.
+          end: The end of the search date range. Defaults to `now`.
 
-          page: The page number of paginated results.
+          page: Current page within paginated list of results.
 
-          per_page: The number of results per page.
+          per_page: The number of results per page. Maximum value is 1000.
 
-          start: The beginning of the search date range. Defaults to `now - 30 days` if not
-              provided.
+          start: The beginning of the search date range. Defaults to `now - 30 days`.
 
           extra_headers: Send extra headers
 
@@ -192,8 +191,6 @@ class AsyncSubmissionsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -206,7 +203,6 @@ class AsyncSubmissionsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "customer_status": customer_status,
                         "end": end,
                         "original_disposition": original_disposition,
                         "outcome_disposition": outcome_disposition,

@@ -78,7 +78,7 @@ __all__ = [
 
 
 class ScriptAndVersionSettingEditParams(TypedDict, total=False):
-    account_id: str
+    account_id: Required[str]
     """Identifier."""
 
     settings: Settings
@@ -393,6 +393,13 @@ class SettingsBindingWorkersBindingKindRatelimitSimple(TypedDict, total=False):
 
     period: Required[int]
     """The period in seconds."""
+
+    mitigation_timeout: int
+    """
+    Duration in seconds to apply the mitigation action after the rate limit is
+    exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400.
+    Must be greater than or equal to the period when non-zero.
+    """
 
 
 class SettingsBindingWorkersBindingKindRatelimit(TypedDict, total=False):

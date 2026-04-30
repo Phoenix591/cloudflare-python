@@ -57,7 +57,7 @@ class BlockSendersResource(SyncAPIResource):
     def create(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         is_regex: bool,
         pattern: str,
         pattern_type: Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"],
@@ -68,13 +68,18 @@ class BlockSendersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderCreateResponse:
-        """
-        Adds a sender pattern to the email block list, preventing messages from matching
-        senders from being delivered.
+    ) -> Optional[BlockSenderCreateResponse]:
+        """Creates a new blocked sender pattern.
+
+        Emails matching this pattern will be
+        blocked from delivery. Patterns can be email addresses, domains, or IP
+        addresses, and support regular expressions.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
+
+          pattern_type: Type of pattern matching. Note: UNKNOWN is deprecated and cannot be used when
+              creating or updating policies, but may be returned for existing entries.
 
           extra_headers: Send extra headers
 
@@ -84,8 +89,6 @@ class BlockSendersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._post(
@@ -104,15 +107,15 @@ class BlockSendersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderCreateResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderCreateResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderCreateResponse], ResultWrapper[BlockSenderCreateResponse]),
+            cast_to=cast(Type[Optional[BlockSenderCreateResponse]], ResultWrapper[BlockSenderCreateResponse]),
         )
 
     def list(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         direction: Literal["asc", "desc"] | Omit = omit,
         order: Literal["pattern", "created_at"] | Omit = omit,
         page: int | Omit = omit,
@@ -127,23 +130,28 @@ class BlockSendersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncV4PagePaginationArray[BlockSenderListResponse]:
-        """
-        Lists all blocked sender entries with their patterns and block reasons.
+        """Returns a paginated list of blocked email sender patterns.
+
+        These patterns
+        prevent emails from matching senders from being delivered. Supports filtering by
+        pattern type and searching across patterns.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
           direction: The sorting direction.
 
-          order: The field to sort by.
+          order: Field to sort by.
 
-          page: The page number of paginated results.
+          page: Current page within paginated list of results.
 
-          per_page: The number of results per page.
+          pattern: Filter by pattern value.
 
-          search: Allows searching in multiple properties of a record simultaneously. This
-              parameter is intended for human users, not automation. Its exact behavior is
-              intentionally left unspecified and is subject to change in the future.
+          pattern_type: Filter by pattern type.
+
+          per_page: The number of results per page. Maximum value is 1000.
+
+          search: Search term for filtering records. Behavior may change.
 
           extra_headers: Send extra headers
 
@@ -153,8 +161,6 @@ class BlockSendersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -183,24 +189,25 @@ class BlockSendersResource(SyncAPIResource):
 
     def delete(
         self,
-        pattern_id: int,
+        pattern_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderDeleteResponse:
-        """
-        Removes a sender from the email block list, allowing their messages to be
-        delivered normally.
+    ) -> Optional[BlockSenderDeleteResponse]:
+        """Removes a blocked sender pattern.
+
+        After deletion, emails from this sender will
+        no longer be automatically blocked based on this rule.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          pattern_id: The unique identifier for the allow policy.
+          pattern_id: Blocked sender pattern identifier
 
           extra_headers: Send extra headers
 
@@ -210,10 +217,10 @@ class BlockSendersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not pattern_id:
+            raise ValueError(f"Expected a non-empty value for `pattern_id` but received {pattern_id!r}")
         return self._delete(
             path_template(
                 "/accounts/{account_id}/email-security/settings/block_senders/{pattern_id}",
@@ -225,34 +232,39 @@ class BlockSendersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderDeleteResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderDeleteResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderDeleteResponse], ResultWrapper[BlockSenderDeleteResponse]),
+            cast_to=cast(Type[Optional[BlockSenderDeleteResponse]], ResultWrapper[BlockSenderDeleteResponse]),
         )
 
     def edit(
         self,
-        pattern_id: int,
+        pattern_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         comments: Optional[str] | Omit = omit,
-        is_regex: Optional[bool] | Omit = omit,
-        pattern: Optional[str] | Omit = omit,
-        pattern_type: Optional[Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"]] | Omit = omit,
+        is_regex: bool | Omit = omit,
+        pattern: str | Omit = omit,
+        pattern_type: Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderEditResponse:
-        """
-        Modifies a blocked sender entry, updating its pattern or block reason.
+    ) -> Optional[BlockSenderEditResponse]:
+        """Updates an existing blocked sender pattern.
+
+        Only provided fields will be
+        modified. The pattern will continue blocking emails until deleted.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          pattern_id: The unique identifier for the allow policy.
+          pattern_id: Blocked sender pattern identifier
+
+          pattern_type: Type of pattern matching. Note: UNKNOWN is deprecated and cannot be used when
+              creating or updating policies, but may be returned for existing entries.
 
           extra_headers: Send extra headers
 
@@ -262,10 +274,10 @@ class BlockSendersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not pattern_id:
+            raise ValueError(f"Expected a non-empty value for `pattern_id` but received {pattern_id!r}")
         return self._patch(
             path_template(
                 "/accounts/{account_id}/email-security/settings/block_senders/{pattern_id}",
@@ -286,31 +298,31 @@ class BlockSendersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderEditResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderEditResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderEditResponse], ResultWrapper[BlockSenderEditResponse]),
+            cast_to=cast(Type[Optional[BlockSenderEditResponse]], ResultWrapper[BlockSenderEditResponse]),
         )
 
     def get(
         self,
-        pattern_id: int,
+        pattern_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderGetResponse:
+    ) -> Optional[BlockSenderGetResponse]:
         """
-        Gets information about a specific blocked sender entry, including the pattern
-        and block reason.
+        Retrieves details for a specific blocked sender pattern including its pattern
+        type, value, and metadata.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          pattern_id: The unique identifier for the allow policy.
+          pattern_id: Blocked sender pattern identifier
 
           extra_headers: Send extra headers
 
@@ -320,10 +332,10 @@ class BlockSendersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not pattern_id:
+            raise ValueError(f"Expected a non-empty value for `pattern_id` but received {pattern_id!r}")
         return self._get(
             path_template(
                 "/accounts/{account_id}/email-security/settings/block_senders/{pattern_id}",
@@ -335,9 +347,9 @@ class BlockSendersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderGetResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderGetResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderGetResponse], ResultWrapper[BlockSenderGetResponse]),
+            cast_to=cast(Type[Optional[BlockSenderGetResponse]], ResultWrapper[BlockSenderGetResponse]),
         )
 
 
@@ -364,7 +376,7 @@ class AsyncBlockSendersResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         is_regex: bool,
         pattern: str,
         pattern_type: Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"],
@@ -375,13 +387,18 @@ class AsyncBlockSendersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderCreateResponse:
-        """
-        Adds a sender pattern to the email block list, preventing messages from matching
-        senders from being delivered.
+    ) -> Optional[BlockSenderCreateResponse]:
+        """Creates a new blocked sender pattern.
+
+        Emails matching this pattern will be
+        blocked from delivery. Patterns can be email addresses, domains, or IP
+        addresses, and support regular expressions.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
+
+          pattern_type: Type of pattern matching. Note: UNKNOWN is deprecated and cannot be used when
+              creating or updating policies, but may be returned for existing entries.
 
           extra_headers: Send extra headers
 
@@ -391,8 +408,6 @@ class AsyncBlockSendersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._post(
@@ -411,15 +426,15 @@ class AsyncBlockSendersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderCreateResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderCreateResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderCreateResponse], ResultWrapper[BlockSenderCreateResponse]),
+            cast_to=cast(Type[Optional[BlockSenderCreateResponse]], ResultWrapper[BlockSenderCreateResponse]),
         )
 
     def list(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         direction: Literal["asc", "desc"] | Omit = omit,
         order: Literal["pattern", "created_at"] | Omit = omit,
         page: int | Omit = omit,
@@ -434,23 +449,28 @@ class AsyncBlockSendersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[BlockSenderListResponse, AsyncV4PagePaginationArray[BlockSenderListResponse]]:
-        """
-        Lists all blocked sender entries with their patterns and block reasons.
+        """Returns a paginated list of blocked email sender patterns.
+
+        These patterns
+        prevent emails from matching senders from being delivered. Supports filtering by
+        pattern type and searching across patterns.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
           direction: The sorting direction.
 
-          order: The field to sort by.
+          order: Field to sort by.
 
-          page: The page number of paginated results.
+          page: Current page within paginated list of results.
 
-          per_page: The number of results per page.
+          pattern: Filter by pattern value.
 
-          search: Allows searching in multiple properties of a record simultaneously. This
-              parameter is intended for human users, not automation. Its exact behavior is
-              intentionally left unspecified and is subject to change in the future.
+          pattern_type: Filter by pattern type.
+
+          per_page: The number of results per page. Maximum value is 1000.
+
+          search: Search term for filtering records. Behavior may change.
 
           extra_headers: Send extra headers
 
@@ -460,8 +480,6 @@ class AsyncBlockSendersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get_api_list(
@@ -490,24 +508,25 @@ class AsyncBlockSendersResource(AsyncAPIResource):
 
     async def delete(
         self,
-        pattern_id: int,
+        pattern_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderDeleteResponse:
-        """
-        Removes a sender from the email block list, allowing their messages to be
-        delivered normally.
+    ) -> Optional[BlockSenderDeleteResponse]:
+        """Removes a blocked sender pattern.
+
+        After deletion, emails from this sender will
+        no longer be automatically blocked based on this rule.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          pattern_id: The unique identifier for the allow policy.
+          pattern_id: Blocked sender pattern identifier
 
           extra_headers: Send extra headers
 
@@ -517,10 +536,10 @@ class AsyncBlockSendersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not pattern_id:
+            raise ValueError(f"Expected a non-empty value for `pattern_id` but received {pattern_id!r}")
         return await self._delete(
             path_template(
                 "/accounts/{account_id}/email-security/settings/block_senders/{pattern_id}",
@@ -532,34 +551,39 @@ class AsyncBlockSendersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderDeleteResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderDeleteResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderDeleteResponse], ResultWrapper[BlockSenderDeleteResponse]),
+            cast_to=cast(Type[Optional[BlockSenderDeleteResponse]], ResultWrapper[BlockSenderDeleteResponse]),
         )
 
     async def edit(
         self,
-        pattern_id: int,
+        pattern_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         comments: Optional[str] | Omit = omit,
-        is_regex: Optional[bool] | Omit = omit,
-        pattern: Optional[str] | Omit = omit,
-        pattern_type: Optional[Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"]] | Omit = omit,
+        is_regex: bool | Omit = omit,
+        pattern: str | Omit = omit,
+        pattern_type: Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderEditResponse:
-        """
-        Modifies a blocked sender entry, updating its pattern or block reason.
+    ) -> Optional[BlockSenderEditResponse]:
+        """Updates an existing blocked sender pattern.
+
+        Only provided fields will be
+        modified. The pattern will continue blocking emails until deleted.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          pattern_id: The unique identifier for the allow policy.
+          pattern_id: Blocked sender pattern identifier
+
+          pattern_type: Type of pattern matching. Note: UNKNOWN is deprecated and cannot be used when
+              creating or updating policies, but may be returned for existing entries.
 
           extra_headers: Send extra headers
 
@@ -569,10 +593,10 @@ class AsyncBlockSendersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not pattern_id:
+            raise ValueError(f"Expected a non-empty value for `pattern_id` but received {pattern_id!r}")
         return await self._patch(
             path_template(
                 "/accounts/{account_id}/email-security/settings/block_senders/{pattern_id}",
@@ -593,31 +617,31 @@ class AsyncBlockSendersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderEditResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderEditResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderEditResponse], ResultWrapper[BlockSenderEditResponse]),
+            cast_to=cast(Type[Optional[BlockSenderEditResponse]], ResultWrapper[BlockSenderEditResponse]),
         )
 
     async def get(
         self,
-        pattern_id: int,
+        pattern_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BlockSenderGetResponse:
+    ) -> Optional[BlockSenderGetResponse]:
         """
-        Gets information about a specific blocked sender entry, including the pattern
-        and block reason.
+        Retrieves details for a specific blocked sender pattern including its pattern
+        type, value, and metadata.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          pattern_id: The unique identifier for the allow policy.
+          pattern_id: Blocked sender pattern identifier
 
           extra_headers: Send extra headers
 
@@ -627,10 +651,10 @@ class AsyncBlockSendersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
+        if not pattern_id:
+            raise ValueError(f"Expected a non-empty value for `pattern_id` but received {pattern_id!r}")
         return await self._get(
             path_template(
                 "/accounts/{account_id}/email-security/settings/block_senders/{pattern_id}",
@@ -642,9 +666,9 @@ class AsyncBlockSendersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[BlockSenderGetResponse]._unwrapper,
+                post_parser=ResultWrapper[Optional[BlockSenderGetResponse]]._unwrapper,
             ),
-            cast_to=cast(Type[BlockSenderGetResponse], ResultWrapper[BlockSenderGetResponse]),
+            cast_to=cast(Type[Optional[BlockSenderGetResponse]], ResultWrapper[BlockSenderGetResponse]),
         )
 
 

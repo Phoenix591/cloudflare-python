@@ -15,7 +15,6 @@ __all__ = [
     "IndexMethod",
     "IndexingOptions",
     "Metadata",
-    "MetadataSearchForAgents",
     "PublicEndpointParams",
     "PublicEndpointParamsChatCompletionsEndpoint",
     "PublicEndpointParamsMcp",
@@ -33,7 +32,7 @@ __all__ = [
 
 
 class InstanceUpdateParams(TypedDict, total=False):
-    account_id: str
+    account_id: Required[str]
 
     ai_gateway_id: Optional[str]
 
@@ -249,18 +248,8 @@ class IndexingOptions(TypedDict, total=False):
     """
 
 
-class MetadataSearchForAgents(TypedDict, total=False):
-    hostname: Required[str]
-
-    zone_id: Required[str]
-
-    zone_name: Required[str]
-
-
 class Metadata(TypedDict, total=False):
     created_from_aisearch_wizard: bool
-
-    search_for_agents: MetadataSearchForAgents
 
     worker_domain: str
 

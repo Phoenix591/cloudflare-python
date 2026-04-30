@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
 from .health_check_param import HealthCheckParam
@@ -11,13 +11,14 @@ __all__ = ["CfInterconnectUpdateParams", "GRE"]
 
 
 class CfInterconnectUpdateParams(TypedDict, total=False):
-    account_id: str
+    account_id: Required[str]
     """Identifier"""
 
     automatic_return_routing: bool
     """
     True if automatic stateful return routing should be enabled for a tunnel, false
-    otherwise.
+    otherwise. Requires the `coupler_integration` account flag to be enabled;
+    requests setting this to `true` without that flag will be rejected.
     """
 
     description: str

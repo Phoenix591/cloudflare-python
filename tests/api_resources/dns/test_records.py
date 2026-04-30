@@ -5866,7 +5866,7 @@ class TestRecords:
                     body={},
                 )
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_method_scan_list(self, client: Cloudflare) -> None:
         record = client.dns.records.scan_list(
@@ -5874,7 +5874,7 @@ class TestRecords:
         )
         assert_matches_type(SyncSinglePage[RecordResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_raw_response_scan_list(self, client: Cloudflare) -> None:
         response = client.dns.records.with_raw_response.scan_list(
@@ -5886,7 +5886,7 @@ class TestRecords:
         record = response.parse()
         assert_matches_type(SyncSinglePage[RecordResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_streaming_response_scan_list(self, client: Cloudflare) -> None:
         with client.dns.records.with_streaming_response.scan_list(
@@ -5900,6 +5900,7 @@ class TestRecords:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_path_params_scan_list(self, client: Cloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -5907,7 +5908,7 @@ class TestRecords:
                 zone_id="",
             )
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_method_scan_review(self, client: Cloudflare) -> None:
         record = client.dns.records.scan_review(
@@ -5915,7 +5916,7 @@ class TestRecords:
         )
         assert_matches_type(Optional[RecordScanReviewResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_method_scan_review_with_all_params(self, client: Cloudflare) -> None:
         record = client.dns.records.scan_review(
@@ -5940,7 +5941,7 @@ class TestRecords:
         )
         assert_matches_type(Optional[RecordScanReviewResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_raw_response_scan_review(self, client: Cloudflare) -> None:
         response = client.dns.records.with_raw_response.scan_review(
@@ -5952,7 +5953,7 @@ class TestRecords:
         record = response.parse()
         assert_matches_type(Optional[RecordScanReviewResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_streaming_response_scan_review(self, client: Cloudflare) -> None:
         with client.dns.records.with_streaming_response.scan_review(
@@ -5966,6 +5967,7 @@ class TestRecords:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     def test_path_params_scan_review(self, client: Cloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -11855,7 +11857,7 @@ class TestAsyncRecords:
                     body={},
                 )
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_method_scan_list(self, async_client: AsyncCloudflare) -> None:
         record = await async_client.dns.records.scan_list(
@@ -11863,7 +11865,7 @@ class TestAsyncRecords:
         )
         assert_matches_type(AsyncSinglePage[RecordResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_raw_response_scan_list(self, async_client: AsyncCloudflare) -> None:
         response = await async_client.dns.records.with_raw_response.scan_list(
@@ -11875,7 +11877,7 @@ class TestAsyncRecords:
         record = await response.parse()
         assert_matches_type(AsyncSinglePage[RecordResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_streaming_response_scan_list(self, async_client: AsyncCloudflare) -> None:
         async with async_client.dns.records.with_streaming_response.scan_list(
@@ -11889,6 +11891,7 @@ class TestAsyncRecords:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_path_params_scan_list(self, async_client: AsyncCloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):
@@ -11896,7 +11899,7 @@ class TestAsyncRecords:
                 zone_id="",
             )
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_method_scan_review(self, async_client: AsyncCloudflare) -> None:
         record = await async_client.dns.records.scan_review(
@@ -11904,7 +11907,7 @@ class TestAsyncRecords:
         )
         assert_matches_type(Optional[RecordScanReviewResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_method_scan_review_with_all_params(self, async_client: AsyncCloudflare) -> None:
         record = await async_client.dns.records.scan_review(
@@ -11929,7 +11932,7 @@ class TestAsyncRecords:
         )
         assert_matches_type(Optional[RecordScanReviewResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_raw_response_scan_review(self, async_client: AsyncCloudflare) -> None:
         response = await async_client.dns.records.with_raw_response.scan_review(
@@ -11941,7 +11944,7 @@ class TestAsyncRecords:
         record = await response.parse()
         assert_matches_type(Optional[RecordScanReviewResponse], record, path=["response"])
 
-    @pytest.mark.skip(reason="Mock server returns incomplete DNS records missing required fields: id, created_on, meta, modified_on (Issue #2)")
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_streaming_response_scan_review(self, async_client: AsyncCloudflare) -> None:
         async with async_client.dns.records.with_streaming_response.scan_review(
@@ -11955,6 +11958,7 @@ class TestAsyncRecords:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="mock server returns invalid data")
     @parametrize
     async def test_path_params_scan_review(self, async_client: AsyncCloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `zone_id` but received ''"):

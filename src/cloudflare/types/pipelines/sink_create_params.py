@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 __all__ = [
@@ -38,7 +38,7 @@ __all__ = [
 
 
 class SinkCreateParams(TypedDict, total=False):
-    account_id: str
+    account_id: Required[str]
     """Specifies the public ID of the account."""
 
     name: Required[str]
@@ -291,31 +291,11 @@ class SchemaFieldJson(TypedDict, total=False):
 
 
 class SchemaFieldStruct(TypedDict, total=False):
-    type: Required[Literal["struct"]]
-
-    metadata_key: Optional[str]
-
-    name: str
-
-    required: bool
-
-    sql_name: str
-
-    fields: Optional[List["SchemaField"]]
+    pass
 
 
 class SchemaFieldList(TypedDict, total=False):
-    type: Required[Literal["list"]]
-
-    metadata_key: Optional[str]
-
-    name: str
-
-    required: bool
-
-    sql_name: str
-
-    element: Optional["SchemaField"]
+    pass
 
 
 SchemaField: TypeAlias = Union[

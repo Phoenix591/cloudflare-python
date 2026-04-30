@@ -277,31 +277,11 @@ class SchemaFieldJson(BaseModel):
 
 
 class SchemaFieldStruct(BaseModel):
-    type: Literal["struct"]
-
-    metadata_key: Optional[str] = None
-
-    name: Optional[str] = None
-
-    required: Optional[bool] = None
-
-    sql_name: Optional[str] = None
-
-    fields: Optional[List["SchemaField"]] = None
+    pass
 
 
 class SchemaFieldList(BaseModel):
-    type: Literal["list"]
-
-    metadata_key: Optional[str] = None
-
-    name: Optional[str] = None
-
-    required: Optional[bool] = None
-
-    sql_name: Optional[str] = None
-
-    element: Optional["SchemaField"] = None
+    pass
 
 
 SchemaField: TypeAlias = Annotated[

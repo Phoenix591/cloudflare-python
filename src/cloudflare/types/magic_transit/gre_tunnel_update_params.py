@@ -13,7 +13,7 @@ __all__ = ["GRETunnelUpdateParams", "HealthCheck", "HealthCheckTarget", "HealthC
 
 
 class GRETunnelUpdateParams(TypedDict, total=False):
-    account_id: str
+    account_id: Required[str]
     """Identifier"""
 
     cloudflare_gre_endpoint: Required[str]
@@ -39,7 +39,8 @@ class GRETunnelUpdateParams(TypedDict, total=False):
     automatic_return_routing: bool
     """
     True if automatic stateful return routing should be enabled for a tunnel, false
-    otherwise.
+    otherwise. Requires the `coupler_integration` account flag to be enabled;
+    requests setting this to `true` without that flag will be rejected.
     """
 
     description: str

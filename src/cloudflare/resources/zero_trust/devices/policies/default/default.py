@@ -98,7 +98,7 @@ class DefaultResource(SyncAPIResource):
     def edit(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         allow_mode_switch: bool | Omit = omit,
         allow_updates: bool | Omit = omit,
         allowed_to_leave: bool | Omit = omit,
@@ -116,6 +116,7 @@ class DefaultResource(SyncAPIResource):
         support_url: str | Omit = omit,
         switch_locked: bool | Omit = omit,
         tunnel_protocol: str | Omit = omit,
+        virtual_networks: Optional[default_edit_params.VirtualNetworks] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -170,6 +171,8 @@ class DefaultResource(SyncAPIResource):
 
           tunnel_protocol: Determines which tunnel protocol to use.
 
+          virtual_networks: Virtual network access settings for the device.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -178,8 +181,6 @@ class DefaultResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._patch(
@@ -203,6 +204,7 @@ class DefaultResource(SyncAPIResource):
                     "support_url": support_url,
                     "switch_locked": switch_locked,
                     "tunnel_protocol": tunnel_protocol,
+                    "virtual_networks": virtual_networks,
                 },
                 default_edit_params.DefaultEditParams,
             ),
@@ -219,7 +221,7 @@ class DefaultResource(SyncAPIResource):
     def get(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -239,8 +241,6 @@ class DefaultResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return self._get(
@@ -295,7 +295,7 @@ class AsyncDefaultResource(AsyncAPIResource):
     async def edit(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         allow_mode_switch: bool | Omit = omit,
         allow_updates: bool | Omit = omit,
         allowed_to_leave: bool | Omit = omit,
@@ -313,6 +313,7 @@ class AsyncDefaultResource(AsyncAPIResource):
         support_url: str | Omit = omit,
         switch_locked: bool | Omit = omit,
         tunnel_protocol: str | Omit = omit,
+        virtual_networks: Optional[default_edit_params.VirtualNetworks] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -367,6 +368,8 @@ class AsyncDefaultResource(AsyncAPIResource):
 
           tunnel_protocol: Determines which tunnel protocol to use.
 
+          virtual_networks: Virtual network access settings for the device.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -375,8 +378,6 @@ class AsyncDefaultResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._patch(
@@ -400,6 +401,7 @@ class AsyncDefaultResource(AsyncAPIResource):
                     "support_url": support_url,
                     "switch_locked": switch_locked,
                     "tunnel_protocol": tunnel_protocol,
+                    "virtual_networks": virtual_networks,
                 },
                 default_edit_params.DefaultEditParams,
             ),
@@ -416,7 +418,7 @@ class AsyncDefaultResource(AsyncAPIResource):
     async def get(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -436,8 +438,6 @@ class AsyncDefaultResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         return await self._get(

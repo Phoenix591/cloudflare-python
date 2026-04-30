@@ -28,16 +28,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install Rye
-        run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: '0.10.2'
 
       - name: Install dependencies
-        run: rye sync --all-features
+        run: uv sync --all-extras
 
       - name: Run lints
         run: ./scripts/lint
@@ -53,19 +50,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install Rye
-        run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: '0.10.2'
 
       - name: Install dependencies
-        run: rye sync --all-features
+        run: uv sync --all-extras
 
       - name: Run build
-        run: rye build
+        run: uv build
 
       - name: Get GitHub OIDC Token
         if: |-
@@ -94,19 +88,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install Rye
-        run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: '0.10.2'
 
       - name: Bootstrap
         run: ./scripts/bootstrap
 
       - name: Run tests
         run: ./scripts/test
+        env:
+          UV_PYTHON: ">=3.9.0"
 
   examples:
     timeout-minutes: 10
@@ -117,16 +110,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install Rye
-        run: |
-          curl -sSf https://rye.astral.sh/get | bash
-          echo "$HOME/.rye/shims" >> $GITHUB_PATH
-        env:
-          RYE_VERSION: '0.44.0'
-          RYE_INSTALL_OPTION: '--yes'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: '0.10.2'
       - name: Install dependencies
-        run: |
-          rye sync --all-features
+        run: uv sync --all-extras
 
       - env:
           CLOUDFLARE_ACCOUNT_ID: f037e56e89293a057740de681ac9abbe
@@ -134,4 +123,4 @@ jobs:
           CLOUDFLARE_ZONE_ID: 0da42c8d2132a9ddaf714f9e7c920711
           CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
         run: |
-            rye run python ./examples/dns/record.py
+            uv run python ./examples/dns/record.py

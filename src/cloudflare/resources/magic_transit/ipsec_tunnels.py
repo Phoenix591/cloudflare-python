@@ -58,7 +58,7 @@ class IPSECTunnelsResource(SyncAPIResource):
     def create(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         cloudflare_endpoint: str,
         interface_address: str,
         name: str,
@@ -97,7 +97,8 @@ class IPSECTunnelsResource(SyncAPIResource):
           name: The name of the IPsec tunnel. The name cannot share a name with other tunnels.
 
           automatic_return_routing: True if automatic stateful return routing should be enabled for a tunnel, false
-              otherwise.
+              otherwise. Requires the `coupler_integration` account flag to be enabled;
+              requests setting this to `true` without that flag will be rejected.
 
           customer_endpoint: The IP address assigned to the customer side of the IPsec tunnel. Not required,
               but must be set for proactive traceroutes to work.
@@ -122,8 +123,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         extra_headers = {
@@ -169,7 +168,7 @@ class IPSECTunnelsResource(SyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         cloudflare_endpoint: str,
         interface_address: str,
         name: str,
@@ -210,7 +209,8 @@ class IPSECTunnelsResource(SyncAPIResource):
           name: The name of the IPsec tunnel. The name cannot share a name with other tunnels.
 
           automatic_return_routing: True if automatic stateful return routing should be enabled for a tunnel, false
-              otherwise.
+              otherwise. Requires the `coupler_integration` account flag to be enabled;
+              requests setting this to `true` without that flag will be rejected.
 
           customer_endpoint: The IP address assigned to the customer side of the IPsec tunnel. Not required,
               but must be set for proactive traceroutes to work.
@@ -235,8 +235,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -287,7 +285,7 @@ class IPSECTunnelsResource(SyncAPIResource):
     def list(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -310,8 +308,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         extra_headers = {
@@ -340,7 +336,7 @@ class IPSECTunnelsResource(SyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -367,8 +363,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -402,7 +396,7 @@ class IPSECTunnelsResource(SyncAPIResource):
     def bulk_update(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         body: object,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -429,8 +423,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         extra_headers = {
@@ -460,7 +452,7 @@ class IPSECTunnelsResource(SyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -485,8 +477,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -521,7 +511,7 @@ class IPSECTunnelsResource(SyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         body: object,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -550,8 +540,6 @@ class IPSECTunnelsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -597,7 +585,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         cloudflare_endpoint: str,
         interface_address: str,
         name: str,
@@ -636,7 +624,8 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
           name: The name of the IPsec tunnel. The name cannot share a name with other tunnels.
 
           automatic_return_routing: True if automatic stateful return routing should be enabled for a tunnel, false
-              otherwise.
+              otherwise. Requires the `coupler_integration` account flag to be enabled;
+              requests setting this to `true` without that flag will be rejected.
 
           customer_endpoint: The IP address assigned to the customer side of the IPsec tunnel. Not required,
               but must be set for proactive traceroutes to work.
@@ -661,8 +650,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         extra_headers = {
@@ -708,7 +695,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         cloudflare_endpoint: str,
         interface_address: str,
         name: str,
@@ -749,7 +736,8 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
           name: The name of the IPsec tunnel. The name cannot share a name with other tunnels.
 
           automatic_return_routing: True if automatic stateful return routing should be enabled for a tunnel, false
-              otherwise.
+              otherwise. Requires the `coupler_integration` account flag to be enabled;
+              requests setting this to `true` without that flag will be rejected.
 
           customer_endpoint: The IP address assigned to the customer side of the IPsec tunnel. Not required,
               but must be set for proactive traceroutes to work.
@@ -774,8 +762,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -826,7 +812,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -849,8 +835,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         extra_headers = {
@@ -879,7 +863,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -906,8 +890,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -941,7 +923,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
     async def bulk_update(
         self,
         *,
-        account_id: str | None = None,
+        account_id: str,
         body: object,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -968,8 +950,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         extra_headers = {
@@ -999,7 +979,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         x_magic_new_hc_target: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1024,8 +1004,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
@@ -1060,7 +1038,7 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
         self,
         ipsec_tunnel_id: str,
         *,
-        account_id: str | None = None,
+        account_id: str,
         body: object,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1089,8 +1067,6 @@ class AsyncIPSECTunnelsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if account_id is None:
-            account_id = self._client._get_account_id_path_param()
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
         if not ipsec_tunnel_id:
