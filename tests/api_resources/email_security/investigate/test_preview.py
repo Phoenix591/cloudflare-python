@@ -26,15 +26,6 @@ class TestPreview:
         assert_matches_type(PreviewCreateResponse, preview, path=["response"])
 
     @parametrize
-    def test_method_create_with_all_params(self, client: Cloudflare) -> None:
-        preview = client.email_security.investigate.preview.create(
-            account_id="023e105f4ecef8ad9ca31a8372d0c353",
-            postfix_id="4Njp3P0STMz2c02Q",
-            submission=True,
-        )
-        assert_matches_type(PreviewCreateResponse, preview, path=["response"])
-
-    @parametrize
     def test_raw_response_create(self, client: Cloudflare) -> None:
         response = client.email_security.investigate.preview.with_raw_response.create(
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
@@ -71,7 +62,7 @@ class TestPreview:
     @parametrize
     def test_method_get(self, client: Cloudflare) -> None:
         preview = client.email_security.investigate.preview.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
         assert_matches_type(PreviewGetResponse, preview, path=["response"])
@@ -79,7 +70,7 @@ class TestPreview:
     @parametrize
     def test_raw_response_get(self, client: Cloudflare) -> None:
         response = client.email_security.investigate.preview.with_raw_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
 
@@ -91,7 +82,7 @@ class TestPreview:
     @parametrize
     def test_streaming_response_get(self, client: Cloudflare) -> None:
         with client.email_security.investigate.preview.with_streaming_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         ) as response:
             assert not response.is_closed
@@ -106,13 +97,13 @@ class TestPreview:
     def test_path_params_get(self, client: Cloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
             client.email_security.investigate.preview.with_raw_response.get(
-                postfix_id="4Njp3P0STMz2c02Q",
+                investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
                 account_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `postfix_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `investigate_id` but received ''"):
             client.email_security.investigate.preview.with_raw_response.get(
-                postfix_id="",
+                investigate_id="",
                 account_id="023e105f4ecef8ad9ca31a8372d0c353",
             )
 
@@ -127,15 +118,6 @@ class TestAsyncPreview:
         preview = await async_client.email_security.investigate.preview.create(
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             postfix_id="4Njp3P0STMz2c02Q",
-        )
-        assert_matches_type(PreviewCreateResponse, preview, path=["response"])
-
-    @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncCloudflare) -> None:
-        preview = await async_client.email_security.investigate.preview.create(
-            account_id="023e105f4ecef8ad9ca31a8372d0c353",
-            postfix_id="4Njp3P0STMz2c02Q",
-            submission=True,
         )
         assert_matches_type(PreviewCreateResponse, preview, path=["response"])
 
@@ -176,7 +158,7 @@ class TestAsyncPreview:
     @parametrize
     async def test_method_get(self, async_client: AsyncCloudflare) -> None:
         preview = await async_client.email_security.investigate.preview.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
         assert_matches_type(PreviewGetResponse, preview, path=["response"])
@@ -184,7 +166,7 @@ class TestAsyncPreview:
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncCloudflare) -> None:
         response = await async_client.email_security.investigate.preview.with_raw_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         )
 
@@ -196,7 +178,7 @@ class TestAsyncPreview:
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncCloudflare) -> None:
         async with async_client.email_security.investigate.preview.with_streaming_response.get(
-            postfix_id="4Njp3P0STMz2c02Q",
+            investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
         ) as response:
             assert not response.is_closed
@@ -211,12 +193,12 @@ class TestAsyncPreview:
     async def test_path_params_get(self, async_client: AsyncCloudflare) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `account_id` but received ''"):
             await async_client.email_security.investigate.preview.with_raw_response.get(
-                postfix_id="4Njp3P0STMz2c02Q",
+                investigate_id="4Njp3P0STMz2c02Q-2024-01-05T10:00:00-12345678",
                 account_id="",
             )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `postfix_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `investigate_id` but received ''"):
             await async_client.email_security.investigate.preview.with_raw_response.get(
-                postfix_id="",
+                investigate_id="",
                 account_id="023e105f4ecef8ad9ca31a8372d0c353",
             )

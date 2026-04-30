@@ -19,8 +19,10 @@ __all__ = [
 
 class Attachment(BaseModel):
     size: int
+    """Size of the attachment in bytes"""
 
     content_type: Optional[str] = None
+    """MIME type of the attachment"""
 
     detection: Optional[
         Literal[
@@ -36,10 +38,25 @@ class Attachment(BaseModel):
             "NONE",
         ]
     ] = None
+    """Detection result for this attachment"""
 
     encrypted: Optional[bool] = None
+    """Whether the attachment is encrypted"""
+
+    filename: Optional[str] = None
+    """Name of the attached file"""
+
+    md5: Optional[str] = None
+    """MD5 hash of the attachment"""
 
     name: Optional[str] = None
+    """Attachment name (alternative to filename)"""
+
+    sha1: Optional[str] = None
+    """SHA1 hash of the attachment"""
+
+    sha256: Optional[str] = None
+    """SHA256 hash of the attachment"""
 
 
 class Finding(BaseModel):
@@ -102,7 +119,7 @@ class SenderInfo(BaseModel):
 
 
 class ThreatCategory(BaseModel):
-    id: int
+    id: Optional[int] = None
 
     description: Optional[str] = None
 
@@ -124,7 +141,7 @@ class DetectionGetResponse(BaseModel):
 
     attachments: List[Attachment]
 
-    findings: List[Finding]
+    findings: Optional[List[Finding]] = None
 
     headers: List[Header]
 

@@ -142,9 +142,8 @@ class InvestigateResource(SyncAPIResource):
         detections_only: bool | Omit = omit,
         domain: str | Omit = omit,
         end: Union[str, datetime] | Omit = omit,
-        exact_subject: str | Omit = omit,
         final_disposition: Literal["MALICIOUS", "SUSPICIOUS", "SPOOF", "SPAM", "BULK", "NONE"] | Omit = omit,
-        message_action: Literal["PREVIEW", "QUARANTINE_RELEASED", "MOVED", "SUBMITTED"] | Omit = omit,
+        message_action: Literal["PREVIEW", "QUARANTINE_RELEASED", "MOVED"] | Omit = omit,
         message_id: str | Omit = omit,
         metric: str | Omit = omit,
         page: Optional[int] | Omit = omit,
@@ -154,7 +153,6 @@ class InvestigateResource(SyncAPIResource):
         sender: str | Omit = omit,
         start: Union[str, datetime] | Omit = omit,
         subject: str | Omit = omit,
-        submissions: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -162,70 +160,31 @@ class InvestigateResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncV4PagePaginationArray[InvestigateListResponse]:
-        """Returns information for each email that matches the search parameter(s).
-
-        If the
-        search takes too long, the endpoint returns 202 with a Location header pointing
-        to a polling endpoint where results can be retrieved once ready.
+        """
+        Returns information for each email that matches the search parameter(s).
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          action_log: Determines if the message action log is included in the response.
+          action_log: Whether to include the message action log in the response.
 
-          detections_only: Determines if the search results will include detections or not.
+          detections_only: Whether to include only detections in search results.
 
-          domain: Filter by a domain found in the email: sender domain, recipient domain, or a
-              domain in a link.
+          domain: Sender domains to filter by.
 
-          end: The end of the search date range. Defaults to `now` if not provided.
+          end: The end of the search date range. Defaults to `now`.
 
-          exact_subject: Search for messages with an exact subject match.
+          final_disposition: Dispositions to filter by.
 
-          final_disposition: The dispositions the search filters by.
+          message_action: Message actions to filter by.
 
-          message_action: The message actions the search filters by.
-
-          page: Deprecated: Use cursor pagination instead.
+          page: Deprecated: Use cursor pagination instead. End of life: November 1, 2026.
 
           per_page: The number of results per page. Maximum value is 1000.
 
-          query: The space-delimited term used in the query. The search is case-insensitive.
+          query: Space-delimited search term. Case-insensitive.
 
-              The content of the following email metadata fields are searched:
-
-              - alert_id
-              - CC
-              - From (envelope_from)
-              - From Name
-              - final_disposition
-              - md5 hash (of any attachment)
-              - sha1 hash (of any attachment)
-              - sha256 hash (of any attachment)
-              - name (of any attachment)
-              - Reason
-              - Received DateTime (yyyy-mm-ddThh:mm:ss)
-              - Sent DateTime (yyyy-mm-ddThh:mm:ss)
-              - ReplyTo
-              - To (envelope_to)
-              - To Name
-              - Message-ID
-              - smtp_helo_server_ip
-              - smtp_previous_hop_ip
-              - x_originating_ip
-              - Subject
-
-          recipient: Filter by recipient. Matches either an email address or a domain.
-
-          sender: Filter by sender. Matches either an email address or a domain.
-
-          start: The beginning of the search date range. Defaults to `now - 30 days` if not
-              provided.
-
-          subject: Search for messages containing individual keywords in any order within the
-              subject.
-
-          submissions: Search for submissions instead of original messages
+          start: The beginning of the search date range. Defaults to `now - 30 days`.
 
           extra_headers: Send extra headers
 
@@ -253,7 +212,6 @@ class InvestigateResource(SyncAPIResource):
                         "detections_only": detections_only,
                         "domain": domain,
                         "end": end,
-                        "exact_subject": exact_subject,
                         "final_disposition": final_disposition,
                         "message_action": message_action,
                         "message_id": message_id,
@@ -265,7 +223,6 @@ class InvestigateResource(SyncAPIResource):
                         "sender": sender,
                         "start": start,
                         "subject": subject,
-                        "submissions": submissions,
                     },
                     investigate_list_params.InvestigateListParams,
                 ),
@@ -275,7 +232,7 @@ class InvestigateResource(SyncAPIResource):
 
     def get(
         self,
-        postfix_id: str,
+        investigate_id: str,
         *,
         account_id: str,
         submission: bool | Omit = omit,
@@ -287,13 +244,14 @@ class InvestigateResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> InvestigateGetResponse:
         """
-        Retrieves detailed information about a specific email message, including
-        headers, metadata, and security scan results.
+        Retrieves comprehensive details for a specific email message including headers,
+        recipients, sender information, and current quarantine status. Use the
+        investigate_id from search results to fetch detailed information.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          postfix_id: The identifier of the message.
+          investigate_id: Unique identifier for a message retrieved from investigation
 
           submission: When true, search the submissions datastore only. When false or omitted, search
               the regular datastore only.
@@ -308,13 +266,13 @@ class InvestigateResource(SyncAPIResource):
         """
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
-        if not postfix_id:
-            raise ValueError(f"Expected a non-empty value for `postfix_id` but received {postfix_id!r}")
+        if not investigate_id:
+            raise ValueError(f"Expected a non-empty value for `investigate_id` but received {investigate_id!r}")
         return self._get(
             path_template(
-                "/accounts/{account_id}/email-security/investigate/{postfix_id}",
+                "/accounts/{account_id}/email-security/investigate/{investigate_id}",
                 account_id=account_id,
-                postfix_id=postfix_id,
+                investigate_id=investigate_id,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -386,9 +344,8 @@ class AsyncInvestigateResource(AsyncAPIResource):
         detections_only: bool | Omit = omit,
         domain: str | Omit = omit,
         end: Union[str, datetime] | Omit = omit,
-        exact_subject: str | Omit = omit,
         final_disposition: Literal["MALICIOUS", "SUSPICIOUS", "SPOOF", "SPAM", "BULK", "NONE"] | Omit = omit,
-        message_action: Literal["PREVIEW", "QUARANTINE_RELEASED", "MOVED", "SUBMITTED"] | Omit = omit,
+        message_action: Literal["PREVIEW", "QUARANTINE_RELEASED", "MOVED"] | Omit = omit,
         message_id: str | Omit = omit,
         metric: str | Omit = omit,
         page: Optional[int] | Omit = omit,
@@ -398,7 +355,6 @@ class AsyncInvestigateResource(AsyncAPIResource):
         sender: str | Omit = omit,
         start: Union[str, datetime] | Omit = omit,
         subject: str | Omit = omit,
-        submissions: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -406,70 +362,31 @@ class AsyncInvestigateResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[InvestigateListResponse, AsyncV4PagePaginationArray[InvestigateListResponse]]:
-        """Returns information for each email that matches the search parameter(s).
-
-        If the
-        search takes too long, the endpoint returns 202 with a Location header pointing
-        to a polling endpoint where results can be retrieved once ready.
+        """
+        Returns information for each email that matches the search parameter(s).
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          action_log: Determines if the message action log is included in the response.
+          action_log: Whether to include the message action log in the response.
 
-          detections_only: Determines if the search results will include detections or not.
+          detections_only: Whether to include only detections in search results.
 
-          domain: Filter by a domain found in the email: sender domain, recipient domain, or a
-              domain in a link.
+          domain: Sender domains to filter by.
 
-          end: The end of the search date range. Defaults to `now` if not provided.
+          end: The end of the search date range. Defaults to `now`.
 
-          exact_subject: Search for messages with an exact subject match.
+          final_disposition: Dispositions to filter by.
 
-          final_disposition: The dispositions the search filters by.
+          message_action: Message actions to filter by.
 
-          message_action: The message actions the search filters by.
-
-          page: Deprecated: Use cursor pagination instead.
+          page: Deprecated: Use cursor pagination instead. End of life: November 1, 2026.
 
           per_page: The number of results per page. Maximum value is 1000.
 
-          query: The space-delimited term used in the query. The search is case-insensitive.
+          query: Space-delimited search term. Case-insensitive.
 
-              The content of the following email metadata fields are searched:
-
-              - alert_id
-              - CC
-              - From (envelope_from)
-              - From Name
-              - final_disposition
-              - md5 hash (of any attachment)
-              - sha1 hash (of any attachment)
-              - sha256 hash (of any attachment)
-              - name (of any attachment)
-              - Reason
-              - Received DateTime (yyyy-mm-ddThh:mm:ss)
-              - Sent DateTime (yyyy-mm-ddThh:mm:ss)
-              - ReplyTo
-              - To (envelope_to)
-              - To Name
-              - Message-ID
-              - smtp_helo_server_ip
-              - smtp_previous_hop_ip
-              - x_originating_ip
-              - Subject
-
-          recipient: Filter by recipient. Matches either an email address or a domain.
-
-          sender: Filter by sender. Matches either an email address or a domain.
-
-          start: The beginning of the search date range. Defaults to `now - 30 days` if not
-              provided.
-
-          subject: Search for messages containing individual keywords in any order within the
-              subject.
-
-          submissions: Search for submissions instead of original messages
+          start: The beginning of the search date range. Defaults to `now - 30 days`.
 
           extra_headers: Send extra headers
 
@@ -497,7 +414,6 @@ class AsyncInvestigateResource(AsyncAPIResource):
                         "detections_only": detections_only,
                         "domain": domain,
                         "end": end,
-                        "exact_subject": exact_subject,
                         "final_disposition": final_disposition,
                         "message_action": message_action,
                         "message_id": message_id,
@@ -509,7 +425,6 @@ class AsyncInvestigateResource(AsyncAPIResource):
                         "sender": sender,
                         "start": start,
                         "subject": subject,
-                        "submissions": submissions,
                     },
                     investigate_list_params.InvestigateListParams,
                 ),
@@ -519,7 +434,7 @@ class AsyncInvestigateResource(AsyncAPIResource):
 
     async def get(
         self,
-        postfix_id: str,
+        investigate_id: str,
         *,
         account_id: str,
         submission: bool | Omit = omit,
@@ -531,13 +446,14 @@ class AsyncInvestigateResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> InvestigateGetResponse:
         """
-        Retrieves detailed information about a specific email message, including
-        headers, metadata, and security scan results.
+        Retrieves comprehensive details for a specific email message including headers,
+        recipients, sender information, and current quarantine status. Use the
+        investigate_id from search results to fetch detailed information.
 
         Args:
-          account_id: Account Identifier
+          account_id: Identifier.
 
-          postfix_id: The identifier of the message.
+          investigate_id: Unique identifier for a message retrieved from investigation
 
           submission: When true, search the submissions datastore only. When false or omitted, search
               the regular datastore only.
@@ -552,13 +468,13 @@ class AsyncInvestigateResource(AsyncAPIResource):
         """
         if not account_id:
             raise ValueError(f"Expected a non-empty value for `account_id` but received {account_id!r}")
-        if not postfix_id:
-            raise ValueError(f"Expected a non-empty value for `postfix_id` but received {postfix_id!r}")
+        if not investigate_id:
+            raise ValueError(f"Expected a non-empty value for `investigate_id` but received {investigate_id!r}")
         return await self._get(
             path_template(
-                "/accounts/{account_id}/email-security/investigate/{postfix_id}",
+                "/accounts/{account_id}/email-security/investigate/{investigate_id}",
                 account_id=account_id,
-                postfix_id=postfix_id,
+                investigate_id=investigate_id,
             ),
             options=make_request_options(
                 extra_headers=extra_headers,
