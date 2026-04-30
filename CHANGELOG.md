@@ -2,53 +2,120 @@
 
 ## 5.0.0 (2026-04-30)
 
-Full Changelog: [v5.0.0-beta.2...v5.0.0](https://github.com/cloudflare/cloudflare-python/compare/v5.0.0-beta.2...v5.0.0)
+Full Changelog: [v4.3.1...v5.0.0](https://github.com/cloudflare/cloudflare-python/compare/v4.3.1...v5.0.0)
 
-### Features
+This is a major release of the Cloudflare Python SDK. It drops support for
+Python 3.8, adds 11 new API services, introduces optional aiohttp backend
+support for improved async concurrency, and includes hundreds of type and
+method updates across the entire API surface.
 
-* **api:** api update ([3b83baa](https://github.com/cloudflare/cloudflare-python/commit/3b83baa3be725513c98c33e678886f83f5c6b2ce))
-* chore: remove account_id and zone_id client options ([988df86](https://github.com/cloudflare/cloudflare-python/commit/988df8632b0b531c5b1117ecd7ed7d77925dd5ac))
-* feat: add organization audit logs endpoint ([6810580](https://github.com/cloudflare/cloudflare-python/commit/681058048aedeb0983d182b1168b131c332e1477))
-* feat(cache): Add origin cloud regions resource to docs/sdk for new API ([c7b5b51](https://github.com/cloudflare/cloudflare-python/commit/c7b5b51764e7c343140d91d4fd86cf7275eec271))
-* feat(iam): add user_groups and user_group_members terraform resources ([cb00d08](https://github.com/cloudflare/cloudflare-python/commit/cb00d08d86197bddbd55bd3107473c1e363c12c4))
+Please review the breaking changes below before upgrading. A migration guide
+is available at [docs/migration-guides/v5.0.0-migration-guide.md](./docs/migration-guides/v5.0.0-migration-guide.md).
+
+---
+
+#### Breaking Changes
+
+- **Python 3.8 is no longer supported.** The minimum required version is now Python 3.9. ([pyproject.toml](https://github.com/cloudflare/cloudflare-python/compare/v4.3.1...v5.0.0))
+- **`typing-extensions` minimum version bumped** from `>=4.10` to `>=4.14`.
+
+Additionally, the following resources have breaking changes:
+
+- `abusereports`
+- `acm.totaltls`
+- `apigateway.configurations`
+- `cloudforceone.threatevents`
+- `d1.database`
+- `intel.indicatorfeeds`
+- `logpush.edge`
+- `origintlsclientauth.hostnames`
+- `queues.consumers`
+- `radar.bgp`
+- `rulesets.rules`
+- `schemavalidation.schemas`
+- `snippets`
+- `zerotrust.dlp`
+- `zerotrust.networks`
+
+See the [v5.0.0 Migration Guide](./docs/migration-guides/v5.0.0-migration-guide.md) for upgrade instructions and resource-specific guidance.
+
+---
+
+#### Features
+
+* **aiohttp backend support:** The async client now supports an optional `aiohttp` HTTP backend for improved concurrency performance. Install with `pip install cloudflare[aiohttp]` and use `DefaultAioHttpClient()` as the `http_client` parameter.
+* **Python 3.13 and 3.14 support** added as tested classifiers.
+
+##### New Services
+
+The following top-level resources are new in this release:
+
+* **AISearch** (`aisearch`): AI-powered search capabilities
+* **Connectivity** (`connectivity`): Connectivity testing and diagnostics
+* **EmailSending** (`email_sending`): Email send and send_raw endpoints
+* **Fraud** (`fraud`): Fraud detection and prevention
+* **GoogleTagGateway** (`google_tag_gateway`): Google Tag Gateway management
+* **Organizations** (`organizations`): Organization audit logs and management
+* **R2DataCatalog** (`r2_data_catalog`): R2 Data Catalog operations
+* **RealtimeKit** (`realtime_kit`): Realtime communication (Calls/TURN)
+* **ResourceTagging** (`resource_tagging`): Resource tagging and labeling
+* **TokenValidation** (`token_validation`): Token validation configuration and rules
+* **VulnerabilityScanner** (`vulnerability_scanner`): Vulnerability scanning, credential sets, and target environments
+
+##### New Endpoints on Existing Services
+
+* **accounts:** update generated types and methods
+* **api_gateway:** add labels endpoints (WAM-1196)
+* **billing:** add billable usage PayGo endpoint
+* **brand_protection:** add v2 endpoints
+* **browser_rendering:** add devtools methods (BRAPI-1051)
+* **cache:** add origin cloud regions resource
+* **custom_origin_trust_store:** enable custom origin trust store
+* **dns:** add dns_records/usage endpoints (DNS-12466)
+* **email_security:** add phishguard reports endpoint
+* **iam:** add user_groups and user_group_members resources
+* **radar:** add Botnet Threat Feed and Post-Quantum endpoints
+* **workers:** add Observability Destinations resources (WO-989)
+* **zero_trust:** add Access Users endpoint (AUTH-7071), DEX rules, Device IP Profile, Device Subnet, WARP Connector connections and failover endpoints, WARP Subnet endpoints, Gateway PAC files (GIN-1439)
+* **zones:** add zone environments endpoints
+
+##### Updated Services
+
+Nearly every existing service received type and method updates through
+composite API spec refreshes. Notable updates include:
+
+* **email_security:** remove deprecated type definitions
+* **radar:** restructured to use per-resource api.md sub-files (no client path changes)
+* **workers_for_platforms:** update generated types
+* **r2:** update generated types
+* **fraud:** update generated types and methods
 
 
-### Bug Fixes
+#### Bug Fixes
 
-* **_models:** add polymorphic_serialization parameter to model_dump overrides ([342b5a8](https://github.com/cloudflare/cloudflare-python/commit/342b5a84daaf5c09e3e1612809d956d916a43621))
-* **ci:** pin single Python version to match pre-uv test behavior ([86676bc](https://github.com/cloudflare/cloudflare-python/commit/86676bca670d38d5947041bc5677138640dd6d92))
-* **ci:** run tests with single Python version and pydantic v2 only ([3259115](https://github.com/cloudflare/cloudflare-python/commit/3259115d9c1c5e2f116adda878851afc86ce5239))
-* **pipelines:** add BaseModel base to response SchemaFieldStruct/SchemaFieldList stubs ([d33af8b](https://github.com/cloudflare/cloudflare-python/commit/d33af8b5d5c1705fde4ae73efdbe3bfe3ba321df))
-* **radar:** move type: ignore[call-arg] to call site for mypy ([fac9404](https://github.com/cloudflare/cloudflare-python/commit/fac9404ebfa1eb5383a3d3c54f49e4120eb8cd11))
+* **_models:** add `polymorphic_serialization` parameter to `model_dump` overrides ([342b5a8](https://github.com/cloudflare/cloudflare-python/commit/342b5a84daaf5c09e3e1612809d956d916a43621))
+* **pipelines:** add `BaseModel` base to response `SchemaFieldStruct`/`SchemaFieldList` stubs ([d33af8b](https://github.com/cloudflare/cloudflare-python/commit/d33af8b5d5c1705fde4ae73efdbe3bfe3ba321df))
+* **dlp:** add missing `model_rebuild`/`update_forward_refs` for `SharedEntryCustomEntry` classes ([25ec10c](https://github.com/cloudflare/cloudflare-python/commit/25ec10c814d138f8dea08a79f9984b70abb58477))
+* **workers:** make `RunQueryParametersNeedleValue` a `BaseModel` with `arbitrary_types_allowed` ([6b7efbc](https://github.com/cloudflare/cloudflare-python/commit/6b7efbc51e6189ba18225c57637015f050060683))
+* **stream:** remove duplicate `notification_url` field in webhook response types ([fc9fb2f](https://github.com/cloudflare/cloudflare-python/commit/fc9fb2f895c5de968f67c62bb599a6792be9fa8f))
 * resolve pre-existing codegen type errors ([fed88d6](https://github.com/cloudflare/cloudflare-python/commit/fed88d6c5a5e482a9de595a1431915320fa11d23))
+* **radar:** fix `type: ignore[call-arg]` placement for mypy compatibility ([fac9404](https://github.com/cloudflare/cloudflare-python/commit/fac9404ebfa1eb5383a3d3c54f49e4120eb8cd11))
+* fix broken reference for the queues `consumer` model ([3f5cf39](https://github.com/cloudflare/cloudflare-python/commit/3f5cf39405b6b38fc594ce348d93a6e7da92c276))
 
 
-### Chores
+#### Chores
 
-* **accounts:** update generated types ([7ff4adf](https://github.com/cloudflare/cloudflare-python/commit/7ff4adf1cf53aae127ffcf059dbfd60620c661e5))
-* **aisearch:** update generated types and methods ([f22897e](https://github.com/cloudflare/cloudflare-python/commit/f22897e1ec7ac175278e5481c4855b44fe093a9d))
-* **aisearch:** update generated types, remove unused tests ([e20c138](https://github.com/cloudflare/cloudflare-python/commit/e20c1386bec9181c3dd6dae42a6dee58fc62f1fb))
-* **api:** update composite API spec ([511b508](https://github.com/cloudflare/cloudflare-python/commit/511b508a3dcdbce558c32bee20a2d2e2edefa689))
-* **api:** update composite API spec ([0ee5719](https://github.com/cloudflare/cloudflare-python/commit/0ee571927b0b9656256ed22d76a412b262241f44))
-* **api:** update composite API spec ([6bf05ea](https://github.com/cloudflare/cloudflare-python/commit/6bf05ea320bcbdf1d9fd30edc6d9a19a626a7d22))
-* **api:** update composite API spec ([fd0fca0](https://github.com/cloudflare/cloudflare-python/commit/fd0fca0667e9ca3837629d1aeb1ede7134f0253d))
-* **api:** update composite API spec ([67db9e9](https://github.com/cloudflare/cloudflare-python/commit/67db9e976b1f31e0a4526c76b8149390be128bd8))
-* **api:** update composite API spec ([0fd3baf](https://github.com/cloudflare/cloudflare-python/commit/0fd3baf76be724534d7693eb5a2c3da1b5144c57))
-* **api:** update composite API spec ([42c4dbf](https://github.com/cloudflare/cloudflare-python/commit/42c4dbfa49e879c59dd5e1100c9d5c0191c968d2))
-* **api:** upload stainless config from cloudflare-config ([0d64642](https://github.com/cloudflare/cloudflare-python/commit/0d646425898be57e654301e98c37beeb69d541c4))
-* apply shared infrastructure changes (rye -&gt; uv migration) ([2f283c2](https://github.com/cloudflare/cloudflare-python/commit/2f283c29584b49e7c000f5e04aa5edc62db36ab9))
-* **email_security:** remove deprecated type definitions ([878e3d4](https://github.com/cloudflare/cloudflare-python/commit/878e3d461cc5704a76665cb47e73b0f153f10546))
-* **fraud:** update generated types and methods ([771c7e4](https://github.com/cloudflare/cloudflare-python/commit/771c7e45ce91554f4897bdc8cdea0ceedc2c48ab))
-* **internal:** version bump ([0a576fa](https://github.com/cloudflare/cloudflare-python/commit/0a576fa0cbe15e8ebee4ff4ca489d8362885231e))
-* **r2:** update generated types ([2e7856d](https://github.com/cloudflare/cloudflare-python/commit/2e7856d879a82674f6f141c6eef33576694cca0a))
-* **radar:** update to_markdown type ignore comments ([d721964](https://github.com/cloudflare/cloudflare-python/commit/d721964e85978708190d31ba12a15b05f840c0b7))
-* sync shared codegen files from staging-next ([2802feb](https://github.com/cloudflare/cloudflare-python/commit/2802feb0090eb951a2393b7677b2601ed279d85f))
-* **workers_for_platforms:** update generated types ([f342310](https://github.com/cloudflare/cloudflare-python/commit/f3423103c48ad1308775105be71e2243ab1865ed))
+* **build:** migrate from rye to uv for project management ([2f283c2](https://github.com/cloudflare/cloudflare-python/commit/2f283c29584b49e7c000f5e04aa5edc62db36ab9))
+* **ci:** pin single Python version and pydantic v2 for test runs ([86676bc](https://github.com/cloudflare/cloudflare-python/commit/86676bca670d38d5947041bc5677138640dd6d92))
+* **typing:** add mypy configuration with strict mode ([pyproject.toml](https://github.com/cloudflare/cloudflare-python/compare/v4.3.1...v5.0.0))
+* **api:** 80+ composite API spec updates across the release cycle
 
 
-### Documentation
+#### Documentation
 
 * add Authentication section to README ([70d934a](https://github.com/cloudflare/cloudflare-python/commit/70d934abd91cfa8f8444e0651ac97012c1d0edcf))
+* add aiohttp backend usage instructions to README
+* add MCP server integration badges (Cursor, VS Code)
 
 ## 5.0.0-beta.2 (2026-04-20)
 
