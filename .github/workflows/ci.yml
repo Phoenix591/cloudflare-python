@@ -97,12 +97,9 @@ jobs:
         run: ./scripts/bootstrap
 
       - name: Run tests
-        run: |
-          echo "==> Running tests with Pydantic v2 (Python >=3.9.0)"
-          uv run --isolated --all-extras pytest
+        run: ./scripts/test
         env:
           UV_PYTHON: ">=3.9.0"
-          DEFER_PYDANTIC_BUILD: "false"
 
   examples:
     timeout-minutes: 10
