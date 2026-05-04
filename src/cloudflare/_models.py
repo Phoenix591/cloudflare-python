@@ -281,6 +281,7 @@ class BaseModel(pydantic.BaseModel):
             warnings: bool | Literal["none", "warn", "error"] = True,
             fallback: Callable[[Any], Any] | None = None,
             serialize_as_any: bool = False,
+            polymorphic_serialization: bool | None = None,
         ) -> dict[str, Any]:
             """Usage docs: https://docs.pydantic.dev/2.4/concepts/serialization/#modelmodel_dump
 
@@ -353,6 +354,7 @@ class BaseModel(pydantic.BaseModel):
             warnings: bool | Literal["none", "warn", "error"] = True,
             fallback: Callable[[Any], Any] | None = None,
             serialize_as_any: bool = False,
+            polymorphic_serialization: bool | None = None,
         ) -> str:
             """Usage docs: https://docs.pydantic.dev/2.4/concepts/serialization/#modelmodel_dump_json
 

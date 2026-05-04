@@ -98,6 +98,8 @@ jobs:
 
       - name: Run tests
         run: ./scripts/test
+        env:
+          UV_PYTHON: ">=3.9.0"
 
   examples:
     timeout-minutes: 10
