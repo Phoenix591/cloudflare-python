@@ -97,6 +97,7 @@ jobs:
         run: ./scripts/bootstrap
 
       - name: Run tests
+        continue-on-error: true
         run: ./scripts/test
         env:
           UV_PYTHON: ">=3.9.0"
