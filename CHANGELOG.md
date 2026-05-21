@@ -1,5 +1,38 @@
 # Changelog
 
+## 5.2.0 (2026-05-21)
+
+Full Changelog: [v5.1.0...v5.2.0](https://github.com/cloudflare/cloudflare-python/compare/v5.1.0...v5.2.0)
+
+### Features
+
+* **ai_gateway:** update generated types and methods ([4923bbb](https://github.com/cloudflare/cloudflare-python/commit/4923bbb97bb42db7e8a6ae54cfa29d2e5bd99d47))
+* **ai_security:** add ai_security resource ([29cb585](https://github.com/cloudflare/cloudflare-python/commit/29cb58506942df30e0cb087f2d7f211a53360d05))
+* **cache:** update generated types and methods ([b7ae845](https://github.com/cloudflare/cloudflare-python/commit/b7ae845ad230f7db0aebfa30f84e6c7c0266278d))
+* **ddos_protection:** add ddos_protection resource ([87f7e95](https://github.com/cloudflare/cloudflare-python/commit/87f7e95e47142d94642fa3ae865559b6c3af989b))
+* **load_balancers:** update generated types and methods ([bb6815d](https://github.com/cloudflare/cloudflare-python/commit/bb6815d0212081da8f2e0e834d6d30e5fce78c41))
+* **r2:** update generated types and methods ([72d2149](https://github.com/cloudflare/cloudflare-python/commit/72d2149e5b7905c4caf266dbefffa626eb4c2d13))
+* **radar:** update generated types and methods ([fb2f0c4](https://github.com/cloudflare/cloudflare-python/commit/fb2f0c41d93bf66b8fff170e460ab79d19fc9fbb))
+* **secrets_store:** update generated types and methods ([636414f](https://github.com/cloudflare/cloudflare-python/commit/636414fc201aba49dc31e544f024a67a1e7b5082))
+* **workers_for_platforms:** update generated types and methods ([7bfed3c](https://github.com/cloudflare/cloudflare-python/commit/7bfed3ced962e765b884e68ae4c1c48e56e1b6b5))
+* **workers:** update generated types and methods ([0bdb685](https://github.com/cloudflare/cloudflare-python/commit/0bdb6858af43a110a91a5d770b69367aca922117))
+* **zero_trust:** update generated types and methods ([aeff7d5](https://github.com/cloudflare/cloudflare-python/commit/aeff7d56432a1f6844b310f9ce7fca9ac09da5e5))
+
+
+### Chores
+
+* **acm:** update generated types and methods ([8b03b3d](https://github.com/cloudflare/cloudflare-python/commit/8b03b3dc081c0fa7cf6bbaca188927379c418b93))
+* **ai:** update generated types and methods ([2f6bdf7](https://github.com/cloudflare/cloudflare-python/commit/2f6bdf7476969dad83fe85c0ae493d7b3f4fa58c))
+* **api_gateway:** update generated types and methods ([5b79a34](https://github.com/cloudflare/cloudflare-python/commit/5b79a34891fe355456e1decebcf462ac1e171ff5))
+* **cloudforce_one:** update generated types and methods ([fc72368](https://github.com/cloudflare/cloudflare-python/commit/fc723685b90eafb8a2f232c72e6f03dd4ad2f823))
+* **d1:** update generated types and methods ([6a05b68](https://github.com/cloudflare/cloudflare-python/commit/6a05b682b6b8a3d1bc64440de52a17d4e8df9034))
+* **email_security:** update generated types and methods ([c89d1ce](https://github.com/cloudflare/cloudflare-python/commit/c89d1ceeb880ff26c06707731b17e4f2e7041b3d))
+* **intel:** update generated types and methods ([b097e5d](https://github.com/cloudflare/cloudflare-python/commit/b097e5d93a5a3c2626088a2132d75625755c2141))
+* **logpush:** update generated types and methods ([f26713b](https://github.com/cloudflare/cloudflare-python/commit/f26713be3354fc403b062b15d0c191fadec283d0))
+* **resource_sharing:** update generated types and methods ([792bf24](https://github.com/cloudflare/cloudflare-python/commit/792bf248ba72dfc93e5bc4b79734475ece24d52b))
+* restore version ([9f99d4b](https://github.com/cloudflare/cloudflare-python/commit/9f99d4b9d86612713073afd9144de0512df6442b))
+* sync shared codegen files from staging-next ([fbb556c](https://github.com/cloudflare/cloudflare-python/commit/fbb556c19cb25f308ba43c94959c669b772f6663))
+
 ## 5.1.0 (2026-05-06)
 
 Full Changelog: [v5.0.0...v5.1.0](https://github.com/cloudflare/cloudflare-python/compare/v5.0.0...v5.1.0)
