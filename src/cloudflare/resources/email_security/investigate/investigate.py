@@ -169,6 +169,8 @@ class InvestigateResource(SyncAPIResource):
 
           delivery_status: Delivery status to filter by.
 
+          delivery_status: Delivery status to filter by.
+
           detections_only: Whether to include only detections in search results.
 
           domain: Sender domains to filter by.
@@ -369,6 +371,8 @@ class AsyncInvestigateResource(AsyncAPIResource):
 
         Args:
           account_id: Identifier.
+
+          delivery_status: Delivery status to filter by.
 
           delivery_status: Delivery status to filter by.
 
