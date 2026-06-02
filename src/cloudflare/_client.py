@@ -147,6 +147,7 @@ if TYPE_CHECKING:
         certificate_authorities,
         leaked_credential_checks,
         magic_network_monitoring,
+        tenant_custom_nameservers,
         origin_post_quantum_encryption,
     )
     from .resources.ai.ai import AIResource, AsyncAIResource
@@ -299,6 +300,10 @@ if TYPE_CHECKING:
     from .resources.magic_network_monitoring.magic_network_monitoring import (
         MagicNetworkMonitoringResource,
         AsyncMagicNetworkMonitoringResource,
+    )
+    from .resources.tenant_custom_nameservers.tenant_custom_nameservers import (
+        TenantCustomNameserversResource,
+        AsyncTenantCustomNameserversResource,
     )
     from .resources.origin_post_quantum_encryption.origin_post_quantum_encryption import (
         OriginPostQuantumEncryptionResource,
@@ -510,6 +515,12 @@ class Cloudflare(SyncAPIClient):
         from .resources.custom_nameservers import CustomNameserversResource
 
         return CustomNameserversResource(self)
+
+    @cached_property
+    def tenant_custom_nameservers(self) -> TenantCustomNameserversResource:
+        from .resources.tenant_custom_nameservers import TenantCustomNameserversResource
+
+        return TenantCustomNameserversResource(self)
 
     @cached_property
     def dns_firewall(self) -> DNSFirewallResource:
@@ -1434,6 +1445,12 @@ class AsyncCloudflare(AsyncAPIClient):
         return AsyncCustomNameserversResource(self)
 
     @cached_property
+    def tenant_custom_nameservers(self) -> AsyncTenantCustomNameserversResource:
+        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResource
+
+        return AsyncTenantCustomNameserversResource(self)
+
+    @cached_property
     def dns_firewall(self) -> AsyncDNSFirewallResource:
         from .resources.dns_firewall import AsyncDNSFirewallResource
 
@@ -2276,6 +2293,12 @@ class CloudflareWithRawResponse:
         return CustomNameserversResourceWithRawResponse(self._client.custom_nameservers)
 
     @cached_property
+    def tenant_custom_nameservers(self) -> tenant_custom_nameservers.TenantCustomNameserversResourceWithRawResponse:
+        from .resources.tenant_custom_nameservers import TenantCustomNameserversResourceWithRawResponse
+
+        return TenantCustomNameserversResourceWithRawResponse(self._client.tenant_custom_nameservers)
+
+    @cached_property
     def dns_firewall(self) -> dns_firewall.DNSFirewallResourceWithRawResponse:
         from .resources.dns_firewall import DNSFirewallResourceWithRawResponse
 
@@ -2943,6 +2966,14 @@ class AsyncCloudflareWithRawResponse:
         from .resources.custom_nameservers import AsyncCustomNameserversResourceWithRawResponse
 
         return AsyncCustomNameserversResourceWithRawResponse(self._client.custom_nameservers)
+
+    @cached_property
+    def tenant_custom_nameservers(
+        self,
+    ) -> tenant_custom_nameservers.AsyncTenantCustomNameserversResourceWithRawResponse:
+        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResourceWithRawResponse
+
+        return AsyncTenantCustomNameserversResourceWithRawResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.AsyncDNSFirewallResourceWithRawResponse:
@@ -3614,6 +3645,14 @@ class CloudflareWithStreamedResponse:
         return CustomNameserversResourceWithStreamingResponse(self._client.custom_nameservers)
 
     @cached_property
+    def tenant_custom_nameservers(
+        self,
+    ) -> tenant_custom_nameservers.TenantCustomNameserversResourceWithStreamingResponse:
+        from .resources.tenant_custom_nameservers import TenantCustomNameserversResourceWithStreamingResponse
+
+        return TenantCustomNameserversResourceWithStreamingResponse(self._client.tenant_custom_nameservers)
+
+    @cached_property
     def dns_firewall(self) -> dns_firewall.DNSFirewallResourceWithStreamingResponse:
         from .resources.dns_firewall import DNSFirewallResourceWithStreamingResponse
 
@@ -4283,6 +4322,14 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.custom_nameservers import AsyncCustomNameserversResourceWithStreamingResponse
 
         return AsyncCustomNameserversResourceWithStreamingResponse(self._client.custom_nameservers)
+
+    @cached_property
+    def tenant_custom_nameservers(
+        self,
+    ) -> tenant_custom_nameservers.AsyncTenantCustomNameserversResourceWithStreamingResponse:
+        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResourceWithStreamingResponse
+
+        return AsyncTenantCustomNameserversResourceWithStreamingResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.AsyncDNSFirewallResourceWithStreamingResponse:
