@@ -467,6 +467,7 @@ from cloudflare.types.zero_trust.access.ai_controls.mcp import (
     ServerListResponse,
     ServerDeleteResponse,
     ServerReadResponse,
+    ServerSyncResponse,
 )
 ```
 
@@ -477,7 +478,7 @@ Methods:
 - <code title="get /accounts/{account_id}/access/ai-controls/mcp/servers">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">list</a>(\*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_list_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_list_response.py">SyncV4PagePaginationArray[ServerListResponse]</a></code>
 - <code title="delete /accounts/{account_id}/access/ai-controls/mcp/servers/{id}">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">delete</a>(id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_delete_response.py">ServerDeleteResponse</a></code>
 - <code title="get /accounts/{account_id}/access/ai-controls/mcp/servers/{id}">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">read</a>(id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_read_response.py">ServerReadResponse</a></code>
-- <code title="post /accounts/{account_id}/access/ai-controls/mcp/servers/{id}/sync">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">sync</a>(id, \*, account_id) -> object</code>
+- <code title="post /accounts/{account_id}/access/ai-controls/mcp/servers/{id}/sync">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">sync</a>(id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_sync_response.py">ServerSyncResponse</a></code>
 
 ### GatewayCA
 
@@ -1335,6 +1336,22 @@ Methods:
 
 ## DLP
 
+### CustomPromptTopics
+
+Types:
+
+```python
+from cloudflare.types.zero_trust.dlp import CustomPromptTopic
+```
+
+Methods:
+
+- <code title="post /accounts/{account_id}/dlp/custom_prompt_topics">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/dlp/custom_prompt_topic_create_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">Optional[CustomPromptTopic]</a></code>
+- <code title="put /accounts/{account_id}/dlp/custom_prompt_topics/{entry_id}">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">update</a>(entry_id, \*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/dlp/custom_prompt_topic_update_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">Optional[CustomPromptTopic]</a></code>
+- <code title="get /accounts/{account_id}/dlp/custom_prompt_topics">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">list</a>(\*, account_id) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">SyncSinglePage[CustomPromptTopic]</a></code>
+- <code title="delete /accounts/{account_id}/dlp/custom_prompt_topics/{entry_id}">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">delete</a>(entry_id, \*, account_id) -> object</code>
+- <code title="get /accounts/{account_id}/dlp/custom_prompt_topics/{entry_id}">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">get</a>(entry_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">Optional[CustomPromptTopic]</a></code>
+
 ### Datasets
 
 Types:
@@ -1714,15 +1731,9 @@ Methods:
 
 #### Items
 
-Types:
-
-```python
-from cloudflare.types.zero_trust.gateway.lists import ItemListResponse
-```
-
 Methods:
 
-- <code title="get /accounts/{account_id}/gateway/lists/{list_id}/items">client.zero_trust.gateway.lists.items.<a href="./src/cloudflare/resources/zero_trust/gateway/lists/items.py">list</a>(list_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/gateway/lists/item_list_response.py">SyncSinglePage[ItemListResponse]</a></code>
+- <code title="get /accounts/{account_id}/gateway/lists/{list_id}/items">client.zero_trust.gateway.lists.items.<a href="./src/cloudflare/resources/zero_trust/gateway/lists/items.py">list</a>(list_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/gateway/gateway_item.py">SyncSinglePage[GatewayItem]</a></code>
 
 ### Locations
 
