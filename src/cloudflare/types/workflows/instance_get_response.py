@@ -11,6 +11,8 @@ from ..._models import BaseModel
 __all__ = [
     "InstanceGetResponse",
     "Error",
+    "Rollback",
+    "RollbackError",
     "Step",
     "StepUnionMember0",
     "StepUnionMember0Attempt",
@@ -31,6 +33,18 @@ class Error(BaseModel):
     message: str
 
     name: str
+
+
+class RollbackError(BaseModel):
+    message: str
+
+    name: str
+
+
+class Rollback(BaseModel):
+    error: Optional[RollbackError] = None
+
+    outcome: Literal["complete", "failed"]
 
 
 class StepUnionMember0AttemptError(BaseModel):
@@ -64,6 +78,12 @@ class StepUnionMember0Config(BaseModel):
     timeout: Union[str, float]
     """Specifies the timeout duration."""
 
+    sensitive: Optional[Literal["output"]] = None
+    """
+    When set to 'output', step output is redacted from log and step output
+    responses.
+    """
+
 
 class StepUnionMember0(BaseModel):
     attempts: List[StepUnionMember0Attempt]
@@ -80,7 +100,7 @@ class StepUnionMember0(BaseModel):
 
     success: Optional[bool] = None
 
-    type: Literal["step"]
+    type: Literal["step", "rollback"]
 
 
 class StepUnionMember1Error(BaseModel):
@@ -153,9 +173,13 @@ class InstanceGetResponse(BaseModel):
 
     queued: datetime
 
+    rollback: Optional[Rollback] = None
+
     start: Optional[datetime] = None
 
-    status: Literal["queued", "running", "paused", "errored", "terminated", "complete", "waitingForPause", "waiting"]
+    status: Literal[
+        "queued", "running", "paused", "errored", "terminated", "complete", "waitingForPause", "waiting", "rollingBack"
+    ]
 
     step_count: int
 
