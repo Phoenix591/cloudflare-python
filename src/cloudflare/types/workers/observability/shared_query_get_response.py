@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 from ...._models import BaseModel
 
 __all__ = [
-    "TelemetryQueryResponse",
+    "SharedQueryGetResponse",
     "Run",
     "RunQuery",
     "RunQueryParameters",
@@ -217,8 +217,8 @@ class RunQueryParametersHaving(BaseModel):
     value: float
 
 
-class RunQueryParametersNeedleValue(BaseModel):
-    model_config = {"arbitrary_types_allowed": True}
+class RunQueryParametersNeedleValue:
+    pass
 
 
 class RunQueryParametersNeedle(BaseModel):
@@ -1140,7 +1140,7 @@ class Trace(BaseModel):
     """Error messages encountered during the trace, if any."""
 
 
-class TelemetryQueryResponse(BaseModel):
+class SharedQueryGetResponse(BaseModel):
     """Complete results of a query run.
 
     The populated fields depend on the requested view type (events, calculations, invocations, traces, or agents).

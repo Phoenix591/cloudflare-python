@@ -9,7 +9,7 @@ from ...._types import SequenceNotStr
 from ...._utils import PropertyInfo
 
 __all__ = [
-    "TelemetryQueryParams",
+    "SharedQueryCreateParams",
     "Timeframe",
     "Parameters",
     "ParametersCalculation",
@@ -26,7 +26,7 @@ __all__ = [
 ]
 
 
-class TelemetryQueryParams(TypedDict, total=False):
+class SharedQueryCreateParams(TypedDict, total=False):
     account_id: Required[str]
 
     query_id: Required[Annotated[str, PropertyInfo(alias="queryId")]]

@@ -5,52 +5,29 @@ from __future__ import annotations
 from typing import Union, Iterable
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
-from ...._types import SequenceNotStr
 from ...._utils import PropertyInfo
 
 __all__ = [
-    "TelemetryKeysParams",
+    "TelemetryLiveTailParams",
     "Filter",
     "FilterUnionMember0",
     "FilterUnionMember0Filter",
     "FilterUnionMember0FilterUnionMember0",
     "FilterUnionMember0FilterWorkersObservabilityFilterLeaf",
     "FilterWorkersObservabilityFilterLeaf",
-    "KeyNeedle",
-    "Needle",
 ]
 
 
-class TelemetryKeysParams(TypedDict, total=False):
+class TelemetryLiveTailParams(TypedDict, total=False):
     account_id: Required[str]
 
-    datasets: SequenceNotStr[str]
-    """Leave this empty to use the default datasets"""
+    filter_combination: Annotated[Literal["and", "or", "AND", "OR"], PropertyInfo(alias="filterCombination")]
+    """Set a flag to describe how to combine the filters on the query."""
 
     filters: Iterable[Filter]
-    """Apply filters to narrow key discovery.
+    """Apply filters to the query. Supports nested groups via kind: 'group'."""
 
-    Supports nested groups via kind: 'group'. Maximum nesting depth is 4.
-    """
-
-    from_: Annotated[float, PropertyInfo(alias="from")]
-
-    key_needle: Annotated[KeyNeedle, PropertyInfo(alias="keyNeedle")]
-    """If the user suggests a key, use this to narrow down the list of keys returned.
-
-    Make sure matchCase is false to avoid case sensitivity issues.
-    """
-
-    limit: float
-    """
-    Advanced usage: set limit=1000+ to retrieve comprehensive key options without
-    needing additional filtering.
-    """
-
-    needle: Needle
-    """Search for a specific substring in any of the events"""
-
-    to: float
+    script_id: Annotated[str, PropertyInfo(alias="scriptId")]
 
 
 class FilterUnionMember0FilterUnionMember0(TypedDict, total=False):
@@ -229,32 +206,3 @@ class FilterWorkersObservabilityFilterLeaf(TypedDict, total=False):
 
 
 Filter: TypeAlias = Union[FilterUnionMember0, FilterWorkersObservabilityFilterLeaf]
-
-
-class KeyNeedle(TypedDict, total=False):
-    """If the user suggests a key, use this to narrow down the list of keys returned.
-
-    Make sure matchCase is false to avoid case sensitivity issues.
-    """
-
-    value: Required[Union[str, float, bool]]
-    """The text or pattern to search for."""
-
-    is_regex: Annotated[bool, PropertyInfo(alias="isRegex")]
-    """When true, treats the value as a regular expression (RE2 syntax)."""
-
-    match_case: Annotated[bool, PropertyInfo(alias="matchCase")]
-    """When true, performs a case-sensitive search. Defaults to case-insensitive."""
-
-
-class Needle(TypedDict, total=False):
-    """Search for a specific substring in any of the events"""
-
-    value: Required[Union[str, float, bool]]
-    """The text or pattern to search for."""
-
-    is_regex: Annotated[bool, PropertyInfo(alias="isRegex")]
-    """When true, treats the value as a regular expression (RE2 syntax)."""
-
-    match_case: Annotated[bool, PropertyInfo(alias="matchCase")]
-    """When true, performs a case-sensitive search. Defaults to case-insensitive."""
