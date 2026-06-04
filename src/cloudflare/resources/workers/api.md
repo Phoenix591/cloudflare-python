@@ -307,6 +307,7 @@ Types:
 ```python
 from cloudflare.types.workers.observability import (
     TelemetryKeysResponse,
+    TelemetryLiveTailResponse,
     TelemetryQueryResponse,
     TelemetryValuesResponse,
 )
@@ -315,6 +316,8 @@ from cloudflare.types.workers.observability import (
 Methods:
 
 - <code title="post /accounts/{account_id}/workers/observability/telemetry/keys">client.workers.observability.telemetry.<a href="./src/cloudflare/resources/workers/observability/telemetry.py">keys</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/telemetry_keys_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/telemetry_keys_response.py">SyncSinglePage[TelemetryKeysResponse]</a></code>
+- <code title="post /accounts/{account_id}/workers/observability/telemetry/live-tail">client.workers.observability.telemetry.<a href="./src/cloudflare/resources/workers/observability/telemetry.py">live_tail</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/telemetry_live_tail_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/telemetry_live_tail_response.py">TelemetryLiveTailResponse</a></code>
+- <code title="post /accounts/{account_id}/workers/observability/telemetry/live-tail/heartbeat">client.workers.observability.telemetry.<a href="./src/cloudflare/resources/workers/observability/telemetry.py">live_tail_heartbeat</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/telemetry_live_tail_heartbeat_params.py">params</a>) -> object</code>
 - <code title="post /accounts/{account_id}/workers/observability/telemetry/query">client.workers.observability.telemetry.<a href="./src/cloudflare/resources/workers/observability/telemetry.py">query</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/telemetry_query_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/telemetry_query_response.py">TelemetryQueryResponse</a></code>
 - <code title="post /accounts/{account_id}/workers/observability/telemetry/values">client.workers.observability.telemetry.<a href="./src/cloudflare/resources/workers/observability/telemetry.py">values</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/telemetry_values_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/telemetry_values_response.py">SyncSinglePage[TelemetryValuesResponse]</a></code>
 
@@ -337,3 +340,29 @@ Methods:
 - <code title="patch /accounts/{account_id}/workers/observability/destinations/{slug}">client.workers.observability.destinations.<a href="./src/cloudflare/resources/workers/observability/destinations.py">update</a>(slug, \*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/destination_update_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/destination_update_response.py">DestinationUpdateResponse</a></code>
 - <code title="get /accounts/{account_id}/workers/observability/destinations">client.workers.observability.destinations.<a href="./src/cloudflare/resources/workers/observability/destinations.py">list</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/destination_list_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/destination_list_response.py">SyncSinglePage[DestinationListResponse]</a></code>
 - <code title="delete /accounts/{account_id}/workers/observability/destinations/{slug}">client.workers.observability.destinations.<a href="./src/cloudflare/resources/workers/observability/destinations.py">delete</a>(slug, \*, account_id) -> <a href="./src/cloudflare/types/workers/observability/destination_delete_response.py">Optional[DestinationDeleteResponse]</a></code>
+
+### Queries
+
+Types:
+
+```python
+from cloudflare.types.workers.observability import QueryCreateResponse, QueryListResponse
+```
+
+Methods:
+
+- <code title="post /accounts/{account_id}/workers/observability/queries">client.workers.observability.queries.<a href="./src/cloudflare/resources/workers/observability/queries.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/query_create_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/query_create_response.py">QueryCreateResponse</a></code>
+- <code title="get /accounts/{account_id}/workers/observability/queries">client.workers.observability.queries.<a href="./src/cloudflare/resources/workers/observability/queries.py">list</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/query_list_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/query_list_response.py">SyncSinglePage[QueryListResponse]</a></code>
+
+### SharedQueries
+
+Types:
+
+```python
+from cloudflare.types.workers.observability import SharedQueryCreateResponse, SharedQueryGetResponse
+```
+
+Methods:
+
+- <code title="post /accounts/{account_id}/workers/observability/shared/query">client.workers.observability.shared_queries.<a href="./src/cloudflare/resources/workers/observability/shared_queries.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/shared_query_create_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/shared_query_create_response.py">SharedQueryCreateResponse</a></code>
+- <code title="get /accounts/{account_id}/workers/observability/shared/query/{id}">client.workers.observability.shared_queries.<a href="./src/cloudflare/resources/workers/observability/shared_queries.py">get</a>(id, \*, account_id, \*\*<a href="src/cloudflare/types/workers/observability/shared_query_get_params.py">params</a>) -> <a href="./src/cloudflare/types/workers/observability/shared_query_get_response.py">SharedQueryGetResponse</a></code>

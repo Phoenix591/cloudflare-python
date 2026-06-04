@@ -21,7 +21,11 @@ from ._types import (
     RequestOptions,
     not_given,
 )
-from ._utils import is_given, get_async_library
+from ._utils import (
+    is_given,
+    is_mapping_t,
+    get_async_library,
+)
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
@@ -39,6 +43,7 @@ if TYPE_CHECKING:
         kv,
         r2,
         acm,
+        dls,
         dns,
         iam,
         ips,
@@ -87,6 +92,7 @@ if TYPE_CHECKING:
         ai_security,
         api_gateway,
         botnet_feed,
+        custom_csrs,
         diagnostics,
         memberships,
         page_shield,
@@ -148,6 +154,7 @@ if TYPE_CHECKING:
     from .resources.kv.kv import KVResource, AsyncKVResource
     from .resources.r2.r2 import R2Resource, AsyncR2Resource
     from .resources.acm.acm import ACMResource, AsyncACMResource
+    from .resources.dls.dls import DLSResource, AsyncDLSResource
     from .resources.dns.dns import DNSResource, AsyncDNSResource
     from .resources.iam.iam import IAMResource, AsyncIAMResource
     from .resources.ips.ips import IPsResource, AsyncIPsResource
@@ -196,6 +203,7 @@ if TYPE_CHECKING:
     from .resources.ai_security.ai_security import AISecurityResource, AsyncAISecurityResource
     from .resources.api_gateway.api_gateway import APIGatewayResource, AsyncAPIGatewayResource
     from .resources.botnet_feed.botnet_feed import BotnetFeedResource, AsyncBotnetFeedResource
+    from .resources.custom_csrs.custom_csrs import CustomCsrsResource, AsyncCustomCsrsResource
     from .resources.diagnostics.diagnostics import DiagnosticsResource, AsyncDiagnosticsResource
     from .resources.memberships.memberships import MembershipsResource, AsyncMembershipsResource
     from .resources.page_shield.page_shield import PageShieldResource, AsyncPageShieldResource
@@ -373,8 +381,16 @@ class Cloudflare(SyncAPIClient):
             base_url = f"https://api.cloudflare.com/client/v4"
 
         if api_version is None:
-            api_version = datetime.today().strftime('%Y-%m-%d')
+            api_version = datetime.today().strftime("%Y-%m-%d")
 
+        custom_headers_env = os.environ.get("CLOUDFLARE_CUSTOM_HEADERS")
+        if custom_headers_env is not None:
+            parsed: dict[str, str] = {}
+            for line in custom_headers_env.split("\n"):
+                colon = line.find(":")
+                if colon >= 0:
+                    parsed[line[:colon].strip()] = line[colon + 1 :].strip()
+            default_headers = {**parsed, **(default_headers if is_mapping_t(default_headers) else {})}
         super().__init__(
             version=__version__,
             base_url=base_url,
@@ -476,6 +492,12 @@ class Cloudflare(SyncAPIClient):
         from .resources.custom_certificates import CustomCertificatesResource
 
         return CustomCertificatesResource(self)
+
+    @cached_property
+    def custom_csrs(self) -> CustomCsrsResource:
+        from .resources.custom_csrs import CustomCsrsResource
+
+        return CustomCsrsResource(self)
 
     @cached_property
     def custom_hostnames(self) -> CustomHostnamesResource:
@@ -650,6 +672,12 @@ class Cloudflare(SyncAPIClient):
         from .resources.addressing import AddressingResource
 
         return AddressingResource(self)
+
+    @cached_property
+    def dls(self) -> DLSResource:
+        from .resources.dls import DLSResource
+
+        return DLSResource(self)
 
     @cached_property
     def audit_logs(self) -> AuditLogsResource:
@@ -1275,8 +1303,16 @@ class AsyncCloudflare(AsyncAPIClient):
             base_url = f"https://api.cloudflare.com/client/v4"
 
         if api_version is None:
-            api_version = datetime.today().strftime('%Y-%m-%d')
+            api_version = datetime.today().strftime("%Y-%m-%d")
 
+        custom_headers_env = os.environ.get("CLOUDFLARE_CUSTOM_HEADERS")
+        if custom_headers_env is not None:
+            parsed: dict[str, str] = {}
+            for line in custom_headers_env.split("\n"):
+                colon = line.find(":")
+                if colon >= 0:
+                    parsed[line[:colon].strip()] = line[colon + 1 :].strip()
+            default_headers = {**parsed, **(default_headers if is_mapping_t(default_headers) else {})}
         super().__init__(
             version=__version__,
             base_url=base_url,
@@ -1378,6 +1414,12 @@ class AsyncCloudflare(AsyncAPIClient):
         from .resources.custom_certificates import AsyncCustomCertificatesResource
 
         return AsyncCustomCertificatesResource(self)
+
+    @cached_property
+    def custom_csrs(self) -> AsyncCustomCsrsResource:
+        from .resources.custom_csrs import AsyncCustomCsrsResource
+
+        return AsyncCustomCsrsResource(self)
 
     @cached_property
     def custom_hostnames(self) -> AsyncCustomHostnamesResource:
@@ -1552,6 +1594,12 @@ class AsyncCloudflare(AsyncAPIClient):
         from .resources.addressing import AsyncAddressingResource
 
         return AsyncAddressingResource(self)
+
+    @cached_property
+    def dls(self) -> AsyncDLSResource:
+        from .resources.dls import AsyncDLSResource
+
+        return AsyncDLSResource(self)
 
     @cached_property
     def audit_logs(self) -> AsyncAuditLogsResource:
@@ -2210,6 +2258,12 @@ class CloudflareWithRawResponse:
         return CustomCertificatesResourceWithRawResponse(self._client.custom_certificates)
 
     @cached_property
+    def custom_csrs(self) -> custom_csrs.CustomCsrsResourceWithRawResponse:
+        from .resources.custom_csrs import CustomCsrsResourceWithRawResponse
+
+        return CustomCsrsResourceWithRawResponse(self._client.custom_csrs)
+
+    @cached_property
     def custom_hostnames(self) -> custom_hostnames.CustomHostnamesResourceWithRawResponse:
         from .resources.custom_hostnames import CustomHostnamesResourceWithRawResponse
 
@@ -2382,6 +2436,12 @@ class CloudflareWithRawResponse:
         from .resources.addressing import AddressingResourceWithRawResponse
 
         return AddressingResourceWithRawResponse(self._client.addressing)
+
+    @cached_property
+    def dls(self) -> dls.DLSResourceWithRawResponse:
+        from .resources.dls import DLSResourceWithRawResponse
+
+        return DLSResourceWithRawResponse(self._client.dls)
 
     @cached_property
     def audit_logs(self) -> audit_logs.AuditLogsResourceWithRawResponse:
@@ -2867,6 +2927,12 @@ class AsyncCloudflareWithRawResponse:
         return AsyncCustomCertificatesResourceWithRawResponse(self._client.custom_certificates)
 
     @cached_property
+    def custom_csrs(self) -> custom_csrs.AsyncCustomCsrsResourceWithRawResponse:
+        from .resources.custom_csrs import AsyncCustomCsrsResourceWithRawResponse
+
+        return AsyncCustomCsrsResourceWithRawResponse(self._client.custom_csrs)
+
+    @cached_property
     def custom_hostnames(self) -> custom_hostnames.AsyncCustomHostnamesResourceWithRawResponse:
         from .resources.custom_hostnames import AsyncCustomHostnamesResourceWithRawResponse
 
@@ -3039,6 +3105,12 @@ class AsyncCloudflareWithRawResponse:
         from .resources.addressing import AsyncAddressingResourceWithRawResponse
 
         return AsyncAddressingResourceWithRawResponse(self._client.addressing)
+
+    @cached_property
+    def dls(self) -> dls.AsyncDLSResourceWithRawResponse:
+        from .resources.dls import AsyncDLSResourceWithRawResponse
+
+        return AsyncDLSResourceWithRawResponse(self._client.dls)
 
     @cached_property
     def audit_logs(self) -> audit_logs.AsyncAuditLogsResourceWithRawResponse:
@@ -3524,6 +3596,12 @@ class CloudflareWithStreamedResponse:
         return CustomCertificatesResourceWithStreamingResponse(self._client.custom_certificates)
 
     @cached_property
+    def custom_csrs(self) -> custom_csrs.CustomCsrsResourceWithStreamingResponse:
+        from .resources.custom_csrs import CustomCsrsResourceWithStreamingResponse
+
+        return CustomCsrsResourceWithStreamingResponse(self._client.custom_csrs)
+
+    @cached_property
     def custom_hostnames(self) -> custom_hostnames.CustomHostnamesResourceWithStreamingResponse:
         from .resources.custom_hostnames import CustomHostnamesResourceWithStreamingResponse
 
@@ -3696,6 +3774,12 @@ class CloudflareWithStreamedResponse:
         from .resources.addressing import AddressingResourceWithStreamingResponse
 
         return AddressingResourceWithStreamingResponse(self._client.addressing)
+
+    @cached_property
+    def dls(self) -> dls.DLSResourceWithStreamingResponse:
+        from .resources.dls import DLSResourceWithStreamingResponse
+
+        return DLSResourceWithStreamingResponse(self._client.dls)
 
     @cached_property
     def audit_logs(self) -> audit_logs.AuditLogsResourceWithStreamingResponse:
@@ -4183,6 +4267,12 @@ class AsyncCloudflareWithStreamedResponse:
         return AsyncCustomCertificatesResourceWithStreamingResponse(self._client.custom_certificates)
 
     @cached_property
+    def custom_csrs(self) -> custom_csrs.AsyncCustomCsrsResourceWithStreamingResponse:
+        from .resources.custom_csrs import AsyncCustomCsrsResourceWithStreamingResponse
+
+        return AsyncCustomCsrsResourceWithStreamingResponse(self._client.custom_csrs)
+
+    @cached_property
     def custom_hostnames(self) -> custom_hostnames.AsyncCustomHostnamesResourceWithStreamingResponse:
         from .resources.custom_hostnames import AsyncCustomHostnamesResourceWithStreamingResponse
 
@@ -4355,6 +4445,12 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.addressing import AsyncAddressingResourceWithStreamingResponse
 
         return AsyncAddressingResourceWithStreamingResponse(self._client.addressing)
+
+    @cached_property
+    def dls(self) -> dls.AsyncDLSResourceWithStreamingResponse:
+        from .resources.dls import AsyncDLSResourceWithStreamingResponse
+
+        return AsyncDLSResourceWithStreamingResponse(self._client.dls)
 
     @cached_property
     def audit_logs(self) -> audit_logs.AsyncAuditLogsResourceWithStreamingResponse:

@@ -23,6 +23,7 @@ from ......_base_client import AsyncPaginator, make_request_options
 from ......types.zero_trust.access.ai_controls.mcp import server_list_params, server_create_params, server_update_params
 from ......types.zero_trust.access.ai_controls.mcp.server_list_response import ServerListResponse
 from ......types.zero_trust.access.ai_controls.mcp.server_read_response import ServerReadResponse
+from ......types.zero_trust.access.ai_controls.mcp.server_sync_response import ServerSyncResponse
 from ......types.zero_trust.access.ai_controls.mcp.server_create_response import ServerCreateResponse
 from ......types.zero_trust.access.ai_controls.mcp.server_delete_response import ServerDeleteResponse
 from ......types.zero_trust.access.ai_controls.mcp.server_update_response import ServerUpdateResponse
@@ -312,9 +313,10 @@ class ServersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> ServerSyncResponse:
         """
-        Syncs an MCP server's tool catalog with the portal.
+        Syncs an MCP server's capabilities and returns the updated server state,
+        including any connection errors.
 
         Args:
           id: portal id
@@ -340,9 +342,9 @@ class ServersResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[object]._unwrapper,
+                post_parser=ResultWrapper[ServerSyncResponse]._unwrapper,
             ),
-            cast_to=cast(Type[object], ResultWrapper[object]),
+            cast_to=cast(Type[ServerSyncResponse], ResultWrapper[ServerSyncResponse]),
         )
 
 
@@ -628,9 +630,10 @@ class AsyncServersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> ServerSyncResponse:
         """
-        Syncs an MCP server's tool catalog with the portal.
+        Syncs an MCP server's capabilities and returns the updated server state,
+        including any connection errors.
 
         Args:
           id: portal id
@@ -656,9 +659,9 @@ class AsyncServersResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                post_parser=ResultWrapper[object]._unwrapper,
+                post_parser=ResultWrapper[ServerSyncResponse]._unwrapper,
             ),
-            cast_to=cast(Type[object], ResultWrapper[object]),
+            cast_to=cast(Type[ServerSyncResponse], ResultWrapper[ServerSyncResponse]),
         )
 
 
