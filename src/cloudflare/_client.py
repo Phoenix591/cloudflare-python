@@ -99,6 +99,7 @@ if TYPE_CHECKING:
         rate_limits,
         url_scanner,
         connectivity,
+        csam_scanner,
         custom_pages,
         dns_firewall,
         healthchecks,
@@ -147,6 +148,7 @@ if TYPE_CHECKING:
         certificate_authorities,
         leaked_credential_checks,
         magic_network_monitoring,
+        tenant_custom_nameservers,
         origin_post_quantum_encryption,
     )
     from .resources.ai.ai import AIResource, AsyncAIResource
@@ -210,6 +212,7 @@ if TYPE_CHECKING:
     from .resources.rate_limits.rate_limits import RateLimitsResource, AsyncRateLimitsResource
     from .resources.url_scanner.url_scanner import URLScannerResource, AsyncURLScannerResource
     from .resources.connectivity.connectivity import ConnectivityResource, AsyncConnectivityResource
+    from .resources.csam_scanner.csam_scanner import CsamScannerResource, AsyncCsamScannerResource
     from .resources.custom_pages.custom_pages import CustomPagesResource, AsyncCustomPagesResource
     from .resources.dns_firewall.dns_firewall import DNSFirewallResource, AsyncDNSFirewallResource
     from .resources.healthchecks.healthchecks import HealthchecksResource, AsyncHealthchecksResource
@@ -299,6 +302,10 @@ if TYPE_CHECKING:
     from .resources.magic_network_monitoring.magic_network_monitoring import (
         MagicNetworkMonitoringResource,
         AsyncMagicNetworkMonitoringResource,
+    )
+    from .resources.tenant_custom_nameservers.tenant_custom_nameservers import (
+        TenantCustomNameserversResource,
+        AsyncTenantCustomNameserversResource,
     )
     from .resources.origin_post_quantum_encryption.origin_post_quantum_encryption import (
         OriginPostQuantumEncryptionResource,
@@ -510,6 +517,12 @@ class Cloudflare(SyncAPIClient):
         from .resources.custom_nameservers import CustomNameserversResource
 
         return CustomNameserversResource(self)
+
+    @cached_property
+    def tenant_custom_nameservers(self) -> TenantCustomNameserversResource:
+        from .resources.tenant_custom_nameservers import TenantCustomNameserversResource
+
+        return TenantCustomNameserversResource(self)
 
     @cached_property
     def dns_firewall(self) -> DNSFirewallResource:
@@ -1004,6 +1017,12 @@ class Cloudflare(SyncAPIClient):
         return AISecurityResource(self)
 
     @cached_property
+    def csam_scanner(self) -> CsamScannerResource:
+        from .resources.csam_scanner import CsamScannerResource
+
+        return CsamScannerResource(self)
+
+    @cached_property
     def abuse_reports(self) -> AbuseReportsResource:
         from .resources.abuse_reports import AbuseReportsResource
 
@@ -1432,6 +1451,12 @@ class AsyncCloudflare(AsyncAPIClient):
         from .resources.custom_nameservers import AsyncCustomNameserversResource
 
         return AsyncCustomNameserversResource(self)
+
+    @cached_property
+    def tenant_custom_nameservers(self) -> AsyncTenantCustomNameserversResource:
+        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResource
+
+        return AsyncTenantCustomNameserversResource(self)
 
     @cached_property
     def dns_firewall(self) -> AsyncDNSFirewallResource:
@@ -1926,6 +1951,12 @@ class AsyncCloudflare(AsyncAPIClient):
         return AsyncAISecurityResource(self)
 
     @cached_property
+    def csam_scanner(self) -> AsyncCsamScannerResource:
+        from .resources.csam_scanner import AsyncCsamScannerResource
+
+        return AsyncCsamScannerResource(self)
+
+    @cached_property
     def abuse_reports(self) -> AsyncAbuseReportsResource:
         from .resources.abuse_reports import AsyncAbuseReportsResource
 
@@ -2274,6 +2305,12 @@ class CloudflareWithRawResponse:
         from .resources.custom_nameservers import CustomNameserversResourceWithRawResponse
 
         return CustomNameserversResourceWithRawResponse(self._client.custom_nameservers)
+
+    @cached_property
+    def tenant_custom_nameservers(self) -> tenant_custom_nameservers.TenantCustomNameserversResourceWithRawResponse:
+        from .resources.tenant_custom_nameservers import TenantCustomNameserversResourceWithRawResponse
+
+        return TenantCustomNameserversResourceWithRawResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.DNSFirewallResourceWithRawResponse:
@@ -2770,6 +2807,12 @@ class CloudflareWithRawResponse:
         return AISecurityResourceWithRawResponse(self._client.ai_security)
 
     @cached_property
+    def csam_scanner(self) -> csam_scanner.CsamScannerResourceWithRawResponse:
+        from .resources.csam_scanner import CsamScannerResourceWithRawResponse
+
+        return CsamScannerResourceWithRawResponse(self._client.csam_scanner)
+
+    @cached_property
     def abuse_reports(self) -> abuse_reports.AbuseReportsResourceWithRawResponse:
         from .resources.abuse_reports import AbuseReportsResourceWithRawResponse
 
@@ -2943,6 +2986,14 @@ class AsyncCloudflareWithRawResponse:
         from .resources.custom_nameservers import AsyncCustomNameserversResourceWithRawResponse
 
         return AsyncCustomNameserversResourceWithRawResponse(self._client.custom_nameservers)
+
+    @cached_property
+    def tenant_custom_nameservers(
+        self,
+    ) -> tenant_custom_nameservers.AsyncTenantCustomNameserversResourceWithRawResponse:
+        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResourceWithRawResponse
+
+        return AsyncTenantCustomNameserversResourceWithRawResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.AsyncDNSFirewallResourceWithRawResponse:
@@ -3439,6 +3490,12 @@ class AsyncCloudflareWithRawResponse:
         return AsyncAISecurityResourceWithRawResponse(self._client.ai_security)
 
     @cached_property
+    def csam_scanner(self) -> csam_scanner.AsyncCsamScannerResourceWithRawResponse:
+        from .resources.csam_scanner import AsyncCsamScannerResourceWithRawResponse
+
+        return AsyncCsamScannerResourceWithRawResponse(self._client.csam_scanner)
+
+    @cached_property
     def abuse_reports(self) -> abuse_reports.AsyncAbuseReportsResourceWithRawResponse:
         from .resources.abuse_reports import AsyncAbuseReportsResourceWithRawResponse
 
@@ -3612,6 +3669,14 @@ class CloudflareWithStreamedResponse:
         from .resources.custom_nameservers import CustomNameserversResourceWithStreamingResponse
 
         return CustomNameserversResourceWithStreamingResponse(self._client.custom_nameservers)
+
+    @cached_property
+    def tenant_custom_nameservers(
+        self,
+    ) -> tenant_custom_nameservers.TenantCustomNameserversResourceWithStreamingResponse:
+        from .resources.tenant_custom_nameservers import TenantCustomNameserversResourceWithStreamingResponse
+
+        return TenantCustomNameserversResourceWithStreamingResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.DNSFirewallResourceWithStreamingResponse:
@@ -4108,6 +4173,12 @@ class CloudflareWithStreamedResponse:
         return AISecurityResourceWithStreamingResponse(self._client.ai_security)
 
     @cached_property
+    def csam_scanner(self) -> csam_scanner.CsamScannerResourceWithStreamingResponse:
+        from .resources.csam_scanner import CsamScannerResourceWithStreamingResponse
+
+        return CsamScannerResourceWithStreamingResponse(self._client.csam_scanner)
+
+    @cached_property
     def abuse_reports(self) -> abuse_reports.AbuseReportsResourceWithStreamingResponse:
         from .resources.abuse_reports import AbuseReportsResourceWithStreamingResponse
 
@@ -4283,6 +4354,14 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.custom_nameservers import AsyncCustomNameserversResourceWithStreamingResponse
 
         return AsyncCustomNameserversResourceWithStreamingResponse(self._client.custom_nameservers)
+
+    @cached_property
+    def tenant_custom_nameservers(
+        self,
+    ) -> tenant_custom_nameservers.AsyncTenantCustomNameserversResourceWithStreamingResponse:
+        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResourceWithStreamingResponse
+
+        return AsyncTenantCustomNameserversResourceWithStreamingResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.AsyncDNSFirewallResourceWithStreamingResponse:
@@ -4785,6 +4864,12 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.ai_security import AsyncAISecurityResourceWithStreamingResponse
 
         return AsyncAISecurityResourceWithStreamingResponse(self._client.ai_security)
+
+    @cached_property
+    def csam_scanner(self) -> csam_scanner.AsyncCsamScannerResourceWithStreamingResponse:
+        from .resources.csam_scanner import AsyncCsamScannerResourceWithStreamingResponse
+
+        return AsyncCsamScannerResourceWithStreamingResponse(self._client.csam_scanner)
 
     @cached_property
     def abuse_reports(self) -> abuse_reports.AsyncAbuseReportsResourceWithStreamingResponse:

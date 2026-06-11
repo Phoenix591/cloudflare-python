@@ -65,6 +65,8 @@ from cloudflare.types import (
 
 # [CustomNameservers](src/cloudflare/resources/custom_nameservers/api.md)
 
+# [TenantCustomNameservers](src/cloudflare/resources/tenant_custom_nameservers/api.md)
+
 # [DNSFirewall](src/cloudflare/resources/dns_firewall/api.md)
 
 # [DNS](src/cloudflare/resources/dns/api.md)
@@ -228,6 +230,8 @@ from cloudflare.types import (
 # [ContentScanning](src/cloudflare/resources/content_scanning/api.md)
 
 # [AISecurity](src/cloudflare/resources/ai_security/api.md)
+
+# [CsamScanner](src/cloudflare/resources/csam_scanner/api.md)
 
 # [AbuseReports](src/cloudflare/resources/abuse_reports/api.md)
 
