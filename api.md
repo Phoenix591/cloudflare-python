@@ -59,9 +59,13 @@ from cloudflare.types import (
 
 # [CustomCertificates](src/cloudflare/resources/custom_certificates/api.md)
 
+# [CustomCsrs](src/cloudflare/resources/custom_csrs/api.md)
+
 # [CustomHostnames](src/cloudflare/resources/custom_hostnames/api.md)
 
 # [CustomNameservers](src/cloudflare/resources/custom_nameservers/api.md)
+
+# [TenantCustomNameservers](src/cloudflare/resources/tenant_custom_nameservers/api.md)
 
 # [DNSFirewall](src/cloudflare/resources/dns_firewall/api.md)
 
@@ -116,6 +120,8 @@ from cloudflare.types import (
 # [Spectrum](src/cloudflare/resources/spectrum/api.md)
 
 # [Addressing](src/cloudflare/resources/addressing/api.md)
+
+# [DLS](src/cloudflare/resources/dls/api.md)
 
 # [AuditLogs](src/cloudflare/resources/audit_logs/api.md)
 
@@ -225,9 +231,13 @@ from cloudflare.types import (
 
 # [AISecurity](src/cloudflare/resources/ai_security/api.md)
 
+# [CsamScanner](src/cloudflare/resources/csam_scanner/api.md)
+
 # [AbuseReports](src/cloudflare/resources/abuse_reports/api.md)
 
 # [AI](src/cloudflare/resources/ai/api.md)
+
+# [AIAudit](src/cloudflare/resources/ai_audit/api.md)
 
 # [AISearch](src/cloudflare/resources/aisearch/api.md)
 

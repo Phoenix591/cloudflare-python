@@ -467,6 +467,7 @@ from cloudflare.types.zero_trust.access.ai_controls.mcp import (
     ServerListResponse,
     ServerDeleteResponse,
     ServerReadResponse,
+    ServerSyncResponse,
 )
 ```
 
@@ -477,7 +478,7 @@ Methods:
 - <code title="get /accounts/{account_id}/access/ai-controls/mcp/servers">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">list</a>(\*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_list_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_list_response.py">SyncV4PagePaginationArray[ServerListResponse]</a></code>
 - <code title="delete /accounts/{account_id}/access/ai-controls/mcp/servers/{id}">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">delete</a>(id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_delete_response.py">ServerDeleteResponse</a></code>
 - <code title="get /accounts/{account_id}/access/ai-controls/mcp/servers/{id}">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">read</a>(id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_read_response.py">ServerReadResponse</a></code>
-- <code title="post /accounts/{account_id}/access/ai-controls/mcp/servers/{id}/sync">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">sync</a>(id, \*, account_id) -> object</code>
+- <code title="post /accounts/{account_id}/access/ai-controls/mcp/servers/{id}/sync">client.zero_trust.access.ai_controls.mcp.servers.<a href="./src/cloudflare/resources/zero_trust/access/ai_controls/mcp/servers.py">sync</a>(id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/ai_controls/mcp/server_sync_response.py">ServerSyncResponse</a></code>
 
 ### GatewayCA
 
@@ -496,6 +497,25 @@ Methods:
 - <code title="post /accounts/{account_id}/access/gateway_ca">client.zero_trust.access.gateway_ca.<a href="./src/cloudflare/resources/zero_trust/access/gateway_ca.py">create</a>(\*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/gateway_ca_create_response.py">Optional[GatewayCACreateResponse]</a></code>
 - <code title="get /accounts/{account_id}/access/gateway_ca">client.zero_trust.access.gateway_ca.<a href="./src/cloudflare/resources/zero_trust/access/gateway_ca.py">list</a>(\*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/gateway_ca_list_response.py">SyncSinglePage[GatewayCAListResponse]</a></code>
 - <code title="delete /accounts/{account_id}/access/gateway_ca/{certificate_id}">client.zero_trust.access.gateway_ca.<a href="./src/cloudflare/resources/zero_trust/access/gateway_ca.py">delete</a>(certificate_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/gateway_ca_delete_response.py">Optional[GatewayCADeleteResponse]</a></code>
+
+### IdPFederationGrants
+
+Types:
+
+```python
+from cloudflare.types.zero_trust.access import (
+    IdPFederationGrant,
+    IdPFederationGrantListResponse,
+    IdPFederationGrantDeleteResponse,
+)
+```
+
+Methods:
+
+- <code title="post /accounts/{account_id}/access/idp_federation_grants">client.zero_trust.access.idp_federation_grants.<a href="./src/cloudflare/resources/zero_trust/access/idp_federation_grants.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/access/idp_federation_grant_create_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/access/idp_federation_grant.py">Optional[IdPFederationGrant]</a></code>
+- <code title="get /accounts/{account_id}/access/idp_federation_grants">client.zero_trust.access.idp_federation_grants.<a href="./src/cloudflare/resources/zero_trust/access/idp_federation_grants.py">list</a>(\*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/idp_federation_grant_list_response.py">Optional[IdPFederationGrantListResponse]</a></code>
+- <code title="delete /accounts/{account_id}/access/idp_federation_grants/{grant_id}">client.zero_trust.access.idp_federation_grants.<a href="./src/cloudflare/resources/zero_trust/access/idp_federation_grants.py">delete</a>(grant_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/idp_federation_grant_delete_response.py">Optional[IdPFederationGrantDeleteResponse]</a></code>
+- <code title="get /accounts/{account_id}/access/idp_federation_grants/{grant_id}">client.zero_trust.access.idp_federation_grants.<a href="./src/cloudflare/resources/zero_trust/access/idp_federation_grants.py">get</a>(grant_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/access/idp_federation_grant.py">Optional[IdPFederationGrant]</a></code>
 
 ### SAMLCertificates
 
@@ -1172,6 +1192,20 @@ Methods:
 - <code title="delete /accounts/{account_id}/dex/rules/{rule_id}">client.zero_trust.dex.rules.<a href="./src/cloudflare/resources/zero_trust/dex/rules.py">delete</a>(rule_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/dex/rule_delete_response.py">Optional[RuleDeleteResponse]</a></code>
 - <code title="get /accounts/{account_id}/dex/rules/{rule_id}">client.zero_trust.dex.rules.<a href="./src/cloudflare/resources/zero_trust/dex/rules.py">get</a>(rule_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/dex/rule_get_response.py">Optional[RuleGetResponse]</a></code>
 
+### Devices
+
+#### ISPs
+
+Types:
+
+```python
+from cloudflare.types.zero_trust.dex.devices import ISPs
+```
+
+Methods:
+
+- <code title="get /accounts/{account_id}/dex/devices/{device_id}/isps">client.zero_trust.dex.devices.isps.<a href="./src/cloudflare/resources/zero_trust/dex/devices/isps.py">list</a>(device_id, \*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/dex/devices/isp_list_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/dex/devices/isps.py">SyncV4PagePagination[Optional[ISPs]]</a></code>
+
 ## Tunnels
 
 Types:
@@ -1334,6 +1368,22 @@ Methods:
 - <code title="get /accounts/{account_id}/zerotrust/connectivity_settings">client.zero_trust.connectivity_settings.<a href="./src/cloudflare/resources/zero_trust/connectivity_settings.py">get</a>(\*, account_id) -> <a href="./src/cloudflare/types/zero_trust/connectivity_setting_get_response.py">ConnectivitySettingGetResponse</a></code>
 
 ## DLP
+
+### CustomPromptTopics
+
+Types:
+
+```python
+from cloudflare.types.zero_trust.dlp import CustomPromptTopic
+```
+
+Methods:
+
+- <code title="post /accounts/{account_id}/dlp/custom_prompt_topics">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/dlp/custom_prompt_topic_create_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">Optional[CustomPromptTopic]</a></code>
+- <code title="put /accounts/{account_id}/dlp/custom_prompt_topics/{entry_id}">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">update</a>(entry_id, \*, account_id, \*\*<a href="src/cloudflare/types/zero_trust/dlp/custom_prompt_topic_update_params.py">params</a>) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">Optional[CustomPromptTopic]</a></code>
+- <code title="get /accounts/{account_id}/dlp/custom_prompt_topics">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">list</a>(\*, account_id) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">SyncSinglePage[CustomPromptTopic]</a></code>
+- <code title="delete /accounts/{account_id}/dlp/custom_prompt_topics/{entry_id}">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">delete</a>(entry_id, \*, account_id) -> object</code>
+- <code title="get /accounts/{account_id}/dlp/custom_prompt_topics/{entry_id}">client.zero_trust.dlp.custom_prompt_topics.<a href="./src/cloudflare/resources/zero_trust/dlp/custom_prompt_topics.py">get</a>(entry_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/dlp/custom_prompt_topic.py">Optional[CustomPromptTopic]</a></code>
 
 ### Datasets
 
@@ -1714,15 +1764,9 @@ Methods:
 
 #### Items
 
-Types:
-
-```python
-from cloudflare.types.zero_trust.gateway.lists import ItemListResponse
-```
-
 Methods:
 
-- <code title="get /accounts/{account_id}/gateway/lists/{list_id}/items">client.zero_trust.gateway.lists.items.<a href="./src/cloudflare/resources/zero_trust/gateway/lists/items.py">list</a>(list_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/gateway/lists/item_list_response.py">SyncSinglePage[ItemListResponse]</a></code>
+- <code title="get /accounts/{account_id}/gateway/lists/{list_id}/items">client.zero_trust.gateway.lists.items.<a href="./src/cloudflare/resources/zero_trust/gateway/lists/items.py">list</a>(list_id, \*, account_id) -> <a href="./src/cloudflare/types/zero_trust/gateway/gateway_item.py">SyncSinglePage[GatewayItem]</a></code>
 
 ### Locations
 
