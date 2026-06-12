@@ -191,6 +191,8 @@ from cloudflare.types import (
 
 # [OriginPostQuantumEncryption](src/cloudflare/resources/origin_post_quantum_encryption/api.md)
 
+# [OriginTLSComplianceModes](src/cloudflare/resources/origin_tls_compliance_modes/api.md)
+
 # [GoogleTagGateway](src/cloudflare/resources/google_tag_gateway/api.md)
 
 # [Zaraz](src/cloudflare/resources/zaraz/api.md)
@@ -210,6 +212,8 @@ from cloudflare.types import (
 # [CloudforceOne](src/cloudflare/resources/cloudforce_one/api.md)
 
 # [AIGateway](src/cloudflare/resources/ai_gateway/api.md)
+
+# [Flagship](src/cloudflare/resources/flagship/api.md)
 
 # [IAM](src/cloudflare/resources/iam/api.md)
 

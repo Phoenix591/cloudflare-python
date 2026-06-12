@@ -74,6 +74,7 @@ if TYPE_CHECKING:
         aisearch,
         alerting,
         firewall,
+        flagship,
         rulesets,
         snippets,
         spectrum,
@@ -187,6 +188,7 @@ if TYPE_CHECKING:
     from .resources.aisearch.aisearch import AISearchResource, AsyncAISearchResource
     from .resources.alerting.alerting import AlertingResource, AsyncAlertingResource
     from .resources.firewall.firewall import FirewallResource, AsyncFirewallResource
+    from .resources.flagship.flagship import FlagshipResource, AsyncFlagshipResource
     from .resources.rulesets.rulesets import RulesetsResource, AsyncRulesetsResource
     from .resources.snippets.snippets import SnippetsResource, AsyncSnippetsResource
     from .resources.spectrum.spectrum import SpectrumResource, AsyncSpectrumResource
@@ -955,6 +957,12 @@ class Cloudflare(SyncAPIClient):
         from .resources.ai_gateway import AIGatewayResource
 
         return AIGatewayResource(self)
+
+    @cached_property
+    def flagship(self) -> FlagshipResource:
+        from .resources.flagship import FlagshipResource
+
+        return FlagshipResource(self)
 
     @cached_property
     def iam(self) -> IAMResource:
@@ -1891,6 +1899,12 @@ class AsyncCloudflare(AsyncAPIClient):
         return AsyncAIGatewayResource(self)
 
     @cached_property
+    def flagship(self) -> AsyncFlagshipResource:
+        from .resources.flagship import AsyncFlagshipResource
+
+        return AsyncFlagshipResource(self)
+
+    @cached_property
     def iam(self) -> AsyncIAMResource:
         from .resources.iam import AsyncIAMResource
 
@@ -2747,6 +2761,12 @@ class CloudflareWithRawResponse:
         return AIGatewayResourceWithRawResponse(self._client.ai_gateway)
 
     @cached_property
+    def flagship(self) -> flagship.FlagshipResourceWithRawResponse:
+        from .resources.flagship import FlagshipResourceWithRawResponse
+
+        return FlagshipResourceWithRawResponse(self._client.flagship)
+
+    @cached_property
     def iam(self) -> iam.IAMResourceWithRawResponse:
         from .resources.iam import IAMResourceWithRawResponse
 
@@ -3430,6 +3450,12 @@ class AsyncCloudflareWithRawResponse:
         return AsyncAIGatewayResourceWithRawResponse(self._client.ai_gateway)
 
     @cached_property
+    def flagship(self) -> flagship.AsyncFlagshipResourceWithRawResponse:
+        from .resources.flagship import AsyncFlagshipResourceWithRawResponse
+
+        return AsyncFlagshipResourceWithRawResponse(self._client.flagship)
+
+    @cached_property
     def iam(self) -> iam.AsyncIAMResourceWithRawResponse:
         from .resources.iam import AsyncIAMResourceWithRawResponse
 
@@ -4111,6 +4137,12 @@ class CloudflareWithStreamedResponse:
         from .resources.ai_gateway import AIGatewayResourceWithStreamingResponse
 
         return AIGatewayResourceWithStreamingResponse(self._client.ai_gateway)
+
+    @cached_property
+    def flagship(self) -> flagship.FlagshipResourceWithStreamingResponse:
+        from .resources.flagship import FlagshipResourceWithStreamingResponse
+
+        return FlagshipResourceWithStreamingResponse(self._client.flagship)
 
     @cached_property
     def iam(self) -> iam.IAMResourceWithStreamingResponse:
@@ -4802,6 +4834,12 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.ai_gateway import AsyncAIGatewayResourceWithStreamingResponse
 
         return AsyncAIGatewayResourceWithStreamingResponse(self._client.ai_gateway)
+
+    @cached_property
+    def flagship(self) -> flagship.AsyncFlagshipResourceWithStreamingResponse:
+        from .resources.flagship import AsyncFlagshipResourceWithStreamingResponse
+
+        return AsyncFlagshipResourceWithStreamingResponse(self._client.flagship)
 
     @cached_property
     def iam(self) -> iam.AsyncIAMResourceWithStreamingResponse:
