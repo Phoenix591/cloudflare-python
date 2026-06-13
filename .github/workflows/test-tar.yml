@@ -33,7 +33,7 @@ jobs:
         node-version: 'lts/*'
 
     - name: fetch Prism and deps
-      run: npm install $(grep -m1 prism-cli scripts/mock | awk '{print $3}' | sed s/--package=//)
+      run: npm install $(grep -m1 prism-cli scripts/mock | awk '{print $3}' | sed s/--package=//) --min-release-age=7
       working-directory: ${{ env.CHECKOUT_DIR }}
 
 # The spec is under a BSD license see https://github.com/cloudflare/api-schemas
