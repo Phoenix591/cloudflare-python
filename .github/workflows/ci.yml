@@ -20,66 +20,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    timeout-minutes: 10
-    name: lint
-    runs-on: ${{ github.repository == 'stainless-sdks/cloudflare-python' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: '0.10.2'
-
-      - name: Install dependencies
-        run: uv sync --all-extras
-
-      - name: Run lints
-        run: ./scripts/lint
-
-  build:
-    if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
-    timeout-minutes: 10
-    name: build
-    permissions:
-      contents: read
-      id-token: write
-    runs-on: ${{ github.repository == 'stainless-sdks/cloudflare-python' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: '0.10.2'
-
-      - name: Install dependencies
-        run: uv sync --all-extras
-
-      - name: Run build
-        run: uv build
-
-      - name: Get GitHub OIDC Token
-        if: |-
-          github.repository == 'stainless-sdks/cloudflare-python' &&
-          !startsWith(github.ref, 'refs/heads/stl/')
-        id: github-oidc
-        uses: actions/github-script@v8
-        with:
-          script: core.setOutput('github_token', await core.getIDToken());
-
-      - name: Upload tarball
-        if: |-
-          github.repository == 'stainless-sdks/cloudflare-python' &&
-          !startsWith(github.ref, 'refs/heads/stl/')
-        env:
-          URL: https://pkg.stainless.com/s
-          AUTH: ${{ steps.github-oidc.outputs.github_token }}
-          SHA: ${{ github.sha }}
-        run: ./scripts/utils/upload-artifact.sh
-
   test:
     timeout-minutes: 30
     name: test
@@ -95,12 +35,14 @@ jobs:
 
       - name: Bootstrap
         run: ./scripts/bootstrap
+        env:
+          UV_PYTHON: ">=3.14.0"
 
       - name: Run tests
         continue-on-error: true
         run: ./scripts/test
         env:
-          UV_PYTHON: ">=3.9.0"
+          UV_PYTHON: ">=3.14.0"
 
   examples:
     timeout-minutes: 10
