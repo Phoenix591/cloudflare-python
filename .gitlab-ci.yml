@@ -21,7 +21,6 @@ lint:
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH != $CI_PROJECT_PATH
   script:
-    - pip install uv
     - uv sync --all-extras
     - ./scripts/lint
 
@@ -34,7 +33,6 @@ build:
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH != $CI_PROJECT_PATH
   script:
-    - pip install uv
     - uv sync --all-extras
     - uv build
 
@@ -51,6 +49,5 @@ examples:
     CLOUDFLARE_ZONE_ID: "0da42c8d2132a9ddaf714f9e7c92011"
     CLOUDFLARE_API_KEY: "${{ secrets.CLOUDFLARE_API_KEY }}"
   script:
-    - pip install uv
     - uv sync --all-extras
     - uv run python ./examples/ai/demo.py
