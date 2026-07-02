@@ -27,6 +27,14 @@ from .dlp.dlp import (
     AsyncDLPResourceWithStreamingResponse,
 )
 from ..._compat import cached_property
+from .casb.casb import (
+    CasbResource,
+    AsyncCasbResource,
+    CasbResourceWithRawResponse,
+    AsyncCasbResourceWithRawResponse,
+    CasbResourceWithStreamingResponse,
+    AsyncCasbResourceWithStreamingResponse,
+)
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from .access.access import (
     AccessResource,
@@ -134,6 +142,10 @@ class ZeroTrustResource(SyncAPIResource):
         return AccessResource(self._client)
 
     @cached_property
+    def casb(self) -> CasbResource:
+        return CasbResource(self._client)
+
+    @cached_property
     def dex(self) -> DEXResource:
         return DEXResource(self._client)
 
@@ -171,7 +183,7 @@ class ZeroTrustResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return ZeroTrustResourceWithRawResponse(self)
 
@@ -180,7 +192,7 @@ class ZeroTrustResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return ZeroTrustResourceWithStreamingResponse(self)
 
@@ -205,6 +217,10 @@ class AsyncZeroTrustResource(AsyncAPIResource):
     @cached_property
     def access(self) -> AsyncAccessResource:
         return AsyncAccessResource(self._client)
+
+    @cached_property
+    def casb(self) -> AsyncCasbResource:
+        return AsyncCasbResource(self._client)
 
     @cached_property
     def dex(self) -> AsyncDEXResource:
@@ -244,7 +260,7 @@ class AsyncZeroTrustResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncZeroTrustResourceWithRawResponse(self)
 
@@ -253,7 +269,7 @@ class AsyncZeroTrustResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncZeroTrustResourceWithStreamingResponse(self)
 
@@ -281,6 +297,10 @@ class ZeroTrustResourceWithRawResponse:
     @cached_property
     def access(self) -> AccessResourceWithRawResponse:
         return AccessResourceWithRawResponse(self._zero_trust.access)
+
+    @cached_property
+    def casb(self) -> CasbResourceWithRawResponse:
+        return CasbResourceWithRawResponse(self._zero_trust.casb)
 
     @cached_property
     def dex(self) -> DEXResourceWithRawResponse:
@@ -340,6 +360,10 @@ class AsyncZeroTrustResourceWithRawResponse:
         return AsyncAccessResourceWithRawResponse(self._zero_trust.access)
 
     @cached_property
+    def casb(self) -> AsyncCasbResourceWithRawResponse:
+        return AsyncCasbResourceWithRawResponse(self._zero_trust.casb)
+
+    @cached_property
     def dex(self) -> AsyncDEXResourceWithRawResponse:
         return AsyncDEXResourceWithRawResponse(self._zero_trust.dex)
 
@@ -397,6 +421,10 @@ class ZeroTrustResourceWithStreamingResponse:
         return AccessResourceWithStreamingResponse(self._zero_trust.access)
 
     @cached_property
+    def casb(self) -> CasbResourceWithStreamingResponse:
+        return CasbResourceWithStreamingResponse(self._zero_trust.casb)
+
+    @cached_property
     def dex(self) -> DEXResourceWithStreamingResponse:
         return DEXResourceWithStreamingResponse(self._zero_trust.dex)
 
@@ -452,6 +480,10 @@ class AsyncZeroTrustResourceWithStreamingResponse:
     @cached_property
     def access(self) -> AsyncAccessResourceWithStreamingResponse:
         return AsyncAccessResourceWithStreamingResponse(self._zero_trust.access)
+
+    @cached_property
+    def casb(self) -> AsyncCasbResourceWithStreamingResponse:
+        return AsyncCasbResourceWithStreamingResponse(self._zero_trust.casb)
 
     @cached_property
     def dex(self) -> AsyncDEXResourceWithStreamingResponse:

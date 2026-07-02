@@ -33,7 +33,7 @@ class DomainsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return DomainsResourceWithRawResponse(self)
 
@@ -42,12 +42,12 @@ class DomainsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return DomainsResourceWithStreamingResponse(self)
 
     @typing_extensions.deprecated(
-        "This operation is deprecated and will be removed in a future release. A replacement Registrar API will be announced separately."
+        "This operation is deprecated and will reach end of life on September 27, 2026. Use the new Registrar API endpoints (domain-search, domain-check, registrations) instead. Refer to https://developers.cloudflare.com/fundamentals/api/reference/deprecations/ for details."
     )
     def update(
         self,
@@ -117,7 +117,7 @@ class DomainsResource(SyncAPIResource):
         )
 
     @typing_extensions.deprecated(
-        "This operation is deprecated and will be removed in a future release. A replacement Registrar API will be announced separately."
+        "This operation is deprecated and will reach end of life on September 27, 2026. Use the new Registrar API endpoints (domain-search, domain-check, registrations) instead. Refer to https://developers.cloudflare.com/fundamentals/api/reference/deprecations/ for details."
     )
     def list(
         self,
@@ -156,7 +156,7 @@ class DomainsResource(SyncAPIResource):
         )
 
     @typing_extensions.deprecated(
-        "This operation is deprecated and will be removed in a future release. A replacement Registrar API will be announced separately."
+        "This operation is deprecated and will reach end of life on September 27, 2026. Use the new Registrar API endpoints (domain-search, domain-check, registrations) instead. Refer to https://developers.cloudflare.com/fundamentals/api/reference/deprecations/ for details."
     )
     def get(
         self,
@@ -215,7 +215,7 @@ class AsyncDomainsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncDomainsResourceWithRawResponse(self)
 
@@ -224,12 +224,12 @@ class AsyncDomainsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncDomainsResourceWithStreamingResponse(self)
 
     @typing_extensions.deprecated(
-        "This operation is deprecated and will be removed in a future release. A replacement Registrar API will be announced separately."
+        "This operation is deprecated and will reach end of life on September 27, 2026. Use the new Registrar API endpoints (domain-search, domain-check, registrations) instead. Refer to https://developers.cloudflare.com/fundamentals/api/reference/deprecations/ for details."
     )
     async def update(
         self,
@@ -299,7 +299,7 @@ class AsyncDomainsResource(AsyncAPIResource):
         )
 
     @typing_extensions.deprecated(
-        "This operation is deprecated and will be removed in a future release. A replacement Registrar API will be announced separately."
+        "This operation is deprecated and will reach end of life on September 27, 2026. Use the new Registrar API endpoints (domain-search, domain-check, registrations) instead. Refer to https://developers.cloudflare.com/fundamentals/api/reference/deprecations/ for details."
     )
     def list(
         self,
@@ -338,7 +338,7 @@ class AsyncDomainsResource(AsyncAPIResource):
         )
 
     @typing_extensions.deprecated(
-        "This operation is deprecated and will be removed in a future release. A replacement Registrar API will be announced separately."
+        "This operation is deprecated and will reach end of life on September 27, 2026. Use the new Registrar API endpoints (domain-search, domain-check, registrations) instead. Refer to https://developers.cloudflare.com/fundamentals/api/reference/deprecations/ for details."
     )
     async def get(
         self,

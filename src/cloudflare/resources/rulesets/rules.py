@@ -35,7 +35,7 @@ class RulesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return RulesResourceWithRawResponse(self)
 
@@ -44,7 +44,7 @@ class RulesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return RulesResourceWithStreamingResponse(self)
 
@@ -1428,6 +1428,75 @@ class RulesResource(SyncAPIResource):
         """
         ...
 
+    @overload
+    def create(
+        self,
+        ruleset_id: str,
+        *,
+        account_id: str | Omit = omit,
+        zone_id: str | Omit = omit,
+        id: str | Omit = omit,
+        action: Literal["transform_response_html"] | Omit = omit,
+        action_parameters: rule_create_params.TransformResponseHTMLRuleActionParameters | Omit = omit,
+        description: str | Omit = omit,
+        enabled: bool | Omit = omit,
+        exposed_credential_check: rule_create_params.TransformResponseHTMLRuleExposedCredentialCheck | Omit = omit,
+        expression: str | Omit = omit,
+        logging: LoggingParam | Omit = omit,
+        position: rule_create_params.TransformResponseHTMLRulePosition | Omit = omit,
+        ratelimit: rule_create_params.TransformResponseHTMLRuleRatelimit | Omit = omit,
+        ref: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> RuleCreateResponse:
+        """Adds a new rule to an account or zone ruleset.
+
+        The rule will be added to the end
+        of the existing list of rules in the ruleset by default.
+
+        Args:
+          ruleset_id: The unique ID of the ruleset.
+
+          account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+
+          zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+
+          id: The unique ID of the rule.
+
+          action: The action to perform when the rule matches.
+
+          action_parameters: The parameters configuring the rule's action.
+
+          description: An informative description of the rule.
+
+          enabled: Whether the rule should be executed.
+
+          exposed_credential_check: Configuration for exposed credential checking.
+
+          expression: The expression defining which traffic will match the rule.
+
+          logging: An object configuring the rule's logging behavior.
+
+          position: An object configuring where the rule will be placed.
+
+          ratelimit: An object configuring the rule's rate limit behavior.
+
+          ref: The reference of the rule (the rule's ID by default).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
     def create(
         self,
         ruleset_id: str,
@@ -1455,6 +1524,7 @@ class RulesResource(SyncAPIResource):
         | Literal["set_cache_tags"]
         | Literal["set_config"]
         | Literal["skip"]
+        | Literal["transform_response_html"]
         | Omit = omit,
         action_parameters: rule_create_params.BlockRuleActionParameters
         | object
@@ -1471,6 +1541,7 @@ class RulesResource(SyncAPIResource):
         | rule_create_params.SetCacheTagsRuleActionParameters
         | rule_create_params.SetConfigurationRuleActionParameters
         | rule_create_params.SkipRuleActionParameters
+        | rule_create_params.TransformResponseHTMLRuleActionParameters
         | Omit = omit,
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
@@ -1494,6 +1565,7 @@ class RulesResource(SyncAPIResource):
         | rule_create_params.SetCacheTagsRuleExposedCredentialCheck
         | rule_create_params.SetConfigurationRuleExposedCredentialCheck
         | rule_create_params.SkipRuleExposedCredentialCheck
+        | rule_create_params.TransformResponseHTMLRuleExposedCredentialCheck
         | Omit = omit,
         expression: str | Omit = omit,
         logging: LoggingParam | Omit = omit,
@@ -1517,6 +1589,7 @@ class RulesResource(SyncAPIResource):
         | rule_create_params.SetCacheTagsRulePosition
         | rule_create_params.SetConfigurationRulePosition
         | rule_create_params.SkipRulePosition
+        | rule_create_params.TransformResponseHTMLRulePosition
         | Omit = omit,
         ratelimit: rule_create_params.BlockRuleRatelimit
         | rule_create_params.ChallengeRuleRatelimit
@@ -1538,6 +1611,7 @@ class RulesResource(SyncAPIResource):
         | rule_create_params.SetCacheTagsRuleRatelimit
         | rule_create_params.SetConfigurationRuleRatelimit
         | rule_create_params.SkipRuleRatelimit
+        | rule_create_params.TransformResponseHTMLRuleRatelimit
         | Omit = omit,
         ref: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3062,6 +3136,76 @@ class RulesResource(SyncAPIResource):
         """
         ...
 
+    @overload
+    def edit(
+        self,
+        rule_id: str,
+        *,
+        ruleset_id: str,
+        account_id: str | Omit = omit,
+        zone_id: str | Omit = omit,
+        id: str | Omit = omit,
+        action: Literal["transform_response_html"] | Omit = omit,
+        action_parameters: rule_edit_params.TransformResponseHTMLRuleActionParameters | Omit = omit,
+        description: str | Omit = omit,
+        enabled: bool | Omit = omit,
+        exposed_credential_check: rule_edit_params.TransformResponseHTMLRuleExposedCredentialCheck | Omit = omit,
+        expression: str | Omit = omit,
+        logging: LoggingParam | Omit = omit,
+        position: rule_edit_params.TransformResponseHTMLRulePosition | Omit = omit,
+        ratelimit: rule_edit_params.TransformResponseHTMLRuleRatelimit | Omit = omit,
+        ref: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> RuleEditResponse:
+        """
+        Updates an existing rule in an account or zone ruleset.
+
+        Args:
+          ruleset_id: The unique ID of the ruleset.
+
+          rule_id: The unique ID of the rule.
+
+          account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+
+          zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+
+          id: The unique ID of the rule.
+
+          action: The action to perform when the rule matches.
+
+          action_parameters: The parameters configuring the rule's action.
+
+          description: An informative description of the rule.
+
+          enabled: Whether the rule should be executed.
+
+          exposed_credential_check: Configuration for exposed credential checking.
+
+          expression: The expression defining which traffic will match the rule.
+
+          logging: An object configuring the rule's logging behavior.
+
+          position: An object configuring where the rule will be placed.
+
+          ratelimit: An object configuring the rule's rate limit behavior.
+
+          ref: The reference of the rule (the rule's ID by default).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
     @required_args(["ruleset_id"])
     def edit(
         self,
@@ -3091,6 +3235,7 @@ class RulesResource(SyncAPIResource):
         | Literal["set_cache_tags"]
         | Literal["set_config"]
         | Literal["skip"]
+        | Literal["transform_response_html"]
         | Omit = omit,
         action_parameters: rule_edit_params.BlockRuleActionParameters
         | object
@@ -3107,6 +3252,7 @@ class RulesResource(SyncAPIResource):
         | rule_edit_params.SetCacheTagsRuleActionParameters
         | rule_edit_params.SetConfigurationRuleActionParameters
         | rule_edit_params.SkipRuleActionParameters
+        | rule_edit_params.TransformResponseHTMLRuleActionParameters
         | Omit = omit,
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
@@ -3130,6 +3276,7 @@ class RulesResource(SyncAPIResource):
         | rule_edit_params.SetCacheTagsRuleExposedCredentialCheck
         | rule_edit_params.SetConfigurationRuleExposedCredentialCheck
         | rule_edit_params.SkipRuleExposedCredentialCheck
+        | rule_edit_params.TransformResponseHTMLRuleExposedCredentialCheck
         | Omit = omit,
         expression: str | Omit = omit,
         logging: LoggingParam | Omit = omit,
@@ -3153,6 +3300,7 @@ class RulesResource(SyncAPIResource):
         | rule_edit_params.SetCacheTagsRulePosition
         | rule_edit_params.SetConfigurationRulePosition
         | rule_edit_params.SkipRulePosition
+        | rule_edit_params.TransformResponseHTMLRulePosition
         | Omit = omit,
         ratelimit: rule_edit_params.BlockRuleRatelimit
         | rule_edit_params.ChallengeRuleRatelimit
@@ -3174,6 +3322,7 @@ class RulesResource(SyncAPIResource):
         | rule_edit_params.SetCacheTagsRuleRatelimit
         | rule_edit_params.SetConfigurationRuleRatelimit
         | rule_edit_params.SkipRuleRatelimit
+        | rule_edit_params.TransformResponseHTMLRuleRatelimit
         | Omit = omit,
         ref: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -3241,7 +3390,7 @@ class AsyncRulesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncRulesResourceWithRawResponse(self)
 
@@ -3250,7 +3399,7 @@ class AsyncRulesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncRulesResourceWithStreamingResponse(self)
 
@@ -4634,6 +4783,75 @@ class AsyncRulesResource(AsyncAPIResource):
         """
         ...
 
+    @overload
+    async def create(
+        self,
+        ruleset_id: str,
+        *,
+        account_id: str | Omit = omit,
+        zone_id: str | Omit = omit,
+        id: str | Omit = omit,
+        action: Literal["transform_response_html"] | Omit = omit,
+        action_parameters: rule_create_params.TransformResponseHTMLRuleActionParameters | Omit = omit,
+        description: str | Omit = omit,
+        enabled: bool | Omit = omit,
+        exposed_credential_check: rule_create_params.TransformResponseHTMLRuleExposedCredentialCheck | Omit = omit,
+        expression: str | Omit = omit,
+        logging: LoggingParam | Omit = omit,
+        position: rule_create_params.TransformResponseHTMLRulePosition | Omit = omit,
+        ratelimit: rule_create_params.TransformResponseHTMLRuleRatelimit | Omit = omit,
+        ref: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> RuleCreateResponse:
+        """Adds a new rule to an account or zone ruleset.
+
+        The rule will be added to the end
+        of the existing list of rules in the ruleset by default.
+
+        Args:
+          ruleset_id: The unique ID of the ruleset.
+
+          account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+
+          zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+
+          id: The unique ID of the rule.
+
+          action: The action to perform when the rule matches.
+
+          action_parameters: The parameters configuring the rule's action.
+
+          description: An informative description of the rule.
+
+          enabled: Whether the rule should be executed.
+
+          exposed_credential_check: Configuration for exposed credential checking.
+
+          expression: The expression defining which traffic will match the rule.
+
+          logging: An object configuring the rule's logging behavior.
+
+          position: An object configuring where the rule will be placed.
+
+          ratelimit: An object configuring the rule's rate limit behavior.
+
+          ref: The reference of the rule (the rule's ID by default).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
     async def create(
         self,
         ruleset_id: str,
@@ -4661,6 +4879,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | Literal["set_cache_tags"]
         | Literal["set_config"]
         | Literal["skip"]
+        | Literal["transform_response_html"]
         | Omit = omit,
         action_parameters: rule_create_params.BlockRuleActionParameters
         | object
@@ -4677,6 +4896,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_create_params.SetCacheTagsRuleActionParameters
         | rule_create_params.SetConfigurationRuleActionParameters
         | rule_create_params.SkipRuleActionParameters
+        | rule_create_params.TransformResponseHTMLRuleActionParameters
         | Omit = omit,
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
@@ -4700,6 +4920,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_create_params.SetCacheTagsRuleExposedCredentialCheck
         | rule_create_params.SetConfigurationRuleExposedCredentialCheck
         | rule_create_params.SkipRuleExposedCredentialCheck
+        | rule_create_params.TransformResponseHTMLRuleExposedCredentialCheck
         | Omit = omit,
         expression: str | Omit = omit,
         logging: LoggingParam | Omit = omit,
@@ -4723,6 +4944,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_create_params.SetCacheTagsRulePosition
         | rule_create_params.SetConfigurationRulePosition
         | rule_create_params.SkipRulePosition
+        | rule_create_params.TransformResponseHTMLRulePosition
         | Omit = omit,
         ratelimit: rule_create_params.BlockRuleRatelimit
         | rule_create_params.ChallengeRuleRatelimit
@@ -4744,6 +4966,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_create_params.SetCacheTagsRuleRatelimit
         | rule_create_params.SetConfigurationRuleRatelimit
         | rule_create_params.SkipRuleRatelimit
+        | rule_create_params.TransformResponseHTMLRuleRatelimit
         | Omit = omit,
         ref: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -6268,6 +6491,76 @@ class AsyncRulesResource(AsyncAPIResource):
         """
         ...
 
+    @overload
+    async def edit(
+        self,
+        rule_id: str,
+        *,
+        ruleset_id: str,
+        account_id: str | Omit = omit,
+        zone_id: str | Omit = omit,
+        id: str | Omit = omit,
+        action: Literal["transform_response_html"] | Omit = omit,
+        action_parameters: rule_edit_params.TransformResponseHTMLRuleActionParameters | Omit = omit,
+        description: str | Omit = omit,
+        enabled: bool | Omit = omit,
+        exposed_credential_check: rule_edit_params.TransformResponseHTMLRuleExposedCredentialCheck | Omit = omit,
+        expression: str | Omit = omit,
+        logging: LoggingParam | Omit = omit,
+        position: rule_edit_params.TransformResponseHTMLRulePosition | Omit = omit,
+        ratelimit: rule_edit_params.TransformResponseHTMLRuleRatelimit | Omit = omit,
+        ref: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> RuleEditResponse:
+        """
+        Updates an existing rule in an account or zone ruleset.
+
+        Args:
+          ruleset_id: The unique ID of the ruleset.
+
+          rule_id: The unique ID of the rule.
+
+          account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+
+          zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+
+          id: The unique ID of the rule.
+
+          action: The action to perform when the rule matches.
+
+          action_parameters: The parameters configuring the rule's action.
+
+          description: An informative description of the rule.
+
+          enabled: Whether the rule should be executed.
+
+          exposed_credential_check: Configuration for exposed credential checking.
+
+          expression: The expression defining which traffic will match the rule.
+
+          logging: An object configuring the rule's logging behavior.
+
+          position: An object configuring where the rule will be placed.
+
+          ratelimit: An object configuring the rule's rate limit behavior.
+
+          ref: The reference of the rule (the rule's ID by default).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
     @required_args(["ruleset_id"])
     async def edit(
         self,
@@ -6297,6 +6590,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | Literal["set_cache_tags"]
         | Literal["set_config"]
         | Literal["skip"]
+        | Literal["transform_response_html"]
         | Omit = omit,
         action_parameters: rule_edit_params.BlockRuleActionParameters
         | object
@@ -6313,6 +6607,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_edit_params.SetCacheTagsRuleActionParameters
         | rule_edit_params.SetConfigurationRuleActionParameters
         | rule_edit_params.SkipRuleActionParameters
+        | rule_edit_params.TransformResponseHTMLRuleActionParameters
         | Omit = omit,
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
@@ -6336,6 +6631,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_edit_params.SetCacheTagsRuleExposedCredentialCheck
         | rule_edit_params.SetConfigurationRuleExposedCredentialCheck
         | rule_edit_params.SkipRuleExposedCredentialCheck
+        | rule_edit_params.TransformResponseHTMLRuleExposedCredentialCheck
         | Omit = omit,
         expression: str | Omit = omit,
         logging: LoggingParam | Omit = omit,
@@ -6359,6 +6655,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_edit_params.SetCacheTagsRulePosition
         | rule_edit_params.SetConfigurationRulePosition
         | rule_edit_params.SkipRulePosition
+        | rule_edit_params.TransformResponseHTMLRulePosition
         | Omit = omit,
         ratelimit: rule_edit_params.BlockRuleRatelimit
         | rule_edit_params.ChallengeRuleRatelimit
@@ -6380,6 +6677,7 @@ class AsyncRulesResource(AsyncAPIResource):
         | rule_edit_params.SetCacheTagsRuleRatelimit
         | rule_edit_params.SetConfigurationRuleRatelimit
         | rule_edit_params.SkipRuleRatelimit
+        | rule_edit_params.TransformResponseHTMLRuleRatelimit
         | Omit = omit,
         ref: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

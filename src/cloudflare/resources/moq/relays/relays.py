@@ -48,7 +48,7 @@ class RelaysResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return RelaysResourceWithRawResponse(self)
 
@@ -57,7 +57,7 @@ class RelaysResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return RelaysResourceWithStreamingResponse(self)
 
@@ -77,8 +77,8 @@ class RelaysResource(SyncAPIResource):
 
         Auto-creates a publish+subscribe token and
         a subscribe-only token. Token values are included in the response (shown once).
-        Config is set to defaults (lingering subscribe enabled, 30s ceiling, origin
-        fallback off). Use PUT to modify.
+        Config is set to defaults (lingering subscribe enabled, 30s ceiling, upstreams
+        off). Use PUT to modify.
 
         Args:
           account_id: Cloudflare account identifier.
@@ -125,13 +125,13 @@ class RelaysResource(SyncAPIResource):
         """Updates a relay's name and/or configuration.
 
         Partial updates: omitted fields are
-        preserved. Config sub-objects replace as whole objects when present.
-        origin_fallback and lingering_subscribe are mutually exclusive.
+        preserved. Config sub-objects replace as whole objects when present. upstreams
+        and lingering_subscribe are mutually exclusive.
 
         Args:
           account_id: Cloudflare account identifier.
 
-          config: origin_fallback and lingering_subscribe are mutually exclusive.
+          config: upstreams and lingering_subscribe are mutually exclusive.
 
           extra_headers: Send extra headers
 
@@ -334,7 +334,7 @@ class AsyncRelaysResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncRelaysResourceWithRawResponse(self)
 
@@ -343,7 +343,7 @@ class AsyncRelaysResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncRelaysResourceWithStreamingResponse(self)
 
@@ -363,8 +363,8 @@ class AsyncRelaysResource(AsyncAPIResource):
 
         Auto-creates a publish+subscribe token and
         a subscribe-only token. Token values are included in the response (shown once).
-        Config is set to defaults (lingering subscribe enabled, 30s ceiling, origin
-        fallback off). Use PUT to modify.
+        Config is set to defaults (lingering subscribe enabled, 30s ceiling, upstreams
+        off). Use PUT to modify.
 
         Args:
           account_id: Cloudflare account identifier.
@@ -411,13 +411,13 @@ class AsyncRelaysResource(AsyncAPIResource):
         """Updates a relay's name and/or configuration.
 
         Partial updates: omitted fields are
-        preserved. Config sub-objects replace as whole objects when present.
-        origin_fallback and lingering_subscribe are mutually exclusive.
+        preserved. Config sub-objects replace as whole objects when present. upstreams
+        and lingering_subscribe are mutually exclusive.
 
         Args:
           account_id: Cloudflare account identifier.
 
-          config: origin_fallback and lingering_subscribe are mutually exclusive.
+          config: upstreams and lingering_subscribe are mutually exclusive.
 
           extra_headers: Send extra headers
 

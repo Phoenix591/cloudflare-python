@@ -44,7 +44,7 @@ class V2Resource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return V2ResourceWithRawResponse(self)
 
@@ -53,7 +53,7 @@ class V2Resource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return V2ResourceWithStreamingResponse(self)
 
@@ -87,6 +87,10 @@ class V2Resource(SyncAPIResource):
         **Supported Operators:**
 
         - `eq` / `eq:string` / `eq:number` / `eq:boolean` - Exact match
+        - `gt` / `gt:number` - Greater than (number only)
+        - `gte` / `gte:number` - Greater than or equal (number only)
+        - `lt` / `lt:number` - Less than (number only)
+        - `lte` / `lte:number` - Less than or equal (number only)
         - `in` / `in:string` / `in:number` - Match any value in list (pipe-separated)
 
         **Metadata Filter Constraints:**
@@ -95,6 +99,13 @@ class V2Resource(SyncAPIResource):
         - Maximum 5 levels of nesting (e.g., `meta.first.second.third.fourth.fifth`)
         - Maximum 10 elements for list operators (`in`)
         - Supports string, number, and boolean value types
+        - Range operators (`gt`, `gte`, `lt`, `lte`) only accept numeric values
+
+        **Filter Consistency:** Filters are combined with AND logic. The system does not
+        validate whether filter combinations are logically consistent. For example,
+        `meta.priority[eq:number]=5&meta.priority[lte:number]=3` will return zero
+        results because no value can satisfy both conditions simultaneously. It is the
+        caller's responsibility to ensure filter combinations make sense.
 
         **Examples:**
 
@@ -110,6 +121,12 @@ class V2Resource(SyncAPIResource):
 
         # Filter by metadata [in:number]
         /images/v2?meta.ratings[in:number]=4|5
+
+        # Filter by metadata range [gte:number]
+        /images/v2?meta.priority[gte:number]=1
+
+        # Filter by bounded range
+        /images/v2?meta.priority[gte:number]=1&meta.priority[lte:number]=5
 
         # Filter by nested metadata
         /images/v2?meta.region.name[eq]=eu-west
@@ -178,7 +195,7 @@ class AsyncV2Resource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncV2ResourceWithRawResponse(self)
 
@@ -187,7 +204,7 @@ class AsyncV2Resource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncV2ResourceWithStreamingResponse(self)
 
@@ -221,6 +238,10 @@ class AsyncV2Resource(AsyncAPIResource):
         **Supported Operators:**
 
         - `eq` / `eq:string` / `eq:number` / `eq:boolean` - Exact match
+        - `gt` / `gt:number` - Greater than (number only)
+        - `gte` / `gte:number` - Greater than or equal (number only)
+        - `lt` / `lt:number` - Less than (number only)
+        - `lte` / `lte:number` - Less than or equal (number only)
         - `in` / `in:string` / `in:number` - Match any value in list (pipe-separated)
 
         **Metadata Filter Constraints:**
@@ -229,6 +250,13 @@ class AsyncV2Resource(AsyncAPIResource):
         - Maximum 5 levels of nesting (e.g., `meta.first.second.third.fourth.fifth`)
         - Maximum 10 elements for list operators (`in`)
         - Supports string, number, and boolean value types
+        - Range operators (`gt`, `gte`, `lt`, `lte`) only accept numeric values
+
+        **Filter Consistency:** Filters are combined with AND logic. The system does not
+        validate whether filter combinations are logically consistent. For example,
+        `meta.priority[eq:number]=5&meta.priority[lte:number]=3` will return zero
+        results because no value can satisfy both conditions simultaneously. It is the
+        caller's responsibility to ensure filter combinations make sense.
 
         **Examples:**
 
@@ -244,6 +272,12 @@ class AsyncV2Resource(AsyncAPIResource):
 
         # Filter by metadata [in:number]
         /images/v2?meta.ratings[in:number]=4|5
+
+        # Filter by metadata range [gte:number]
+        /images/v2?meta.priority[gte:number]=1
+
+        # Filter by bounded range
+        /images/v2?meta.priority[gte:number]=1&meta.priority[lte:number]=5
 
         # Filter by nested metadata
         /images/v2?meta.region.name[eq]=eu-west

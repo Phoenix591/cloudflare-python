@@ -33,7 +33,7 @@ class LocationsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return LocationsResourceWithRawResponse(self)
 
@@ -42,7 +42,7 @@ class LocationsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return LocationsResourceWithStreamingResponse(self)
 
@@ -82,9 +82,9 @@ class LocationsResource(SyncAPIResource):
 
           endpoints: Configure the destination endpoints for this location.
 
-          max_ttl: Configure DNS response TTL behavior for this Gateway location. Gateway can
-              rewrite DNS responses to cap returned record TTLs using the account setting or a
-              location-specific value, or leave TTLs unchanged.
+          max_ttl: Controls how DNS response TTLs are capped for this location relative to the
+              account `max_ttl_secs` setting. Omitting `max_ttl` on update resets it to
+              `inherit`.
 
           networks: Specify the list of network ranges from which requests at this location
               originate. The list takes effect only if it is non-empty and the IPv4 endpoint
@@ -161,9 +161,9 @@ class LocationsResource(SyncAPIResource):
 
           endpoints: Configure the destination endpoints for this location.
 
-          max_ttl: Configure DNS response TTL behavior for this Gateway location. Gateway can
-              rewrite DNS responses to cap returned record TTLs using the account setting or a
-              location-specific value, or leave TTLs unchanged.
+          max_ttl: Controls how DNS response TTLs are capped for this location relative to the
+              account `max_ttl_secs` setting. Omitting `max_ttl` on update resets it to
+              `inherit`.
 
           networks: Specify the list of network ranges from which requests at this location
               originate. The list takes effect only if it is non-empty and the IPv4 endpoint
@@ -333,7 +333,7 @@ class AsyncLocationsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncLocationsResourceWithRawResponse(self)
 
@@ -342,7 +342,7 @@ class AsyncLocationsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncLocationsResourceWithStreamingResponse(self)
 
@@ -382,9 +382,9 @@ class AsyncLocationsResource(AsyncAPIResource):
 
           endpoints: Configure the destination endpoints for this location.
 
-          max_ttl: Configure DNS response TTL behavior for this Gateway location. Gateway can
-              rewrite DNS responses to cap returned record TTLs using the account setting or a
-              location-specific value, or leave TTLs unchanged.
+          max_ttl: Controls how DNS response TTLs are capped for this location relative to the
+              account `max_ttl_secs` setting. Omitting `max_ttl` on update resets it to
+              `inherit`.
 
           networks: Specify the list of network ranges from which requests at this location
               originate. The list takes effect only if it is non-empty and the IPv4 endpoint
@@ -461,9 +461,9 @@ class AsyncLocationsResource(AsyncAPIResource):
 
           endpoints: Configure the destination endpoints for this location.
 
-          max_ttl: Configure DNS response TTL behavior for this Gateway location. Gateway can
-              rewrite DNS responses to cap returned record TTLs using the account setting or a
-              location-specific value, or leave TTLs unchanged.
+          max_ttl: Controls how DNS response TTLs are capped for this location relative to the
+              account `max_ttl_secs` setting. Omitting `max_ttl` on update resets it to
+              `inherit`.
 
           networks: Specify the list of network ranges from which requests at this location
               originate. The list takes effect only if it is non-empty and the IPv4 endpoint

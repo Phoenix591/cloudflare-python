@@ -35,7 +35,7 @@ class CatchAllsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return CatchAllsResourceWithRawResponse(self)
 
@@ -44,7 +44,7 @@ class CatchAllsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return CatchAllsResourceWithStreamingResponse(self)
 
@@ -56,6 +56,8 @@ class CatchAllsResource(SyncAPIResource):
         matchers: Iterable[CatchAllMatcherParam],
         enabled: Literal[True, False] | Omit = omit,
         name: str | Omit = omit,
+        owner_worker_tag: str | Omit = omit,
+        source: Literal["api", "wrangler"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -79,6 +81,13 @@ class CatchAllsResource(SyncAPIResource):
 
           name: Routing rule name.
 
+          owner_worker_tag: Public tag (script_tag) of the Worker that owns this rule. Required when
+              `source` is `wrangler`.
+
+          source: Who manages the rule. `api` covers dashboard, generic API, and Terraform;
+              `wrangler` means the rule is managed by a Worker's wrangler.jsonc. Defaults to
+              `api` when omitted on write.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -97,6 +106,8 @@ class CatchAllsResource(SyncAPIResource):
                     "matchers": matchers,
                     "enabled": enabled,
                     "name": name,
+                    "owner_worker_tag": owner_worker_tag,
+                    "source": source,
                 },
                 catch_all_update_params.CatchAllUpdateParams,
             ),
@@ -157,7 +168,7 @@ class AsyncCatchAllsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncCatchAllsResourceWithRawResponse(self)
 
@@ -166,7 +177,7 @@ class AsyncCatchAllsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncCatchAllsResourceWithStreamingResponse(self)
 
@@ -178,6 +189,8 @@ class AsyncCatchAllsResource(AsyncAPIResource):
         matchers: Iterable[CatchAllMatcherParam],
         enabled: Literal[True, False] | Omit = omit,
         name: str | Omit = omit,
+        owner_worker_tag: str | Omit = omit,
+        source: Literal["api", "wrangler"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -201,6 +214,13 @@ class AsyncCatchAllsResource(AsyncAPIResource):
 
           name: Routing rule name.
 
+          owner_worker_tag: Public tag (script_tag) of the Worker that owns this rule. Required when
+              `source` is `wrangler`.
+
+          source: Who manages the rule. `api` covers dashboard, generic API, and Terraform;
+              `wrangler` means the rule is managed by a Worker's wrangler.jsonc. Defaults to
+              `api` when omitted on write.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -219,6 +239,8 @@ class AsyncCatchAllsResource(AsyncAPIResource):
                     "matchers": matchers,
                     "enabled": enabled,
                     "name": name,
+                    "owner_worker_tag": owner_worker_tag,
+                    "source": source,
                 },
                 catch_all_update_params.CatchAllUpdateParams,
             ),

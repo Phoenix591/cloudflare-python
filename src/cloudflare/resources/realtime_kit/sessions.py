@@ -53,7 +53,7 @@ class SessionsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return SessionsResourceWithRawResponse(self)
 
@@ -62,7 +62,7 @@ class SessionsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return SessionsResourceWithStreamingResponse(self)
 
@@ -292,8 +292,6 @@ class SessionsResource(SyncAPIResource):
         account_id: str,
         app_id: str,
         session_id: str,
-        filters: Literal["device_info", "ip_information", "precall_network_information", "events", "quality_stats"]
-        | Omit = omit,
         include_peer_events: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -310,9 +308,6 @@ class SessionsResource(SyncAPIResource):
           account_id: The account identifier tag.
 
           app_id: The app identifier tag.
-
-          filters: Comma separated list of filters to apply. Note that there must be no spaces
-              between the filters.
 
           include_peer_events: if true, response includes all the peer events of participant.
 
@@ -346,10 +341,7 @@ class SessionsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform(
-                    {
-                        "filters": filters,
-                        "include_peer_events": include_peer_events,
-                    },
+                    {"include_peer_events": include_peer_events},
                     session_get_session_participant_details_params.SessionGetSessionParticipantDetailsParams,
                 ),
             ),
@@ -638,7 +630,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncSessionsResourceWithRawResponse(self)
 
@@ -647,7 +639,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncSessionsResourceWithStreamingResponse(self)
 
@@ -877,8 +869,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         account_id: str,
         app_id: str,
         session_id: str,
-        filters: Literal["device_info", "ip_information", "precall_network_information", "events", "quality_stats"]
-        | Omit = omit,
         include_peer_events: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -895,9 +885,6 @@ class AsyncSessionsResource(AsyncAPIResource):
           account_id: The account identifier tag.
 
           app_id: The app identifier tag.
-
-          filters: Comma separated list of filters to apply. Note that there must be no spaces
-              between the filters.
 
           include_peer_events: if true, response includes all the peer events of participant.
 
@@ -931,10 +918,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {
-                        "filters": filters,
-                        "include_peer_events": include_peer_events,
-                    },
+                    {"include_peer_events": include_peer_events},
                     session_get_session_participant_details_params.SessionGetSessionParticipantDetailsParams,
                 ),
             ),

@@ -46,7 +46,7 @@ class RulesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return RulesResourceWithRawResponse(self)
 
@@ -55,7 +55,7 @@ class RulesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return RulesResourceWithStreamingResponse(self)
 
@@ -67,7 +67,9 @@ class RulesResource(SyncAPIResource):
         matchers: Iterable[MatcherParam],
         enabled: Literal[True, False] | Omit = omit,
         name: str | Omit = omit,
+        owner_worker_tag: str | Omit = omit,
         priority: float | Omit = omit,
+        source: Literal["api", "wrangler"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -92,7 +94,14 @@ class RulesResource(SyncAPIResource):
 
           name: Routing rule name.
 
+          owner_worker_tag: Public tag (script_tag) of the Worker that owns this rule. Required when
+              `source` is `wrangler`.
+
           priority: Priority of the routing rule.
+
+          source: Who manages the rule. `api` covers dashboard, generic API, and Terraform;
+              `wrangler` means the rule is managed by a Worker's wrangler.jsonc. Defaults to
+              `api` when omitted on write.
 
           extra_headers: Send extra headers
 
@@ -112,7 +121,9 @@ class RulesResource(SyncAPIResource):
                     "matchers": matchers,
                     "enabled": enabled,
                     "name": name,
+                    "owner_worker_tag": owner_worker_tag,
                     "priority": priority,
+                    "source": source,
                 },
                 rule_create_params.RuleCreateParams,
             ),
@@ -135,7 +146,9 @@ class RulesResource(SyncAPIResource):
         matchers: Iterable[MatcherParam],
         enabled: Literal[True, False] | Omit = omit,
         name: str | Omit = omit,
+        owner_worker_tag: str | Omit = omit,
         priority: float | Omit = omit,
+        source: Literal["api", "wrangler"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -161,7 +174,14 @@ class RulesResource(SyncAPIResource):
 
           name: Routing rule name.
 
+          owner_worker_tag: Public tag (script_tag) of the Worker that owns this rule. Required when
+              `source` is `wrangler`.
+
           priority: Priority of the routing rule.
+
+          source: Who manages the rule. `api` covers dashboard, generic API, and Terraform;
+              `wrangler` means the rule is managed by a Worker's wrangler.jsonc. Defaults to
+              `api` when omitted on write.
 
           extra_headers: Send extra headers
 
@@ -187,7 +207,9 @@ class RulesResource(SyncAPIResource):
                     "matchers": matchers,
                     "enabled": enabled,
                     "name": name,
+                    "owner_worker_tag": owner_worker_tag,
                     "priority": priority,
+                    "source": source,
                 },
                 rule_update_params.RuleUpdateParams,
             ),
@@ -309,7 +331,7 @@ class AsyncRulesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncRulesResourceWithRawResponse(self)
 
@@ -318,7 +340,7 @@ class AsyncRulesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncRulesResourceWithStreamingResponse(self)
 
@@ -330,7 +352,9 @@ class AsyncRulesResource(AsyncAPIResource):
         matchers: Iterable[MatcherParam],
         enabled: Literal[True, False] | Omit = omit,
         name: str | Omit = omit,
+        owner_worker_tag: str | Omit = omit,
         priority: float | Omit = omit,
+        source: Literal["api", "wrangler"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -355,7 +379,14 @@ class AsyncRulesResource(AsyncAPIResource):
 
           name: Routing rule name.
 
+          owner_worker_tag: Public tag (script_tag) of the Worker that owns this rule. Required when
+              `source` is `wrangler`.
+
           priority: Priority of the routing rule.
+
+          source: Who manages the rule. `api` covers dashboard, generic API, and Terraform;
+              `wrangler` means the rule is managed by a Worker's wrangler.jsonc. Defaults to
+              `api` when omitted on write.
 
           extra_headers: Send extra headers
 
@@ -375,7 +406,9 @@ class AsyncRulesResource(AsyncAPIResource):
                     "matchers": matchers,
                     "enabled": enabled,
                     "name": name,
+                    "owner_worker_tag": owner_worker_tag,
                     "priority": priority,
+                    "source": source,
                 },
                 rule_create_params.RuleCreateParams,
             ),
@@ -398,7 +431,9 @@ class AsyncRulesResource(AsyncAPIResource):
         matchers: Iterable[MatcherParam],
         enabled: Literal[True, False] | Omit = omit,
         name: str | Omit = omit,
+        owner_worker_tag: str | Omit = omit,
         priority: float | Omit = omit,
+        source: Literal["api", "wrangler"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -424,7 +459,14 @@ class AsyncRulesResource(AsyncAPIResource):
 
           name: Routing rule name.
 
+          owner_worker_tag: Public tag (script_tag) of the Worker that owns this rule. Required when
+              `source` is `wrangler`.
+
           priority: Priority of the routing rule.
+
+          source: Who manages the rule. `api` covers dashboard, generic API, and Terraform;
+              `wrangler` means the rule is managed by a Worker's wrangler.jsonc. Defaults to
+              `api` when omitted on write.
 
           extra_headers: Send extra headers
 
@@ -450,7 +492,9 @@ class AsyncRulesResource(AsyncAPIResource):
                     "matchers": matchers,
                     "enabled": enabled,
                     "name": name,
+                    "owner_worker_tag": owner_worker_tag,
                     "priority": priority,
+                    "source": source,
                 },
                 rule_update_params.RuleUpdateParams,
             ),

@@ -34,7 +34,7 @@ class BytimesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return BytimesResourceWithRawResponse(self)
 
@@ -43,7 +43,7 @@ class BytimesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return BytimesResourceWithStreamingResponse(self)
 
@@ -103,6 +103,8 @@ class BytimesResource(SyncAPIResource):
               | \\<<       | Less Than                | %3C         |
               | \\>>=      | Greater than or equal to | %3E%3D      |
               | \\<<=      | Less than or equal to    | %3C%3D      |
+
+              Use the above to construct filters.
 
           metrics:
               One or more metrics to compute. Options are:
@@ -168,7 +170,7 @@ class AsyncBytimesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncBytimesResourceWithRawResponse(self)
 
@@ -177,7 +179,7 @@ class AsyncBytimesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncBytimesResourceWithStreamingResponse(self)
 
@@ -237,6 +239,8 @@ class AsyncBytimesResource(AsyncAPIResource):
               | \\<<       | Less Than                | %3C         |
               | \\>>=      | Greater than or equal to | %3E%3D      |
               | \\<<=      | Less than or equal to    | %3C%3D      |
+
+              Use the above to construct filters.
 
           metrics:
               One or more metrics to compute. Options are:

@@ -33,7 +33,7 @@ class CustomNameserversResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return CustomNameserversResourceWithRawResponse(self)
 
@@ -42,7 +42,7 @@ class CustomNameserversResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return CustomNameserversResourceWithStreamingResponse(self)
 
@@ -60,7 +60,7 @@ class CustomNameserversResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[CustomNameserver]:
         """
-        Add Account Custom Nameserver
+        Adds a custom nameserver to the account for use as a vanity nameserver on zones.
 
         Args:
           account_id: Account identifier tag.
@@ -111,7 +111,7 @@ class CustomNameserversResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncSinglePage[CustomNameserverDeleteResponse]:
         """
-        Delete Account Custom Nameserver
+        Removes a custom nameserver from the account.
 
         Args:
           account_id: Account identifier tag.
@@ -186,7 +186,7 @@ class AsyncCustomNameserversResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncCustomNameserversResourceWithRawResponse(self)
 
@@ -195,7 +195,7 @@ class AsyncCustomNameserversResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncCustomNameserversResourceWithStreamingResponse(self)
 
@@ -213,7 +213,7 @@ class AsyncCustomNameserversResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[CustomNameserver]:
         """
-        Add Account Custom Nameserver
+        Adds a custom nameserver to the account for use as a vanity nameserver on zones.
 
         Args:
           account_id: Account identifier tag.
@@ -264,7 +264,7 @@ class AsyncCustomNameserversResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[CustomNameserverDeleteResponse, AsyncSinglePage[CustomNameserverDeleteResponse]]:
         """
-        Delete Account Custom Nameserver
+        Removes a custom nameserver from the account.
 
         Args:
           account_id: Account identifier tag.

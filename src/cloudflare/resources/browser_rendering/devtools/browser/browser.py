@@ -55,7 +55,7 @@ class BrowserResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return BrowserResourceWithRawResponse(self)
 
@@ -64,7 +64,7 @@ class BrowserResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return BrowserResourceWithStreamingResponse(self)
 
@@ -74,6 +74,7 @@ class BrowserResource(SyncAPIResource):
         account_id: str,
         keep_alive: float | Omit = omit,
         lab: bool | Omit = omit,
+        live_view_url_expires_in_ms: float | Omit = omit,
         recording: bool | Omit = omit,
         targets: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -84,7 +85,7 @@ class BrowserResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrowserCreateResponse:
         """
-        Acquire a new browser DevTools session
+        Get a browser session ID.
 
         Args:
           account_id: Account ID.
@@ -92,6 +93,9 @@ class BrowserResource(SyncAPIResource):
           keep_alive: Keep-alive time in milliseconds.
 
           lab: Use experimental browser.
+
+          live_view_url_expires_in_ms: How long the live view URL remains valid, in milliseconds (max 60 minutes). Only
+              used when targets is true.
 
           targets: Include browser targets in response.
 
@@ -116,6 +120,7 @@ class BrowserResource(SyncAPIResource):
                     {
                         "keep_alive": keep_alive,
                         "lab": lab,
+                        "live_view_url_expires_in_ms": live_view_url_expires_in_ms,
                         "recording": recording,
                         "targets": targets,
                     },
@@ -391,7 +396,7 @@ class AsyncBrowserResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncBrowserResourceWithRawResponse(self)
 
@@ -400,7 +405,7 @@ class AsyncBrowserResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncBrowserResourceWithStreamingResponse(self)
 
@@ -410,6 +415,7 @@ class AsyncBrowserResource(AsyncAPIResource):
         account_id: str,
         keep_alive: float | Omit = omit,
         lab: bool | Omit = omit,
+        live_view_url_expires_in_ms: float | Omit = omit,
         recording: bool | Omit = omit,
         targets: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -420,7 +426,7 @@ class AsyncBrowserResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BrowserCreateResponse:
         """
-        Acquire a new browser DevTools session
+        Get a browser session ID.
 
         Args:
           account_id: Account ID.
@@ -428,6 +434,9 @@ class AsyncBrowserResource(AsyncAPIResource):
           keep_alive: Keep-alive time in milliseconds.
 
           lab: Use experimental browser.
+
+          live_view_url_expires_in_ms: How long the live view URL remains valid, in milliseconds (max 60 minutes). Only
+              used when targets is true.
 
           targets: Include browser targets in response.
 
@@ -452,6 +461,7 @@ class AsyncBrowserResource(AsyncAPIResource):
                     {
                         "keep_alive": keep_alive,
                         "lab": lab,
+                        "live_view_url_expires_in_ms": live_view_url_expires_in_ms,
                         "recording": recording,
                         "targets": targets,
                     },

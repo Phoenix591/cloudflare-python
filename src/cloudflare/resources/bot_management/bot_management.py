@@ -33,7 +33,7 @@ class BotManagementResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return BotManagementResourceWithRawResponse(self)
 
@@ -42,7 +42,7 @@ class BotManagementResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return BotManagementResourceWithStreamingResponse(self)
 
@@ -131,8 +131,7 @@ class BotManagementResource(SyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           cf_robots_variant: Specifies the Robots Access Control License variant to use.
 
@@ -248,8 +247,7 @@ class BotManagementResource(SyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           cf_robots_variant: Specifies the Robots Access Control License variant to use.
 
@@ -374,8 +372,7 @@ class BotManagementResource(SyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           cf_robots_variant: Specifies the Robots Access Control License variant to use.
 
@@ -500,8 +497,7 @@ class BotManagementResource(SyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           auto_update_model: Automatically update to the newest bot detection models created by Cloudflare as
               they are released.
@@ -655,7 +651,7 @@ class AsyncBotManagementResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncBotManagementResourceWithRawResponse(self)
 
@@ -664,7 +660,7 @@ class AsyncBotManagementResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncBotManagementResourceWithStreamingResponse(self)
 
@@ -753,8 +749,7 @@ class AsyncBotManagementResource(AsyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           cf_robots_variant: Specifies the Robots Access Control License variant to use.
 
@@ -870,8 +865,7 @@ class AsyncBotManagementResource(AsyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           cf_robots_variant: Specifies the Robots Access Control License variant to use.
 
@@ -996,8 +990,7 @@ class AsyncBotManagementResource(AsyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           cf_robots_variant: Specifies the Robots Access Control License variant to use.
 
@@ -1122,8 +1115,7 @@ class AsyncBotManagementResource(AsyncAPIResource):
         Args:
           zone_id: Identifier.
 
-          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers. Please note the value
-              `only_on_ad_pages` is currently not available for Enterprise customers.
+          ai_bots_protection: Enable rule to block AI Scrapers and Crawlers.
 
           auto_update_model: Automatically update to the newest bot detection models created by Cloudflare as
               they are released.

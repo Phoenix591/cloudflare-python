@@ -55,7 +55,7 @@ class BotsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return BotsResourceWithRawResponse(self)
 
@@ -64,7 +64,7 @@ class BotsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return BotsResourceWithStreamingResponse(self)
 
@@ -115,7 +115,8 @@ class BotsResource(SyncAPIResource):
 
           format: Format in which results will be returned.
 
-          kind: Filters results by bot kind.
+          kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           limit: Limits the number of objects returned in the response.
 
@@ -257,7 +258,8 @@ class BotsResource(SyncAPIResource):
 
           bot_category: Filters results by bot category.
 
-          bot_kind: Filters results by bot kind.
+          bot_kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           bot_operator: Filters results by bot operator.
 
@@ -389,7 +391,8 @@ class BotsResource(SyncAPIResource):
 
           bot_category: Filters results by bot category.
 
-          bot_kind: Filters results by bot kind.
+          bot_kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           bot_operator: Filters results by bot operator.
 
@@ -520,7 +523,8 @@ class BotsResource(SyncAPIResource):
 
           bot_category: Filters results by bot category.
 
-          bot_kind: Filters results by bot kind.
+          bot_kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           bot_operator: Filters results by bot operator.
 
@@ -604,7 +608,7 @@ class AsyncBotsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#accessing-raw-response-data-eg-headers
         """
         return AsyncBotsResourceWithRawResponse(self)
 
@@ -613,7 +617,7 @@ class AsyncBotsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/cloudflare/cloudflare-python#with_streaming_response
+        For more information, see https://www.gitlab.cfdata.org/cloudflare/sdks/cloudflare-python#with_streaming_response
         """
         return AsyncBotsResourceWithStreamingResponse(self)
 
@@ -664,7 +668,8 @@ class AsyncBotsResource(AsyncAPIResource):
 
           format: Format in which results will be returned.
 
-          kind: Filters results by bot kind.
+          kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           limit: Limits the number of objects returned in the response.
 
@@ -806,7 +811,8 @@ class AsyncBotsResource(AsyncAPIResource):
 
           bot_category: Filters results by bot category.
 
-          bot_kind: Filters results by bot kind.
+          bot_kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           bot_operator: Filters results by bot operator.
 
@@ -938,7 +944,8 @@ class AsyncBotsResource(AsyncAPIResource):
 
           bot_category: Filters results by bot category.
 
-          bot_kind: Filters results by bot kind.
+          bot_kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           bot_operator: Filters results by bot operator.
 
@@ -1069,7 +1076,8 @@ class AsyncBotsResource(AsyncAPIResource):
 
           bot_category: Filters results by bot category.
 
-          bot_kind: Filters results by bot kind.
+          bot_kind: Filters results by bot kind. Deprecated: the Verified Bot / Signed Agent
+              distinction is being removed.
 
           bot_operator: Filters results by bot operator.
 
