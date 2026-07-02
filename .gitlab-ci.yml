@@ -2,6 +2,12 @@ stages:
   - lint
   - build
   - test
+  - review
+
+include:
+  - component: $CI_SERVER_FQDN/cloudflare/ci/ai/opencode@~latest
+    inputs:
+      runOnMR: true
 
 default:
   image: $IMAGE_PYTHON
