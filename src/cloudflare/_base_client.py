@@ -14,6 +14,7 @@ import email.utils
 from types import TracebackType
 from random import random
 from typing import (
+    IO,
     TYPE_CHECKING,
     Any,
     Dict,
