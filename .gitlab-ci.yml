@@ -56,4 +56,5 @@ examples:
     CLOUDFLARE_API_KEY: "${{ secrets.CLOUDFLARE_API_KEY }}"
   script:
     - uv sync --all-extras
-    - uv run python ./examples/ai/demo.py
+    - uv run python ./examples/dns/record.py
+    - uv run python ./examples/workers/script_upload.py
