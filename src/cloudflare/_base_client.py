@@ -1405,10 +1405,11 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
         model: Type[object],
         page: Type[SyncPageT],
         body: Body | None = None,
+        content: bytes | str | None = None,
         options: RequestOptions = {},
         method: str = "get",
     ) -> SyncPageT:
-        opts = FinalRequestOptions.construct(method=method, url=path, json_data=body, **options)
+        opts = FinalRequestOptions.construct(method=method, url=path, json_data=body, content=content, **options)
         return self._request_api_list(model, page, opts)
 
 
@@ -1984,10 +1985,11 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
         model: Type[_T],
         page: Type[AsyncPageT],
         body: Body | None = None,
+        content: bytes | str | None = None,
         options: RequestOptions = {},
         method: str = "get",
     ) -> AsyncPaginator[_T, AsyncPageT]:
-        opts = FinalRequestOptions.construct(method=method, url=path, json_data=body, **options)
+        opts = FinalRequestOptions.construct(method=method, url=path, json_data=body, content=content, **options)
         return self._request_api_list(model, page, opts)
 
 
