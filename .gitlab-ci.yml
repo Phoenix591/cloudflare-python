@@ -42,19 +42,14 @@ build:
     - uv sync --all-extras
     - uv build
 
-examples:
+test:
   stage: test
-  timeout: 10 minutes
+  timeout: 30 minutes
   rules:
     - if: $CI_COMMIT_TITLE == "codegen metadata"
       when: never
-    - if: $CI_PROJECT_PATH == "cloudflare/sdks/cloudflare-python" && ($CI_PIPELINE_SOURCE == "push" || $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH != $CI_PROJECT_PATH)
-  variables:
-    CLOUDFLARE_ACCOUNT_ID: "f037e56e89293a057740de681ac9abbe"
-    CLOUDFLARE_EMAIL: "terraform-acceptance-test@cfapi.net"
-    CLOUDFLARE_ZONE_ID: "0da42c8d2132a9ddaf714f9e7c92011"
-    CLOUDFLARE_API_KEY: "${{ secrets.CLOUDFLARE_API_KEY }}"
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH != $CI_PROJECT_PATH
   script:
     - uv sync --all-extras
-    - uv run python ./examples/dns/record.py
-    - uv run python ./examples/workers/script_upload.py
+    - ./scripts/test
