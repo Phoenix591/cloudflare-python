@@ -1405,7 +1405,7 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
         model: Type[object],
         page: Type[SyncPageT],
         body: Body | None = None,
-        content: bytes | str | None = None,
+        content: bytes | bytearray | IO[bytes] | Iterable[bytes] | None = None,
         options: RequestOptions = {},
         method: str = "get",
     ) -> SyncPageT:
@@ -1985,7 +1985,7 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
         model: Type[_T],
         page: Type[AsyncPageT],
         body: Body | None = None,
-        content: bytes | str | None = None,
+        content: bytes | bytearray | IO[bytes] | Iterable[bytes] | None = None,
         options: RequestOptions = {},
         method: str = "get",
     ) -> AsyncPaginator[_T, AsyncPageT]:
