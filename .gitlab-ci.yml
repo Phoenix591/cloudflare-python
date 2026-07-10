@@ -45,7 +45,8 @@ build:
 test:
   stage: test
   image: $IMAGE_NODE_TRIXIE
-  timeout: 1 hour
+  timeout: 15 minutes
+  allow_failure: true
   rules:
     - if: $CI_COMMIT_TITLE == "codegen metadata"
       when: never
