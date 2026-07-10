@@ -42,6 +42,14 @@ from .rules.rules import (
     RulesResourceWithStreamingResponse,
     AsyncRulesResourceWithStreamingResponse,
 )
+from .account_rules import (
+    AccountRulesResource,
+    AsyncAccountRulesResource,
+    AccountRulesResourceWithRawResponse,
+    AsyncAccountRulesResourceWithRawResponse,
+    AccountRulesResourceWithStreamingResponse,
+    AsyncAccountRulesResourceWithStreamingResponse,
+)
 from ..._base_client import make_request_options
 from ...types.email_routing import (
     email_routing_enable_params,
@@ -61,6 +69,10 @@ class EmailRoutingResource(SyncAPIResource):
     @cached_property
     def rules(self) -> RulesResource:
         return RulesResource(self._client)
+
+    @cached_property
+    def account_rules(self) -> AccountRulesResource:
+        return AccountRulesResource(self._client)
 
     @cached_property
     def addresses(self) -> AddressesResource:
@@ -266,6 +278,10 @@ class AsyncEmailRoutingResource(AsyncAPIResource):
     @cached_property
     def rules(self) -> AsyncRulesResource:
         return AsyncRulesResource(self._client)
+
+    @cached_property
+    def account_rules(self) -> AsyncAccountRulesResource:
+        return AsyncAccountRulesResource(self._client)
 
     @cached_property
     def addresses(self) -> AsyncAddressesResource:
@@ -495,6 +511,10 @@ class EmailRoutingResourceWithRawResponse:
         return RulesResourceWithRawResponse(self._email_routing.rules)
 
     @cached_property
+    def account_rules(self) -> AccountRulesResourceWithRawResponse:
+        return AccountRulesResourceWithRawResponse(self._email_routing.account_rules)
+
+    @cached_property
     def addresses(self) -> AddressesResourceWithRawResponse:
         return AddressesResourceWithRawResponse(self._email_routing.addresses)
 
@@ -529,6 +549,10 @@ class AsyncEmailRoutingResourceWithRawResponse:
     @cached_property
     def rules(self) -> AsyncRulesResourceWithRawResponse:
         return AsyncRulesResourceWithRawResponse(self._email_routing.rules)
+
+    @cached_property
+    def account_rules(self) -> AsyncAccountRulesResourceWithRawResponse:
+        return AsyncAccountRulesResourceWithRawResponse(self._email_routing.account_rules)
 
     @cached_property
     def addresses(self) -> AsyncAddressesResourceWithRawResponse:
@@ -567,6 +591,10 @@ class EmailRoutingResourceWithStreamingResponse:
         return RulesResourceWithStreamingResponse(self._email_routing.rules)
 
     @cached_property
+    def account_rules(self) -> AccountRulesResourceWithStreamingResponse:
+        return AccountRulesResourceWithStreamingResponse(self._email_routing.account_rules)
+
+    @cached_property
     def addresses(self) -> AddressesResourceWithStreamingResponse:
         return AddressesResourceWithStreamingResponse(self._email_routing.addresses)
 
@@ -601,6 +629,10 @@ class AsyncEmailRoutingResourceWithStreamingResponse:
     @cached_property
     def rules(self) -> AsyncRulesResourceWithStreamingResponse:
         return AsyncRulesResourceWithStreamingResponse(self._email_routing.rules)
+
+    @cached_property
+    def account_rules(self) -> AsyncAccountRulesResourceWithStreamingResponse:
+        return AsyncAccountRulesResourceWithStreamingResponse(self._email_routing.account_rules)
 
     @cached_property
     def addresses(self) -> AsyncAddressesResourceWithStreamingResponse:
