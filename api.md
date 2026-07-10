@@ -75,6 +75,8 @@ from cloudflare.types import (
 
 # [EmailSecurity](src/cloudflare/resources/email_security/api.md)
 
+# [EmailAuth](src/cloudflare/resources/email_auth/api.md)
+
 # [EmailRouting](src/cloudflare/resources/email_routing/api.md)
 
 # [EmailSending](src/cloudflare/resources/email_sending/api.md)
@@ -153,6 +155,8 @@ from cloudflare.types import (
 
 # [Registrar](src/cloudflare/resources/registrar/api.md)
 
+# [RegistrarSandbox](src/cloudflare/resources/registrar_sandbox/api.md)
+
 # [RequestTracers](src/cloudflare/resources/request_tracers/api.md)
 
 # [Rules](src/cloudflare/resources/rules/api.md)
@@ -210,6 +214,8 @@ from cloudflare.types import (
 # [RealtimeKit](src/cloudflare/resources/realtime_kit/api.md)
 
 # [Calls](src/cloudflare/resources/calls/api.md)
+
+# [MoQ](src/cloudflare/resources/moq/api.md)
 
 # [CloudforceOne](src/cloudflare/resources/cloudforce_one/api.md)
 
