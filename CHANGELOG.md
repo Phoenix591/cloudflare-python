@@ -1,5 +1,190 @@
 # Changelog
 
+## 5.5.0 (2026-07-10)
+
+Full Changelog: [v5.4.0...v5.5.0](https://github.com/cloudflare/cloudflare-python/compare/v5.4.0...v5.5.0)
+
+### Breaking Changes
+
+* **ssl:** The `recommendations` sub-resource has been removed. `client.ssl.recommendations.get()` and the `RecommendationGetResponse` type are no longer available.
+* **email_routing:** The `list` method has been removed from `client.email_routing.rules`. Only `create`, `update`, `delete`, and `get` remain. The `RuleListParams` type has been removed.
+* **zero_trust:** The `UserPolicyCheckGeo` type has been removed from `cloudflare.types.zero_trust.access.applications`. The geo information is now inlined as `UserIdentityGeo` within `UserPolicyCheckListResponse`.
+* **zero_trust:** The pagination type for `client.zero_trust.devices.ip_profiles.list()` changed from `SyncSinglePage` to `SyncV4PagePaginationArray`. Code that relied on single-page iteration semantics may need adjustment.
+* **aisearch:** The `SourceParamsWebCrawlerStoreOptions` type and the `store_options` field on `SourceParamsWebCrawler` have been removed from instance create/update params and responses. The `parse_type` enum value `"feed-rss"` has been removed (only `"sitemap"` and `"crawl"` remain). The `search_query` field on `InstanceSearchResponse` and `NamespaceSearchResponse` changed from required `str` to `Optional[str]`. A new required `query_kind` field (`Literal["text", "image", "multimodal"]`) has been added to search responses.
+* **zero_trust:** In `Organization` and related params, `MfaSSHPivKeyRequirements` has been renamed to `MfaPivKeyRequirements`, the `mfa_ssh_piv_key_requirements` field has been renamed to `mfa_piv_key_requirements`, and the `allowed_authenticators` enum value `"ssh_piv_key"` has been changed to `"piv_key"`.
+
+### Features
+
+* **email_auth:** add email_auth resource ([43fb66a](https://github.com/cloudflare/cloudflare-python/commit/43fb66a7e))
+* **moq:** add moq resource ([c409a18](https://github.com/cloudflare/cloudflare-python/commit/c409a1818))
+* **logs:** add log_explorer sub-resource with query, datasets, and available datasets ([b8896ca](https://github.com/cloudflare/cloudflare-python/commit/b8896ca79))
+* **email_security:** add bulk message operations to investigate ([e96350d](https://github.com/cloudflare/cloudflare-python/commit/e96350d9a))
+* **aisearch:** add multimodal support with image_url content parts and new `@cf/qwen/qwen3-vl-embedding-2b` embedding model ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **zero_trust:** add Worker destination types (`WorkerDestination`, `PreviewWorkerDestination`, `AllWorkersDestination`, `AllPreviewWorkersDestination`) to Access applications and `eager_redirect_cookie_setting` field to self-hosted applications ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **magic_transit:** add `primary` and `site_id` fields to connector create/edit params ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **rulesets:** add `Vary` cache settings with `ActionParametersVary`, `ActionParametersVaryDefault`, and `ActionParametersVaryHeaders` types ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **cloudforce_one:** `threat_events.datasets.list()` now accepts optional params ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **email_security:** add `expected_disposition` param to `investigate.move.create()` and `investigate.move.bulk()` ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **email_routing:** add `support_subaddress` field to `Settings` response type ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **zero_trust:** add `max_ttl_secs` field to `GatewayConfigurationSettings` and new `MaxTTL` type to gateway `Location` for DNS TTL cap control ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **zero_trust:** add `GlobalAcceleration` type to default and custom device policy settings ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **accounts:** add `category` field to `PermissionGroupGetResponse` and `PermissionGroupListResponse` for account and user tokens ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+
+#### New Resources
+
+**EmailAuth** (`client.email_auth`)
+
+DMARC report management and SPF inspection for email authentication.
+
+**DMARCReports** (`client.email_auth.dmarc_reports`)
+
+- `edit(*, zone_id, **params) -> Optional[DMARCReportEditResponse]`
+- `get(*, zone_id) -> Optional[DMARCReportGetResponse]`
+
+New types:
+```python
+from cloudflare.types.email_auth import DMARCReportEditResponse, DMARCReportGetResponse
+```
+
+**SPF Inspect** (`client.email_auth.spf.inspect`)
+
+- `get(*, zone_id, **params) -> Optional[InspectGetResponse]`
+
+New types:
+```python
+from cloudflare.types.email_auth.spf import InspectGetResponse
+```
+
+**MoQ** (`client.moq`)
+
+Media over QUIC relay management.
+
+**Relays** (`client.moq.relays`)
+
+- `create(*, account_id, **params) -> Optional[RelayCreateResponse]`
+- `update(relay_id, *, account_id, **params) -> Optional[RelayUpdateResponse]`
+- `list(*, account_id, **params) -> SyncSinglePage[RelayListResponse]`
+- `delete(relay_id, *, account_id) -> object`
+- `get(relay_id, *, account_id) -> Optional[RelayGetResponse]`
+
+New types:
+```python
+from cloudflare.types.moq import (
+    RelayCreateResponse,
+    RelayUpdateResponse,
+    RelayListResponse,
+    RelayGetResponse,
+)
+```
+
+**Tokens** (`client.moq.relays.tokens`)
+
+- `rotate(relay_id, *, account_id, **params) -> Optional[TokenRotateResponse]`
+
+New types:
+```python
+from cloudflare.types.moq.relays import TokenRotateResponse
+```
+
+**Log Explorer** (`client.logs.log_explorer`)
+
+SQL-based log querying and dataset management.
+
+**Query** (`client.logs.log_explorer.query`)
+
+- `sql(body, *, account_id, zone_id, **params) -> SyncSinglePage[QuerySqlResponse]`
+
+New types:
+```python
+from cloudflare.types.logs.log_explorer import QuerySqlResponse
+```
+
+**Datasets** (`client.logs.log_explorer.datasets`)
+
+- `create(*, account_id, zone_id, **params) -> Optional[Dataset]`
+- `update(dataset_id, *, account_id, zone_id, **params) -> Optional[Dataset]`
+- `list(*, account_id, zone_id, **params) -> SyncSinglePage[DatasetSummary]`
+- `get(dataset_id, *, account_id, zone_id) -> Optional[Dataset]`
+
+**Available** (`client.logs.log_explorer.datasets.available`)
+
+- `list(*, account_id, zone_id) -> SyncSinglePage[AvailableDataset]`
+
+New types:
+```python
+from cloudflare.types.logs.log_explorer import (
+    Dataset,
+    DatasetSummary,
+    CreateRequest,
+    UpdateRequest,
+)
+from cloudflare.types.logs.log_explorer.datasets import AvailableDataset, AvailableList
+```
+
+**Email Security Investigate Bulk** (`client.email_security.investigate.bulk`)
+
+Bulk message movement and quarantine release operations.
+
+- `create(*, account_id, **params) -> BulkCreateResponse`
+- `list(*, account_id, **params) -> SyncV4PagePaginationArray[BulkListResponse]`
+- `delete(job_id, *, account_id) -> BulkDeleteResponse`
+- `get(job_id, *, account_id) -> BulkGetResponse`
+
+**Cancel** (`client.email_security.investigate.bulk.cancel`)
+
+- `create(job_id, *, account_id) -> CancelCreateResponse`
+
+**Messages** (`client.email_security.investigate.bulk.messages`)
+
+- `list(job_id, *, account_id, **params) -> SyncV4PagePaginationArray[MessageListResponse]`
+
+New types:
+```python
+from cloudflare.types.email_security.investigate import (
+    BulkCreateResponse,
+    BulkListResponse,
+    BulkDeleteResponse,
+    BulkGetResponse,
+)
+from cloudflare.types.email_security.investigate.bulk import (
+    CancelCreateResponse,
+    MessageListResponse,
+)
+```
+
+### Chores
+
+* **billing:** update generated types and methods ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **pipelines:** update generated types and methods ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+* **workers:** update generated types and methods ([de12426](https://github.com/cloudflare/cloudflare-python/commit/de1242647))
+
+## 5.4.0 (2026-06-16)
+
+Full Changelog: [v5.3.0...v5.4.0](https://github.com/cloudflare/cloudflare-python/compare/v5.3.0...v5.4.0)
+
+### Features
+
+* feat(ai_gateway): add custom_providers resource ([b982ff3](https://github.com/cloudflare/cloudflare-python/commit/b982ff391eab267ef16c719d0fc798d970292ed2))
+* feat(api): map ipsec_tunnels/psk, sites/app_policies and cf1_sites for magic-on-ramps ([5d8e422](https://github.com/cloudflare/cloudflare-python/commit/5d8e422736d8e044d2c73065cbb8595573b2656d))
+* feat(ct_alerter): add CT alerting subscription endpoint mappings ([5bb529c](https://github.com/cloudflare/cloudflare-python/commit/5bb529c2eabe4ce0c23cddbf8073c6a025dc3024))
+* feat(tenants): add tenants resource SDK mapping [PT-2567] ([7677b4c](https://github.com/cloudflare/cloudflare-python/commit/7677b4c9566495b627b2cd90c9220268f9c6c46d))
+
+
+### Chores
+
+* **api:** update composite API spec ([2b0e738](https://github.com/cloudflare/cloudflare-python/commit/2b0e7388107c4110489484c2b38d4d9295b15af2))
+* **api:** update composite API spec ([c7202c9](https://github.com/cloudflare/cloudflare-python/commit/c7202c9f9215a179b17362439c59b2e99566ab40))
+* **api:** update composite API spec ([f94e4de](https://github.com/cloudflare/cloudflare-python/commit/f94e4de91421e736243f75eee987c888f06d8f0b))
+* **api:** update composite API spec ([656f973](https://github.com/cloudflare/cloudflare-python/commit/656f97390d51da3e224e67f2305d6d46f7ae239a))
+* **api:** update composite API spec ([05e802d](https://github.com/cloudflare/cloudflare-python/commit/05e802d1940e1b0bfe59a25c388b83f53edd238e))
+* **api:** update composite API spec ([3817b57](https://github.com/cloudflare/cloudflare-python/commit/3817b571d02b2d23f087bbdb574853632d0bc1db))
+* **api:** update composite API spec ([3e26c73](https://github.com/cloudflare/cloudflare-python/commit/3e26c739c29586ab33e05bb4dc6673d06748d013))
+* **api:** update composite API spec ([0ff89f9](https://github.com/cloudflare/cloudflare-python/commit/0ff89f99ddfbaf078d3b20eada5fd2bc4139fc65))
+* **api:** update composite API spec ([eeec39a](https://github.com/cloudflare/cloudflare-python/commit/eeec39a7ab478625ead7a1e6276c1c258ff574fd))
+* **api:** update composite API spec ([45260b9](https://github.com/cloudflare/cloudflare-python/commit/45260b91f48ed30eb69f1ecd184f245b03a59146))
+* **api:** update composite API spec ([72eb205](https://github.com/cloudflare/cloudflare-python/commit/72eb20551c18d2cae3dfbef960a12ff22b4a7de7))
+* **internal:** codegen related update ([86bdf98](https://github.com/cloudflare/cloudflare-python/commit/86bdf981e37d4b028f4e555d7e0b1e76324f23b3))
+
 ## 5.3.0 (2026-06-11)
 
 Full Changelog: [v5.2.0...v5.3.0](https://github.com/cloudflare/cloudflare-python/compare/v5.2.0...v5.3.0)
