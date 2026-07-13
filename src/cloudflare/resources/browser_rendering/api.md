@@ -90,6 +90,18 @@ Methods:
 
 - <code title="post /accounts/{account_id}/browser-rendering/markdown">client.browser_rendering.markdown.<a href="./src/cloudflare/resources/browser_rendering/markdown.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/browser_rendering/markdown_create_params.py">params</a>) -> <a href="./src/cloudflare/types/browser_rendering/markdown_create_response.py">str</a></code>
 
+## AccessibilityTree
+
+Types:
+
+```python
+from cloudflare.types.browser_rendering import AccessibilityTreeCreateResponse
+```
+
+Methods:
+
+- <code title="post /accounts/{account_id}/browser-rendering/accessibilityTree">client.browser_rendering.accessibility_tree.<a href="./src/cloudflare/resources/browser_rendering/accessibility_tree.py">create</a>(\*, account_id, \*\*<a href="src/cloudflare/types/browser_rendering/accessibility_tree_create_params.py">params</a>) -> <a href="./src/cloudflare/types/browser_rendering/accessibility_tree_create_response.py">AccessibilityTreeCreateResponse</a></code>
+
 ## Crawl
 
 Types:
@@ -168,7 +180,7 @@ from cloudflare.types.browser_rendering.devtools.browser import (
 Methods:
 
 - <code title="put /accounts/{account_id}/browser-rendering/devtools/browser/{session_id}/json/new">client.browser_rendering.devtools.browser.targets.<a href="./src/cloudflare/resources/browser_rendering/devtools/browser/targets.py">create</a>(session_id, \*, account_id, \*\*<a href="src/cloudflare/types/browser_rendering/devtools/browser/target_create_params.py">params</a>) -> <a href="./src/cloudflare/types/browser_rendering/devtools/browser/target_create_response.py">TargetCreateResponse</a></code>
-- <code title="get /accounts/{account_id}/browser-rendering/devtools/browser/{session_id}/json/list">client.browser_rendering.devtools.browser.targets.<a href="./src/cloudflare/resources/browser_rendering/devtools/browser/targets.py">list</a>(session_id, \*, account_id) -> <a href="./src/cloudflare/types/browser_rendering/devtools/browser/target_list_response.py">TargetListResponse</a></code>
+- <code title="get /accounts/{account_id}/browser-rendering/devtools/browser/{session_id}/json/list">client.browser_rendering.devtools.browser.targets.<a href="./src/cloudflare/resources/browser_rendering/devtools/browser/targets.py">list</a>(session_id, \*, account_id, \*\*<a href="src/cloudflare/types/browser_rendering/devtools/browser/target_list_params.py">params</a>) -> <a href="./src/cloudflare/types/browser_rendering/devtools/browser/target_list_response.py">TargetListResponse</a></code>
 - <code title="get /accounts/{account_id}/browser-rendering/devtools/browser/{session_id}/json/activate/{target_id}">client.browser_rendering.devtools.browser.targets.<a href="./src/cloudflare/resources/browser_rendering/devtools/browser/targets.py">activate</a>(target_id, \*, account_id, session_id) -> <a href="./src/cloudflare/types/browser_rendering/devtools/browser/target_activate_response.py">TargetActivateResponse</a></code>
 - <code title="get /accounts/{account_id}/browser-rendering/devtools/browser/{session_id}/json/close/{target_id}">client.browser_rendering.devtools.browser.targets.<a href="./src/cloudflare/resources/browser_rendering/devtools/browser/targets.py">close</a>(target_id, \*, account_id, session_id) -> <a href="./src/cloudflare/types/browser_rendering/devtools/browser/target_close_response.py">TargetCloseResponse</a></code>
 - <code title="get /accounts/{account_id}/browser-rendering/devtools/browser/{session_id}/json/list/{target_id}">client.browser_rendering.devtools.browser.targets.<a href="./src/cloudflare/resources/browser_rendering/devtools/browser/targets.py">get</a>(target_id, \*, account_id, session_id) -> <a href="./src/cloudflare/types/browser_rendering/devtools/browser/target_get_response.py">TargetGetResponse</a></code>
